@@ -3,12 +3,22 @@
   import Header from '@/components/Header.vue';
   import Main from '@/components/Main.vue';
   import Footer from '@/components/Footer.vue';
+  import {onMounted, onUnmounted} from "vue";
 
   const compLayoutState = useCompLayoutState();
 
-  window.onresize = () => {
+  function handleResize():void {
     compLayoutState.calcCurrentState(window.innerWidth);
   }
+
+  onMounted(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', handleResize);
+  })
 </script>
 
 <template>

@@ -6,14 +6,14 @@ import {type Ref, ref} from "vue";
   function toggleNavLinks():void {
     navLinkToggle.value = !navLinkToggle.value;
   }
-
-  window.onresize = (e:Event) => {
-    if(navLinkToggle.value === false && window.innerWidth > 600){
-      navLinkToggle.value = true;
-    } else if (navLinkToggle.value === true && window.innerWidth < 600){
-      navLinkToggle.value = false;
-    }
-  }
+  //
+  // window.onresize = (e:Event) => {
+  //   if(navLinkToggle.value === false && window.innerWidth > 600){
+  //     navLinkToggle.value = true;
+  //   } else if (navLinkToggle.value === true && window.innerWidth < 600){
+  //     navLinkToggle.value = false;
+  //   }
+  // }
 </script>
 
 <template>
