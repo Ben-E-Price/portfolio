@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import List from "@/components/list/List.vue";
+
   import pageContent from "@/content.json"
   import type {SiteContent, About} from "@/types/content.ts";
   const {about} = pageContent as SiteContent
@@ -31,6 +33,11 @@
       <h2 id="about">{{headings[0]}}</h2>
       <p>{{about.about}}</p>
     </div>
+
+    <span>
+      <h2 id="skills">{{headings[1]}}</h2>
+      <List :items="about.skills" />
+    </span>
   </section>
 </template>
 
