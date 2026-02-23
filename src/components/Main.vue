@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import data from "@/content.json"
+  const {about} = JSON.parse(data)
 
 </script>
 
