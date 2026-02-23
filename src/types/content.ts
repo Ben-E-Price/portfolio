@@ -1,4 +1,4 @@
-interface About {
+export interface About {
   about: string;
   skills: string[];
 
@@ -30,11 +30,10 @@ interface LiveExample {
   "description": string;
 }
 
-type WorkExamples = LiveExample[];
 
 export interface SiteContent {
   "about": About;
-  "experience": Experience;
-  "education": Education;
-  "live-example": WorkExamples;
+  "experience": Experience[];
+  "education": Education[];
+  "live-example": LiveExample[];
 }

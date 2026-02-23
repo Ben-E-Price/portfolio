@@ -1,11 +1,10 @@
 <script setup lang="ts">
-  import data from "@/content.json"
-  const {about} = JSON.parse(data)
-
+  import About from "@/components/main-sections/About.vue";
 </script>
 
 <template>
   <main>
+    <About />
     <section class="content-wrapper" id="about"></section>
     <section class="content-wrapper" id="experience"></section>
     <section class="content-wrapper" id="education"></section>
