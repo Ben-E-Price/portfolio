@@ -8,11 +8,11 @@ export const useCompLayoutState = defineStore('comp-layout-state', () => {
     return _breakPointState.value;
   })
 
-  function setBreakPointState(state:number){
+  function setBreakPointState(state:number):void{
     _breakPointState.value = state;
   }
 
-  function calcCurrentState(newWidth:number){
+  function calcCurrentState(newWidth:number):void{
     if(newWidth <= 600){
       setBreakPointState(0);
     } else if (newWidth > 600 && newWidth <= 900){
