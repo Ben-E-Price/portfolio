@@ -27,10 +27,10 @@
     }
   ],
 
-  "live-example": [
+  "liveExample": [
     {
-      "link-live": "Place Holder",
-      "link-repo": "Place Holder",
+      "linkLive": "Place Holder",
+      "linkRepo": "Place Holder",
       "title": "Place Holder",
       "description": "Place Holder"
     }

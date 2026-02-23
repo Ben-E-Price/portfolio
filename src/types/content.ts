@@ -24,8 +24,8 @@ interface Education extends Experience {
 }
 
 interface LiveExample {
-  "link-live": string;
-  "link-repo": string;
+  "linkLive": string;
+  "linkRepo": string;
   "title": string;
   "description": string;
 }
@@ -35,7 +35,7 @@ interface SiteContent {
   "about": About;
   "experience": Experience[];
   "education": Education[];
-  "live-example": LiveExample[];
+  "liveExample": LiveExample[];
 }
 
 export type {About, Experience, Education, LiveExample, SiteContent};

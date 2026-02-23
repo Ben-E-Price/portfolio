@@ -1,11 +1,10 @@
 <script setup lang="ts">
   import List from "@/components/list/List.vue";
+  import type {About} from "@/types/content.ts";
 
-  import pageContent from "@/content.json"
-  import type {SiteContent, About} from "@/types/content.ts";
-  const {about} = pageContent as SiteContent
+  defineProps<{content:About}>();
 
-  function aboutValid(data: any): data is About {
+  function validateAbout(data: any): data is About {
     return (
       data &&
         typeof data === "object" &&
@@ -22,7 +21,7 @@
     return word.charAt(0).toUpperCase() + word.slice(1);
   }
 
-  aboutValid(about);
+  validateAbout(about);
   const id:string[] = Object.keys(about)
   const headings:string[] = id.map((head:string) => upperCaseHeading(head));
 </script>
