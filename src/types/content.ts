@@ -1,4 +1,4 @@
-export interface About {
+interface About {
   about: string;
   skills: string[];
 
@@ -31,9 +31,11 @@ interface LiveExample {
 }
 
 
-export interface SiteContent {
+interface SiteContent {
   "about": About;
   "experience": Experience[];
   "education": Education[];
   "live-example": LiveExample[];
 }
+
+export type {About, Experience, Education, LiveExample, SiteContent};
