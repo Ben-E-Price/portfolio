@@ -9,18 +9,20 @@ interface ContactData {
   github: string;
 }
 
-interface Experience {
+interface ExperienceData {
   "location": string;
   "description": string;
   "year": string;
 }
+
+type Experience = ExperienceData[];
 
 interface Qualification {
   "title": string;
   "grade": string;
 }
 
-interface Education extends Experience {
+interface Education extends ExperienceData {
   "qualification": Qualification[];
 }
 
@@ -34,7 +36,7 @@ interface LiveExample {
 
 interface SiteContent {
   "about": AboutData;
-  "experience": Experience[];
+  "experience": Experience;
   "education": Education[];
   "liveExample": LiveExample[];
 }

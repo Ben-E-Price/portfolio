@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import About from "@/components/main-sections/About.vue";
+  import Experience from "@/components/main-sections/Experience.vue";
   import type {SiteContent} from "@/types/content.ts";
   import content from "@/content.json";
 
@@ -19,7 +20,7 @@
 <template>
   <main>
     <About :content="about" />
-    <section class="content-wrapper" id="about"></section>
+    <Experience :content="experience" />
     <section class="content-wrapper" id="experience"></section>
     <section class="content-wrapper" id="education"></section>
     <section class="content-wrapper" id="live-examples"></section>

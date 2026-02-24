@@ -23,7 +23,7 @@
 </script>
 
 <template>
-  <section class="content-wrapper">
+  <section class="sec-wrapper" id="sec-about">
     <div id="about">
       <h2
         :id="`heading-${idAbout}`"
