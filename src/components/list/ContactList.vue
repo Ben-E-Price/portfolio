@@ -8,6 +8,7 @@
     <li
       v-for="(value, key) in items"
       v-bind:key="`contact-${key}`"
+      class="dis-flex"
     >
       <h3 v-to-heading>{{key}}</h3>
       <p>{{value}}</p>
