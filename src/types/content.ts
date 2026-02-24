@@ -22,9 +22,11 @@ interface Qualification {
   "grade": string;
 }
 
-interface Education extends ExperienceData {
+interface EducationData extends ExperienceData {
   "qualification": Qualification[];
 }
+
+type Education = ExperienceData[];
 
 interface LiveExample {
   "linkLive": string;
@@ -37,8 +39,8 @@ interface LiveExample {
 interface SiteContent {
   "about": AboutData;
   "experience": Experience;
-  "education": Education[];
+  "education": Education;
   "liveExample": LiveExample[];
 }
 
-export type {AboutData, ContactData, Experience, Education, LiveExample, SiteContent};
+export type {AboutData, ContactData, Experience, EducationData, Education, LiveExample, SiteContent};
