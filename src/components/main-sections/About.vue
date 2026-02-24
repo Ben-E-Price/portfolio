@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import List from "@/components/list/List.vue";
+  import ContactList from "@/components/list/ContactList.vue";
   import type {AboutData} from "@/types/content.ts";
 
   const {content} = defineProps<{content: AboutData}>();
@@ -46,6 +47,7 @@
           v-to-heading>
         {{idContact}}
       </h2>
+      <ContactList :items="contact" />
     </span>
   </section>
 </template>

@@ -9,8 +9,8 @@
       v-for="(value, key) in items"
       v-bind:key="`contact-${key}`"
     >
-      <h3 v-to-heading>{{key}}}</h3>
-      <p>{{value}}}</p>
+      <h3 v-to-heading>{{key}}</h3>
+      <p>{{value}}</p>
     </li>
   </ul>
 </template>
