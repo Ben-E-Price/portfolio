@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type {Qualification} from "@/types/content.ts";
+  import type {Qualification} from "@/types/content.ts";
 
-const {content: {title, grade}} = defineProps<{content:Qualification}>();
+  const {content} = defineProps<{content:Qualification}>();
+  const {title, grade} = content;
 </script>
 
 <template>
