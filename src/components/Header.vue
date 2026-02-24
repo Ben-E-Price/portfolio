@@ -33,7 +33,7 @@ import {storeToRefs} from "pinia";
 
     </span>
     <span id="heading-wrapper">
-      <h1>Heading</h1>
+      <h1 v-to-heading>heading</h1>
     </span>
 
     <nav id="link-wrapper" v-if="navLinkVisibility">

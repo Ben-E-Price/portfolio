@@ -18,13 +18,8 @@
     )
   }
 
-  function upperCaseHeading(word: string):string {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }
-
   validateAbout(content);
   const id:string[] = Object.keys(content);
-  const headings:string[] = id.map((head:string) => upperCaseHeading(head));
 </script>
 
 <template>
