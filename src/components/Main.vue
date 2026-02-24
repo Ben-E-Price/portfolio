@@ -21,17 +21,15 @@
   <main>
     <About :content="about" />
     <AccordionSection
-      :seciton-name="`experience`"
+      :section-name="`experience`"
       :content="experience"
     />
 
     <AccordionSection
-      :seciton-name="`education`"
+      :section-name="`education`"
       :content="education"
     />
 
-    <section class="content-wrapper" id="experience"></section>
-    <section class="content-wrapper" id="education"></section>
     <section class="content-wrapper" id="live-examples"></section>
   </main>
 </template>
