@@ -1,6 +1,7 @@
 <script setup lang="ts">
+  import About from "@/components/main-sections/About.vue";
   import type {SiteContent} from "@/types/content.ts";
-  import content from "@/content.json"
+  import content from "@/content.json";
 
   function validateSiteContent(content: any): content is SiteContent {
     return (
@@ -17,7 +18,7 @@
 
 <template>
   <main>
-    <About />
+    <About :content="about" />
     <section class="content-wrapper" id="about"></section>
     <section class="content-wrapper" id="experience"></section>
     <section class="content-wrapper" id="education"></section>

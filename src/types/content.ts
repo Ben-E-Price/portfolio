@@ -1,4 +1,4 @@
-interface About {
+interface AboutData {
   about: string;
   skills: string[];
 
@@ -32,10 +32,10 @@ interface LiveExample {
 
 
 interface SiteContent {
-  "about": About;
+  "about": AboutData;
   "experience": Experience[];
   "education": Education[];
   "liveExample": LiveExample[];
 }
 
-export type {About, Experience, Education, LiveExample, SiteContent};
+export type {AboutData, Experience, Education, LiveExample, SiteContent};
