@@ -1,11 +1,12 @@
 interface AboutData {
   about: string;
   skills: string[];
+  contact: ContactData;
+}
 
-  contact: {
-    "email": string;
-    github: string;
-  };
+interface ContactData {
+  "email": string;
+  github: string;
 }
 
 interface Experience {
@@ -38,4 +39,4 @@ interface SiteContent {
   "liveExample": LiveExample[];
 }
 
-export type {AboutData, Experience, Education, LiveExample, SiteContent};
+export type {AboutData, ContactData, Experience, Education, LiveExample, SiteContent};
