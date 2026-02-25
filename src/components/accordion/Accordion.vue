@@ -20,7 +20,6 @@
   })
 
   const setComponentType = (key: CompTypeKey) => componentType.value[key] = true;
-  const checkCompType = (compareKey:CompTypeKey):boolean => componentType.value[compareKey];
 
   function validateExperience(data: any):data is ExperienceData {
     return data && "description" in data
@@ -54,12 +53,12 @@
     </summary>
 
     <PanelExperience
-      v-if="checkCompType(`experience`)"
+      v-if="componentType.experience"
       :content="item.description"
     />
 
     <PanelQualification
-      v-if="checkCompType(`education`)"
+      v-if="componentType.education"
       :content="item.qualification"
     />
   </details>
