@@ -3,14 +3,16 @@ import Carousel from "@/components/carousel/Carousel.vue";
   import type {LiveExample} from "@/types/content.ts";
 
   const {content} = defineProps<{content: LiveExample}>();
+  const classList:string[] = ["content-wrapper"]
+  const title:string = "work-example";
 </script>
 
 <template>
-  <section id="carousel-wrapper" class="sec-wrapper">
+  <section id="live-examples" :class="classList">
     <h2
-      :id="`heading-${content.title}`"
+      :id="`heading-${title}`"
       v-to-heading
-    >{{content.title}}</h2>
+    >{{title}}</h2>
 
     <Carousel :content="content" />
   </section>

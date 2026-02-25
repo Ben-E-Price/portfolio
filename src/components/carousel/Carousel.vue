@@ -8,7 +8,6 @@ const {content} = defineProps<{content: LiveExample}>();
     <div id="carousel-outer">
 
     </div>
-  </section>
 </template>
 
 <style scoped>

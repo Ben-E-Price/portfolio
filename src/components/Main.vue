@@ -3,6 +3,7 @@
   import AccordionSection from "@/components/accordion/AccordionSection.vue";
   import type {SiteContent} from "@/types/content.ts";
   import content from "@/content.json";
+  import WorkExample from "@/components/main-sections/WorkExample.vue";
 
   function validateSiteContent(content: any): content is SiteContent {
     return (
@@ -14,7 +15,7 @@
   }
 
   validateSiteContent(content)
-  const {about, experience, education, live} = content;
+  const {about, experience, education, liveExample} = content;
 </script>
 
 <template>
@@ -30,7 +31,7 @@
       :content="education"
     />
 
-    <section class="content-wrapper" id="live-examples"></section>
+    <WorkExample :content="liveExample" />
   </main>
 </template>
 
