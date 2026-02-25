@@ -5,7 +5,6 @@ const {content} = defineProps<{content: LiveExample}>();
 </script>
 
 <template>
-  <section id="carousel-wrapper" class="sec-wrapper">
     <div id="carousel-outer">
 
     </div>
