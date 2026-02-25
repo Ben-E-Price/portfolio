@@ -1,8 +1,9 @@
 <script setup lang="ts">
   import PanelExperience from "@/components/accordion/PanelExperience.vue";
   import PanelQualification from "@/components/accordion/PanelQualification.vue";
+
   import type {Education, EducationData, Experience, ExperienceData} from "@/types/content.ts";
-  import {type Ref, ref} from "vue";
+  import {onBeforeMount, type Ref, ref} from "vue";
 
   interface CompType {
     education: boolean;
@@ -11,6 +12,7 @@
 
   type CompTypeKey = keyof CompType;
   type ContentList = Experience | Education;
+  type ContentData = ExperienceData | EducationData | undefined;
 
   const {content} = defineProps<{content: ContentList}>();
 
@@ -21,16 +23,20 @@
 
   const setComponentType = (key: CompTypeKey) => componentType.value[key] = true;
 
-  function validateExperience(data: any):data is ExperienceData {
-    return data && "description" in data
+  function validateExperience(data: ContentData):data is ExperienceData {
+    if(data && "description" in data) return true;
+
+    return false
   }
 
-  function validateEducation(data: any):data is EducationData {
-    return data && "qualification" in data
+  function validateEducation(data: ContentData):data is EducationData {
+    if(data && "qualification" in data) return true;
+
+    return false
   }
 
   function findComponentType(content:ContentList) {
-    const data:any = content[0];
+    const data:ContentData = content[0];
 
     if(validateExperience(data)){
       setComponentType("experience");
@@ -39,7 +45,7 @@
     }
   }
 
-  findComponentType(content);
+  onBeforeMount(() => findComponentType(content));
 </script>
 
 <template>
@@ -58,7 +64,7 @@
     />
 
     <PanelQualification
-      v-if="componentType.education"
+      v-else-if="componentType.education"
       :content="item.qualification"
     />
   </details>

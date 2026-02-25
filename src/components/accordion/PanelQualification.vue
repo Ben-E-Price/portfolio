@@ -9,6 +9,7 @@
   <div
     :class="classList"
     v-for="{title, grade} in content"
+    v-bind:key="title"
   >
     <p class="qual-title">{{ title }}</p>
     <p class="qual-grade">{{ grade }}</p>
