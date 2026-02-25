@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import type {LiveExample} from "@/types/content.ts";
+import type {LiveExample} from "@/types/content.ts";
 
-  const {content} = defineProps<{content: LiveExample}>();
+const {content} = defineProps<{content: LiveExample}>();
 </script>
 
 <template>
