@@ -43,4 +43,4 @@ interface SiteContent {
   "liveExample": LiveExample[];
 }
 
-export type {AboutData, ContactData, Experience, EducationData, Education, Qualification, LiveExample, SiteContent};
+export type {AboutData, ContactData, Experience, ExperienceData, EducationData, Education, Qualification, LiveExample, SiteContent};

@@ -1,31 +1,32 @@
 <script setup lang="ts">
   import PanelExperience from "@/components/accordion/PanelExperience.vue";
   import PanelQualification from "@/components/accordion/PanelQualification.vue";
-  import type {Education, Experience} from "@/types/content.ts";
+  import type {Education, EducationData, Experience, ExperienceData} from "@/types/content.ts";
   import {type Ref, ref} from "vue";
 
-  interface ComponentType {
-    experience: boolean
-    qualification: boolean
+  interface CompType {
+    education: boolean;
+    experience: boolean;
   }
 
+  type CompTypeKey = keyof CompType;
   type ContentList = Experience | Education;
 
   const {content} = defineProps<{content: ContentList}>();
 
-  const componentType:Ref<ComponentType> = ref({
+  const componentType:Ref<CompType> = ref({
+    education: false,
     experience: false,
-    qualification: false,
   })
 
-  const setComponentType = (key: string) => componentType.value[key] = true;
-  const getComponentType = (key: string) => componentType.value[key];
+  const setComponentType = (key: CompTypeKey) => componentType.value[key] = true;
+  const checkCompType = (compareKey:CompTypeKey):boolean => componentType.value[compareKey];
 
-  function validateExperience(data: any):data is Experience {
+  function validateExperience(data: any):data is ExperienceData {
     return data && "description" in data
   }
 
-  function validateEducation(data: any):data is Education {
+  function validateEducation(data: any):data is EducationData {
     return data && "qualification" in data
   }
 
@@ -33,9 +34,9 @@
     const data:any = content[0];
 
     if(validateExperience(data)){
-      setComponentType("education");
+      setComponentType("experience");
     } else if(validateEducation(data)){
-      setComponentType("qualification");
+      setComponentType("education");
     }
   }
 
@@ -53,12 +54,12 @@
     </summary>
 
     <PanelExperience
-      :v-if="getComponentType(`experience`)"
+      v-if="checkCompType(`experience`)"
       :content="item.description"
     />
 
     <PanelQualification
-      :v-if="getComponentType(`qualification`)"
+      v-if="checkCompType(`education`)"
       :content="item.qualification"
     />
   </details>
