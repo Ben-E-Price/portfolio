@@ -6,7 +6,7 @@
 
   const {content} = defineProps<{content: LiveExample}>();
   const classList:string[] = ["content-wrapper"]
-  const title:string = "work-example";
+  const title:string = "Live Examples";
 </script>
 
 <template>
