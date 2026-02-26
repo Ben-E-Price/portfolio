@@ -9,5 +9,8 @@
 </template>
 
 <style scoped>
-
+  #indicator-container {
+    border: blue solid 1px;
+    width: 100%;
+  }
 </style>

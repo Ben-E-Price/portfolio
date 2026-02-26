@@ -5,11 +5,14 @@
 </script>
 
 <template>
-  <span class="carousel-card">
+  <div class="carousel-card">
 
-  </span>
+  </div>
 </template>
 
 <style scoped>
-
+  .carousel-card {
+    background: grey;
+    height: 250px
+  }
 </style>

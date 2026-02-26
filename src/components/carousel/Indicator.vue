@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+  const indicatorSize:string = "20px";
 </script>
 
 <template>
@@ -9,5 +9,9 @@
 </template>
 
 <style scoped>
-
+  .indicator {
+    width: v-bind('indicatorSize');
+    height: v-bind('indicatorSize');
+    border-radius: 50%;
+  }
 </style>
