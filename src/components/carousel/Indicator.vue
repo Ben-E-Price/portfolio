@@ -3,7 +3,9 @@
 </script>
 
 <template>
-  <span class="carousel-indicator"></span>
+  <li class="carousel-indicator">
+    <button class="indicator"></button>
+  </li>
 </template>
 
 <style scoped>
