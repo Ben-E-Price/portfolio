@@ -2,7 +2,6 @@
   import About from "@/components/main-sections/About.vue";
   import AccordionSection from "@/components/accordion/AccordionSection.vue";
   import WorkExample from "@/components/main-sections/WorkExample.vue";
-  import DynamicHeading from "@/components/heading/DynamicHeading.vue";
 
   import type {SiteContent} from "@/types/content.ts";
 
@@ -23,10 +22,6 @@
 
 <template>
   <main>
-    <DynamicHeading
-      :id="`test`"
-      :text="`Heading Test`"
-      :level="3"/>
     <About :content="about" />
     <AccordionSection
       :section-name="`experience`"

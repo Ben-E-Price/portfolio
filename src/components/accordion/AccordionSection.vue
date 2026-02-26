@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import Accordion from "@/components/accordion/Accordion.vue";
+  import DynamicHeading from "../heading/DynamicHeading.vue";
   import type {Experience, Education} from "@/types/content.ts";
 
   type ContentLists = Experience | Education;
@@ -8,7 +9,11 @@
 
 <template>
   <section class="sec-wrapper" :id="`sec-${sectionName}`">
-    <h2 :id="`heading-${sectionName}`" v-to-heading>{{ sectionName }}</h2>
+    <DynamicHeading
+      :id="sectionName"
+      :text="sectionName"
+      :level="2"
+    />
     <Accordion :content="content"/>
   </section>
 </template>

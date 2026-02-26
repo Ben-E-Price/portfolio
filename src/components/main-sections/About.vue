@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import List from "@/components/list/List.vue";
   import ContactList from "@/components/list/ContactList.vue";
+  import DynamicHeading from "../heading/DynamicHeading.vue";
+
   import type {AboutData} from "@/types/content.ts";
 
   const {content} = defineProps<{content: AboutData}>();
@@ -25,28 +27,29 @@
 <template>
   <section class="sec-wrapper" id="sec-about">
     <div id="about">
-      <h2
-        :id="`heading-${idAbout}`"
-        v-to-heading>
-        {{idAbout}}
-      </h2>
+      <DynamicHeading
+        :id="idAbout"
+        :text="idAbout"
+        :level="2"
+      />
       <p>{{about}}</p>
     </div>
 
     <span>
-      <h2
-        :id="`heading-${idSkills}`"
-        v-to-heading>
-        {{idSkills}}
-      </h2>
+      <DynamicHeading
+        :id="idSkills"
+        :text="idSkills"
+        :level="2"
+      />
       <List :items="skills" />
     </span>
 
     <span>
-      <h2 :id="`heading-${idContact}`"
-          v-to-heading>
-        {{idContact}}
-      </h2>
+      <DynamicHeading
+        :id="idContact"
+        :text="idContact"
+        :level="2"
+      />
       <ContactList :items="contact" />
     </span>
   </section>

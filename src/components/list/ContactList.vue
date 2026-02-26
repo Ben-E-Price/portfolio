@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import DynamicHeading from "../heading/DynamicHeading.vue";
   import type {ContactData} from "@/types/content.ts";
   const {items} =  defineProps<{items: ContactData}>();
 </script>
@@ -10,7 +11,11 @@
       v-bind:key="`contact-${key}`"
       class="dis-flex"
     >
-      <h3 v-to-heading>{{key}}</h3>
+      <DynamicHeading
+        :id="key"
+        :text="key"
+        :level="3"
+      />
       <p>{{value}}</p>
     </li>
   </ul>
