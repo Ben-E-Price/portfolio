@@ -1,9 +1,12 @@
 <script setup lang="ts">
   import About from "@/components/main-sections/About.vue";
   import AccordionSection from "@/components/accordion/AccordionSection.vue";
-  import type {SiteContent} from "@/types/content.ts";
-  import content from "@/content.json";
   import WorkExample from "@/components/main-sections/WorkExample.vue";
+  import DynamicHeading from "@/components/heading/DynamicHeading.vue";
+
+  import type {SiteContent} from "@/types/content.ts";
+
+  import content from "@/content.json";
 
   function validateSiteContent(content: any): content is SiteContent {
     return (
@@ -20,6 +23,10 @@
 
 <template>
   <main>
+    <DynamicHeading
+      :id="`test`"
+      :text="`Heading Test`"
+      :level="3"/>
     <About :content="about" />
     <AccordionSection
       :section-name="`experience`"
