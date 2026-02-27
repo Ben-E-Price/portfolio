@@ -3,23 +3,20 @@
   import Button from "@/components/carousel/Button.vue";
   import IndicatorContainer from "@/components/carousel/IdicatorContainer.vue";
   import type {LiveExample} from "@/types/content.ts";
-  import {onMounted, ref} from "vue";
+  import {onMounted} from "vue";
 
   const {content} = defineProps<{content: LiveExample}>();
+  const controlsTransformPer:number = 0.5;
+  const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
 
   const getElementHeight = (element: HTMLElement):number => element.getBoundingClientRect().height;
 
   function setOuterHeight(outer:HTMLElement, controls:HTMLElement):void  {
     const heightOuter:number = getElementHeight(outer);
     const heightControls:number = getElementHeight(controls);
-    const heightCorrected: number = heightOuter - heightControls;
+    const heightCorrected: number = heightOuter - (heightControls * controlsTransformPer);
 
     outer.style.height = heightCorrected + `px`;
-  }
-
-  function setOuterPadding(outer:HTMLElement):void {
-    console.log(getComputedStyle(outer).padding);
-
   }
 
   function handleOuterSetup():void {
@@ -53,7 +50,8 @@
   }
 
   #carousel-controls {
-    transform: translateY(-100%);
+    --y-trans: v-bind('controlsTransStyle');
+    transform: translateY(var(--y-trans));
     display: grid;
     grid-template-columns: auto 33% auto;
   }
