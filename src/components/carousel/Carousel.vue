@@ -5,17 +5,29 @@
   import type {LiveExample} from "@/types/content.ts";
 
   const {content} = defineProps<{content: LiveExample}>();
+
+  function setOuterHight(outer:HTMLElement):void  {
+
+  }
+
+  function setOuterPadding(outer:HTMLElement):void {
+
+  }
+
+  function handleOuterSetup():void {
+    const outer:HTMLElement = document.getElementById("carousel-outer");
+    
+  }
 </script>
 
 <template>
-    <div id="carousel-outer">
+    <div id="carousel-outer" >
       <InnerCard :content="content" />
       <div id="carousel-controls">
         <Button :btnJustify="'prev'"/>
         <IndicatorContainer/>
         <Button :btnJustify="'next'"/>
       </div>
-
     </div>
 </template>
 
