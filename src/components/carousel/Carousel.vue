@@ -3,21 +3,33 @@
   import Button from "@/components/carousel/Button.vue";
   import IndicatorContainer from "@/components/carousel/IdicatorContainer.vue";
   import type {LiveExample} from "@/types/content.ts";
+  import {onMounted, ref} from "vue";
 
   const {content} = defineProps<{content: LiveExample}>();
 
-  function setOuterHight(outer:HTMLElement):void  {
+  const getElementHeight = (element: HTMLElement):number => element.getBoundingClientRect().height;
 
+  function setOuterHeight(outer:HTMLElement, controls:HTMLElement):void  {
+    const outerHeight:number = getElementHeight(outer);
+    const controlsHeight:number = getElementHeight(controls);
+    const correctedHeight: number = outerHeight - controlsHeight;
+
+    outer.style.height = correctedHeight + `px`;
   }
 
   function setOuterPadding(outer:HTMLElement):void {
+    console.log(getComputedStyle(outer).padding);
 
   }
 
   function handleOuterSetup():void {
-    const outer:HTMLElement = document.getElementById("carousel-outer");
-    
+    const outer:HTMLElement | null = document.getElementById("carousel-outer");
+    const controls:HTMLElement | null = document.getElementById("carousel-controls");
+
+    setOuterHight(outer, controls)
   }
+
+  onMounted(() => handleOuterSetup());
 </script>
 
 <template>
