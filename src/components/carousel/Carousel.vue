@@ -10,11 +10,11 @@
   const getElementHeight = (element: HTMLElement):number => element.getBoundingClientRect().height;
 
   function setOuterHeight(outer:HTMLElement, controls:HTMLElement):void  {
-    const outerHeight:number = getElementHeight(outer);
-    const controlsHeight:number = getElementHeight(controls);
-    const correctedHeight: number = outerHeight - controlsHeight;
+    const heightOuter:number = getElementHeight(outer);
+    const heightControls:number = getElementHeight(controls);
+    const heightCorrected: number = heightOuter - heightControls;
 
-    outer.style.height = correctedHeight + `px`;
+    outer.style.height = heightCorrected + `px`;
   }
 
   function setOuterPadding(outer:HTMLElement):void {
@@ -26,7 +26,7 @@
     const outer:HTMLElement | null = document.getElementById("carousel-outer");
     const controls:HTMLElement | null = document.getElementById("carousel-controls");
 
-    setOuterHight(outer, controls)
+    setOuterHeight(outer, controls);
   }
 
   onMounted(() => handleOuterSetup());
