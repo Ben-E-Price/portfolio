@@ -6,7 +6,8 @@
   import {onMounted} from "vue";
 
   const {content} = defineProps<{content: LiveExample}>();
-  const controlsTransformPer:number = 0.5;
+
+  const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
 
   const getElementHeight = (element: HTMLElement):number => element.getBoundingClientRect().height;
@@ -17,13 +18,23 @@
     const heightCorrected: number = heightOuter - (heightControls * controlsTransformPer);
 
     outer.style.height = heightCorrected + `px`;
+ }
+
+  function setButtonTransform(outer:HTMLElement, button:HTMLElement):void {
+    const outerHeight:number = getElementHeight(outer);
+    const buttonHeight:number =  getElementHeight(button);
+    const transform:number = (outerHeight / 2) - (buttonHeight / 2);
+
+    button.style.transform = `translateY(-${transform}px)`;
   }
 
   function handleOuterSetup():void {
     const outer:HTMLElement | null = document.getElementById("carousel-outer");
     const controls:HTMLElement | null = document.getElementById("carousel-controls");
+    const button:HTMLElement | null = document.getElementsByClassName("carousel-button")[0];
 
     setOuterHeight(outer, controls);
+    setButtonTransform(outer, button);
   }
 
   onMounted(() => handleOuterSetup());
