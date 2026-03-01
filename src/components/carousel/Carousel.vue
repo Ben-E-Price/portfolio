@@ -10,6 +10,8 @@
   const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
 
+  let buttonTransform:number = 0;
+
   const getElementHeight = (element: HTMLElement):number => element.getBoundingClientRect().height;
 
   function setOuterHeight(outer:HTMLElement, controls:HTMLElement):void  {
@@ -23,18 +25,13 @@
   function setButtonTransform(outer:HTMLElement, button:HTMLElement):void {
     const outerHeight:number = getElementHeight(outer);
     const buttonHeight:number =  getElementHeight(button);
-    const transform:number = (outerHeight / 2) - (buttonHeight / 2);
-
-    button.style.transform = `translateY(-${transform}px)`;
+    buttonTransform = (outerHeight / 2) - (buttonHeight / 2);
   }
 
   function handleOuterSetup():void {
-    const outer:HTMLElement | null = document.getElementById("carousel-outer");
-    const controls:HTMLElement | null = document.getElementById("carousel-controls");
-    const button:HTMLElement | null = document.getElementsByClassName("carousel-button")[0];
 
     setOuterHeight(outer, controls);
-    setButtonTransform(outer, button);
+    setButtonTransform(outer, button)
   }
 
   onMounted(() => handleOuterSetup());
@@ -44,9 +41,15 @@
     <div id="carousel-outer" >
       <InnerCard :content="content" />
       <div id="carousel-controls">
-        <Button :btnJustify="'prev'"/>
+        <Button
+          :btnVertTrans="buttonTransform"
+          :btnJustify="'prev'"
+        />
         <IndicatorContainer/>
-        <Button :btnJustify="'next'"/>
+        <Button
+          :btnVertTrans="buttonTransform"
+          :btnJustify="'next'"
+        />
       </div>
     </div>
 </template>
