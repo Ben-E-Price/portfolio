@@ -1,10 +1,10 @@
 type ElementList = [string, boolean][]
-interface ElementHeights {
+interface HeightList {
   [key: string]: number;
 }
 
 class ElementHeight {
-  private _height: number;
+  private _height: number = 0;
   private element: HTMLElement;
 
   constructor(
@@ -15,7 +15,6 @@ class ElementHeight {
   }
 
   private getElement():this {
-    console.log(document.getElementById(this.elementName));
     this.element = this.isId ? document.getElementById(this.elementName) :
       document.getElementsByClassName(this.elementName)[0];
 
@@ -32,19 +31,20 @@ class ElementHeight {
   }
 }
 
-class CarouselElements {
-  private _heights:ElementHeights = {};
+export class ElementHeightFinder {
+  private _heights:HeightList = {};
 
   constructor(elementData: ElementList) {
     elementData.forEach(([elementName, isId]) => {
-      const key:string = elementName.split("-").slice(-1);
-
+      const key:string = elementName.split("-").slice(-1)[0] as string;
       const elementHeight = new ElementHeight(elementName, isId);
-      this.heights[key] = elementHeight.height();
+      this._heights[key] = elementHeight.height();
     })
   }
 
-  public heights(){
+  public heights():HeightList{
     return this._heights;
   }
 }
+
+export type {ElementList, HeightList};

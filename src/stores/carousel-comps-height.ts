@@ -1,13 +1,36 @@
-import {defineStore} from "pinia";
+import {defineStore, type StoreDefinition} from "pinia";
+import {ElementHeightFinder, type ElementList, type HeightList} from "@/utils/comp-height-finder.ts";
+import {ref, type Ref} from "vue";
 
-type CarouselComps = "carousel-outer" | "carousel-controls" | "carousel-button";
+export const useCarouselHeights:StoreDefinition<"carousel-comps-height"> = defineStore("carousel-comps-height", () => {
+  const elementList: ElementList = [
+    ["carousel-outer", true],
+    ["carousel-controls", true],
+    ["carousel-button", false]
+  ];
 
-export const useCarouselHeights = defineStore("carousel-comps-height", () => {
-  const findElements: ElementList = [["carousel-outer", true], ["carousel-controls", true], ["carousel-button", false]]
-  const test = new CarouselElements(findElements);
-  const _heightOuter:ElementHeight = new ElementHeight("carousel-outer", true);
-  const _heightControls:ElementHeight = new ElementHeight("carousel-controls", true);
-  const _heightButton:ElementHeight =  new ElementHeight("carousel-button", false);
+  const _heightOuter:Ref<number> = ref(0)
+  const _heightControls:Ref<number> = ref(0)
+  const _heightButton:Ref<number> = ref(0);
 
-  return {test}
+  function isNumber(check:any):boolean {
+    return typeof check === "number"
+  }
+
+  function areNumbers(object:HeightList):boolean {
+    return Object.values(object).every((value):boolean => isNumber(value))
+  }
+
+  function setHeights():void {
+    const elementHeights:HeightList = new ElementHeightFinder(elementList).heights()
+
+    if(areNumbers(elementHeights)){
+      const {outer, controls, button} = elementHeights;
+      _heightOuter.value = outer;
+      _heightControls.value = controls;
+      _heightButton.value = button;
+    }
+  }
+
+  return {setHeights};
 })

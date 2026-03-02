@@ -3,13 +3,12 @@
   import Button from "@/components/carousel/Button.vue";
   import IndicatorContainer from "@/components/carousel/IdicatorContainer.vue";
 
+  import {useCarouselHeights} from "@/stores/carousel-comps-height.ts";
   import type {LiveExample} from "@/types/content.ts";
   import {onMounted} from "vue";
-  import {useCarouselHeights} from "@/stores/carousel-comps-height.ts";
 
   const {content} = defineProps<{content: LiveExample}>();
 
-  const elementHeights = useCarouselHeights();
 
   const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
