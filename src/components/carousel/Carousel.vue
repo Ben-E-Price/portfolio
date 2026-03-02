@@ -30,8 +30,6 @@
 
   function handleOuterSetup():void {
 
-    setOuterHeight(outer, controls);
-    setButtonTransform(outer, button)
   }
 
   onMounted(() => handleOuterSetup());
