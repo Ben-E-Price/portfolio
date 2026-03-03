@@ -8,10 +8,12 @@
 
   import type {Ref} from "vue";
   import type {LiveExample} from "@/types/content.ts";
+  import {storeToRefs} from "pinia";
 
   const {content} = defineProps<{content: LiveExample}>();
 
   const compHeights = useCarouselHeights();
+  const {heightOuter, heightControls} = storeToRefs(compHeights);
 
   const correctedOuterHeight:Ref<string> = ref("");
   const controlsTransformPer:number = 1;
@@ -20,10 +22,9 @@
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
   function correctOuterHeight():void  {
-    const heightCorrected: number = compHeights.heightOuter - (compHeights.heightControls * controlsTransformPer);
+    const heightCorrected: number = heightOuter.value - (heightControls.value * controlsTransformPer);
     setCorrectedOuterHeight(heightCorrected);
  }
-
 
   function initComponents():void {
     compHeights.setHeights()
