@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import type {LiveExample} from "@/types/content.ts";
-  import {reactive} from "vue";
+  import {reactive, watch} from "vue";
 
   const {
     content,
@@ -15,6 +15,10 @@
   const styles = reactive({
     transform: `translateX(${transX}%)`,
   })
+
+  watch(() => currentSlide, (newSlide) => {
+  })
+
 </script>
 
 <template>

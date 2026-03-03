@@ -34,6 +34,14 @@
     correctOuterHeight()
   }
 
+  function increaseSlide():void {
+    currentSlide.value === slideLimit - 1 ? currentSlide.value = 0 : currentSlide.value++;
+  }
+
+  function decreaseSlide():void {
+    currentSlide.value === 0 ? currentSlide.value = slideLimit - 1 : currentSlide.value--;
+  }
+
   onMounted(() => initComponents());
 </script>
 
@@ -49,10 +57,12 @@
 
       <div id="carousel-controls">
         <Button
+          @click="decreaseSlide"
           :btnJustify="'prev'"
         />
         <IndicatorContainer/>
         <Button
+          @click="increaseSlide"
           :btnJustify="'next'"
         />
       </div>
