@@ -2,7 +2,15 @@
   import type {LiveExample} from "@/types/content.ts";
   import {reactive} from "vue";
 
-  const {content, transX} = defineProps<{content: LiveExample, transX:number}>();
+  const {
+    content,
+    transX,
+    currentSlide
+  } = defineProps<{
+    content: LiveExample,
+    transX:number,
+    currentSlide:number
+  }>();
 
   const styles = reactive({
     transform: `translateX(${transX}%)`,

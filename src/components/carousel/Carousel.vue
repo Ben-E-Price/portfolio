@@ -10,7 +10,7 @@
   import type {LiveExample} from "@/types/content.ts";
   import {storeToRefs} from "pinia";
 
-  const {content} = defineProps<{content: LiveExample}>();
+  const {content} = defineProps<{content: LiveExample[]}>();
 
   const compHeights = useCarouselHeights();
   const {heightOuter, heightControls} = storeToRefs(compHeights);
@@ -18,6 +18,9 @@
   const correctedOuterHeight:Ref<string> = ref("");
   const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
+
+  const currentSlide:Ref<number> = ref(0);
+  const slideLimit:number = content.length;
 
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
@@ -39,7 +42,8 @@
       <div id="slides-wrapper">
         <InnerCard
           v-for="(data, index) in content"
-          :transX="Number(index) * 100"
+          :currentSlide="currentSlide"
+          :transX="index"
           :content="data" />
       </div>
 
