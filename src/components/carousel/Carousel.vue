@@ -17,21 +17,13 @@
   const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
 
-  let buttonTransform:number = 0;
-
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
-  const getElementHeight = (element: HTMLElement):number => element.getBoundingClientRect().height;
 
   function correctOuterHeight():void  {
     const heightCorrected: number = compHeights.heightOuter - (compHeights.heightControls * controlsTransformPer);
     setCorrectedOuterHeight(heightCorrected);
  }
 
-  function setButtonTransform(outer:HTMLElement, button:HTMLElement):void {
-    const outerHeight:number = getElementHeight(outer);
-    const buttonHeight:number =  getElementHeight(button);
-    buttonTransform = (outerHeight / 2) - (buttonHeight / 2);
-  }
 
   function initComponents():void {
     compHeights.setHeights()
@@ -46,12 +38,10 @@
       <InnerCard :content="content" />
       <div id="carousel-controls">
         <Button
-          :btnVertTrans="buttonTransform"
           :btnJustify="'prev'"
         />
         <IndicatorContainer/>
         <Button
-          :btnVertTrans="buttonTransform"
           :btnJustify="'next'"
         />
       </div>

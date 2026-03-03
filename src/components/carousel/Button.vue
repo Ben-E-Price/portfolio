@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import {type Ref, ref, watch} from "vue";
+  import {useCarouselHeights} from "@/stores/carousel-comps-height.ts";
+  import {ref, watch} from "vue";
+  import {storeToRefs} from "pinia";
 
-  const {btnJustify, btnVertTrans} = defineProps<{
-    btnJustify: ButtonTypes,
-    btnVertTrans:number,
-  }>();
-
+  import type { Ref } from "vue";
   type ButtonTypes = "next" | "prev";
+
+  const {btnJustify} = defineProps<{btnJustify: ButtonTypes}>();
+
+  const compHeights = useCarouselHeights();
+  const {heightOuter, heightButton} = storeToRefs(compHeights);
 
   const transformStyle:Ref<string> = ref("");
   const size:string = "30px";
@@ -14,7 +17,11 @@ import {type Ref, ref, watch} from "vue";
 
   const setTransform = (transValue:number) => transformStyle.value = `-${transValue}px`;
 
-  watch(() => btnVertTrans, (transValue:number) => console.log(transValue));
+  function calcButtonTransform():void {
+    setTransform((heightOuter.value / 2) - heightButton.value);
+  }
+
+  watch(heightOuter, () => calcButtonTransform());
 </script>
 
 <template>
