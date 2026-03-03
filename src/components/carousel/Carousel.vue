@@ -36,7 +36,13 @@
 
 <template>
     <div id="carousel-outer">
-      <InnerCard :content="content" />
+      <div id="slides-wrapper">
+        <InnerCard
+          v-for="(data, index) in content"
+          :transX="Number(index) * 100"
+          :content="data" />
+      </div>
+
       <div id="carousel-controls">
         <Button
           :btnJustify="'prev'"
