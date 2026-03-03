@@ -2,26 +2,26 @@ import {defineStore, type StoreDefinition} from "pinia";
 import {ElementHeightFinder, type ElementList, type HeightList} from "@/utils/comp-height-finder.ts";
 import {computed, type ComputedRef, ref, type Ref} from "vue";
 
-export const useCarouselHeights:StoreDefinition<"carousel-comps-height"> = defineStore("carousel-comps-height", () => {
-  const elementList: ElementList = [
-    ["carousel-outer", true],
-    ["carousel-controls", true],
-    ["carousel-button", false]
-  ];
+const elementList: ElementList = [
+  ["carousel-outer", true],
+  ["carousel-controls", true],
+  ["carousel-button", false]
+];
 
+export const useCarouselHeights = defineStore("carousel-comps-height", () => {
   const _heightOuter:Ref<number> = ref(0)
   const _heightControls:Ref<number> = ref(0)
   const _heightButton:Ref<number> = ref(0);
 
-  const heightOuter:ComputedRef = computed(() => {
+  const heightOuter:ComputedRef<number> = computed(() => {
     return _heightOuter.value;
   })
 
-  const heightControls:ComputedRef = computed(() => {
-    return heightControls.value;
+  const heightControls:ComputedRef<number> = computed(() => {
+    return _heightControls.value;
   })
 
-  const heightButton:ComputedRef = computed(() => {
+  const heightButton:ComputedRef<number> = computed(() => {
     return _heightButton.value;
   })
 
@@ -35,7 +35,6 @@ export const useCarouselHeights:StoreDefinition<"carousel-comps-height"> = defin
 
   function setHeights():void {
     const elementHeights:HeightList = new ElementHeightFinder(elementList).heights()
-
     if(areNumbers(elementHeights)){
       const {outer, controls, button} = elementHeights;
       _heightOuter.value = outer;

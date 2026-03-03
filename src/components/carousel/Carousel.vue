@@ -4,25 +4,27 @@
   import IndicatorContainer from "@/components/carousel/IdicatorContainer.vue";
 
   import {useCarouselHeights} from "@/stores/carousel-comps-height.ts";
+  import {onMounted, ref} from "vue";
+
+  import type {Ref} from "vue";
   import type {LiveExample} from "@/types/content.ts";
-  import {onMounted} from "vue";
 
   const {content} = defineProps<{content: LiveExample}>();
 
+  const compHeights = useCarouselHeights();
 
+  const correctedOuterHeight:Ref<string> = ref("");
   const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
 
   let buttonTransform:number = 0;
 
+  const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
   const getElementHeight = (element: HTMLElement):number => element.getBoundingClientRect().height;
 
-  function setOuterHeight(outer:HTMLElement, controls:HTMLElement):void  {
-    const heightOuter:number = getElementHeight(outer);
-    const heightControls:number = getElementHeight(controls);
-    const heightCorrected: number = heightOuter - (heightControls * controlsTransformPer);
-
-    outer.style.height = heightCorrected + `px`;
+  function correctOuterHeight():void  {
+    const heightCorrected: number = compHeights.heightOuter - (compHeights.heightControls * controlsTransformPer);
+    setCorrectedOuterHeight(heightCorrected);
  }
 
   function setButtonTransform(outer:HTMLElement, button:HTMLElement):void {
@@ -31,14 +33,16 @@
     buttonTransform = (outerHeight / 2) - (buttonHeight / 2);
   }
 
-  function handleOuterSetup():void {
+  function initComponents():void {
+    compHeights.setHeights()
+    correctOuterHeight()
   }
 
-  onMounted(() => handleOuterSetup());
+  onMounted(() => initComponents());
 </script>
 
 <template>
-    <div id="carousel-outer" >
+    <div id="carousel-outer">
       <InnerCard :content="content" />
       <div id="carousel-controls">
         <Button
@@ -56,6 +60,8 @@
 
 <style scoped>
   #carousel-outer {
+    --correct-height: v-bind('correctedOuterHeight');
+    height: var(--correct-height);
     display: grid;
     grid-template-rows: auto auto;
     border: black solid 1px;
