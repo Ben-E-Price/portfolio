@@ -46,7 +46,7 @@
         <InnerCard
           v-for="(data, index) in content"
           :currentSlide="currentSlide"
-          :transX="index"
+          :slideNum="index"
           :content="data" />
       </div>
 

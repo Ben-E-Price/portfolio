@@ -4,16 +4,16 @@
 
   const {
     content,
-    transX,
+    slideNum,
     currentSlide
   } = defineProps<{
     content: LiveExample,
-    transX:number,
+    slideNum:number,
     currentSlide:number
   }>();
 
   const styles = reactive({
-    transform: `translateX(${transX}%)`,
+    transform: `translateX(${slideNum}%)`,
   })
 
   watch(() => currentSlide, (newSlide) => {
