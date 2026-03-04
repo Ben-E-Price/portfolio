@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import type {LiveExample} from "@/types/content.ts";
-  import {reactive, watch} from "vue";
+  import {onBeforeMount, type Ref, ref, watch} from "vue";
 
   const {
     content,
@@ -12,12 +12,17 @@
     currentSlide:number
   }>();
 
-  const styles = reactive({
-    transform: `translateX(${slideNum}%)`,
+  const setTransform = ():string => styles.value.transform = `translateX(${(slideNum - currentSlide) * 100}%)`;
+
+  const styles:Ref<object> = ref({
+    transform: ``,
   })
 
-  watch(() => currentSlide, (newSlide) => {
+  watch(() => currentSlide, () => {
+    setTransform();
   })
+
+  onBeforeMount(() => setTransform())
 
 </script>
 
@@ -29,9 +34,11 @@
 
 <style scoped>
   .carousel-card {
+    transition: 0.5s;
     display: inline-block;
     width: 100%;
     height: 250px;
     border: red solid 1px;
   }
+
 </style>
