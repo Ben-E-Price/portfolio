@@ -3,6 +3,7 @@
   import Button from "@/components/carousel/Button.vue";
   import IndicatorContainer from "@/components/carousel/IdicatorContainer.vue";
 
+  import {useCurrentSlide} from "@/stores/carousel-current-slide.ts";
   import {useCarouselHeights} from "@/stores/carousel-comps-height.ts";
   import {onMounted, ref} from "vue";
 
@@ -15,6 +16,10 @@
   const compHeights = useCarouselHeights();
   const {heightOuter, heightControls} = storeToRefs(compHeights);
 
+  const slide = useCurrentSlide();
+  const {increaseSlide, decreaseSlide, setSlideLimit} = slide;
+  const {currentSlide} = storeToRefs(slide);
+
   const correctedOuterHeight:Ref<string> = ref("");
   const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
@@ -26,12 +31,13 @@
     setCorrectedOuterHeight(heightCorrected);
  }
 
-  function initComponents():void {
+  function initCarousel():void {
     compHeights.setHeights()
     correctOuterHeight()
+    setSlideLimit(content.length)
   }
 
-  onMounted(() => initComponents());
+  onMounted(() => initCarousel());
 </script>
 
 <template>
