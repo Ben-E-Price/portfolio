@@ -19,9 +19,6 @@
   const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
 
-  const currentSlide:Ref<number> = ref(0);
-  const slideLimit:number = content.length;
-
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
   function correctOuterHeight():void  {
@@ -32,14 +29,6 @@
   function initComponents():void {
     compHeights.setHeights()
     correctOuterHeight()
-  }
-
-  function increaseSlide():void {
-    currentSlide.value === slideLimit - 1 ? currentSlide.value = 0 : currentSlide.value++;
-  }
-
-  function decreaseSlide():void {
-    currentSlide.value === 0 ? currentSlide.value = slideLimit - 1 : currentSlide.value--;
   }
 
   onMounted(() => initComponents());

@@ -22,15 +22,16 @@
 </script>
 
 <template>
-  <div class="carousel-card" :style="styles">
+  <span class="carousel-card" :style="styles">
 
-  </div>
+  </span>
 </template>
 
 <style scoped>
   .carousel-card {
-    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+    height: 250px;
     border: red solid 1px;
-    height: 250px
   }
 </style>
