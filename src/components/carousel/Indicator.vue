@@ -1,14 +1,24 @@
 <script setup lang="ts">
+  const {slideNum} = defineProps<{slideNum:number}>();
+
   const indicatorSize:string = "20px";
+  const classList:string[] = ["indicator"];
 </script>
 
 <template>
   <li class="carousel-indicator">
-    <button class="indicator"></button>
+    <button
+      :slide="slideNum"
+      :class="classList"
+    ></button>
   </li>
 </template>
 
 <style scoped>
+  .active-indicator {
+    background-color: blue;
+  }
+
   .indicator {
     width: v-bind('indicatorSize');
     height: v-bind('indicatorSize');

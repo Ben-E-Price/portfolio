@@ -55,7 +55,7 @@
           @click="decreaseSlide"
           :btnJustify="'prev'"
         />
-        <IndicatorContainer/>
+        <IndicatorContainer :slideList="content" />
         <Button
           @click="increaseSlide"
           :btnJustify="'next'"
