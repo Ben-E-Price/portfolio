@@ -1,8 +1,11 @@
 <script setup lang="ts">
   import Indicator from "@/components/carousel/Indicator.vue";
+
   import {useCurrentSlide} from "@/stores/carousel-current-slide.ts";
+  import {onMounted, watch} from "vue";
+
   import type {LiveExample} from "@/types/content.ts";
-  import {onMounted} from "vue";
+  import {storeToRefs} from "pinia";
 
   declare global {
     interface NamedNodeMap {
@@ -14,6 +17,7 @@
 
   const slideStore = useCurrentSlide();
   const {setCurrentSlide} = slideStore;
+  const {currentSlide} = storeToRefs(slideStore);
 
   const activeClass:string = "active-indicator";
 
@@ -53,11 +57,15 @@
   function handleClick(e:Event):void {
     const targetIndicator:HTMLElement = getTargetIndicator(e.target as HTMLElement);
     setCurrentSlide(getIndicatorSlide(targetIndicator));
-    handleActiveIndicator(targetIndicator);
   }
 
   onMounted(() => {
     initActiveIndicator();
+  })
+
+  watch(currentSlide, (newVal) => {
+    const newIndicator:HTMLElement = elementFromClassList("indicator", newVal) as HTMLElement;
+    handleActiveIndicator(newIndicator);
   })
 </script>
 
