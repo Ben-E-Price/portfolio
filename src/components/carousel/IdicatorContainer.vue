@@ -21,14 +21,14 @@
   const removeClass = (el:HTMLElement, removeClass:string) => el.classList.remove(removeClass);
   const isListItem = (el:HTMLElement):boolean => el instanceof HTMLLIElement;
   const getIndicatorSlide = (el:HTMLElement):number => Number(el.getAttribute("slide"));
-  const getFirstClass = (getClass:string):Element | undefined => document.getElementsByClassName(getClass)[0];
+  const elementFromClassList = (getClass:string, indexPos:number):Element | undefined => document.getElementsByClassName(getClass)[indexPos];
 
   function getTargetButton(parent:HTMLElement):Element | undefined {
     return parent.getElementsByClassName("indicator")[0];
   }
 
   function initActiveIndicator():void {
-    const firstIndicator = getFirstClass("indicator") as HTMLElement;
+    const firstIndicator = elementFromClassList("indicator", 0) as HTMLElement;
     setActiveIndicator(firstIndicator);
   }
 
@@ -37,7 +37,7 @@
   }
 
   function removeActiveIndicator():void {
-    const activeElement = getFirstClass(activeClass) as HTMLElement;
+    const activeElement = elementFromClassList(activeClass, 0) as HTMLElement;
     removeClass(activeElement, activeClass);
   }
 

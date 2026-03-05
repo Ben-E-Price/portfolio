@@ -73,6 +73,7 @@
     border: black solid 1px;
     width: 100%;
     padding: 5px;
+    overflow: hidden;
   }
 
   #carousel-controls {
