@@ -19,9 +19,14 @@
     background-color: blue;
   }
 
+  .carousel-indicator {
+    margin: auto;
+  }
+
   .indicator {
     width: v-bind('indicatorSize');
     height: v-bind('indicatorSize');
     border-radius: 50%;
   }
+
 </style>

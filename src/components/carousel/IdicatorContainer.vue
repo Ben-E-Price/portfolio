@@ -74,7 +74,14 @@
 
 <style scoped>
   #indicator-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: blue solid 1px;
     width: 100%;
+  }
+
+  #indicator-container li {
+    list-style: none;
   }
 </style>
