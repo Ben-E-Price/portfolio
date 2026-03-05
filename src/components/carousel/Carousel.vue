@@ -82,4 +82,10 @@
     grid-template-columns: auto 33% auto;
   }
 
+  #slides-wrapper{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+  }
+
 </style>

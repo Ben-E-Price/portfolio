@@ -27,15 +27,15 @@
 </script>
 
 <template>
-  <span class="carousel-card" :style="styles">
+  <div class="carousel-card" :style="styles">
 
-  </span>
+  </div>
 </template>
 
 <style scoped>
   .carousel-card {
     transition: 0.5s;
-    display: inline-block;
+    //display: inline-block;
     width: 100%;
     height: 250px;
     border: red solid 1px;
