@@ -37,6 +37,26 @@
     setSlideLimit(content.length)
   }
 
+  const cloneElement = (element:Element):Node => element.cloneNode(true);
+
+  function cloneEndSlides(slide:Element[]):Node[] {
+    const firstClone:Node = cloneElement(slide[0] as Element);
+    const lastClone:Node = cloneElement(slide.slice(-1)[0] as Element);
+
+    return [firstClone, lastClone];
+  }
+
+  function insertClones([firstClone, lastClone]:Node[], parent:HTMLElement):void {
+    parent.append(firstClone);
+    parent.prepend(lastClone);
+  }
+
+  function handleCloneElements():void {
+    const allSlides:Element[] = Array.from(document.getElementsByClassName("carousel-card"));
+    const slideContainer:HTMLElement | null = document.getElementById("slides-wrapper");
+    insertClones(cloneEndSlides(allSlides), slideContainer);
+  }
+
   onMounted(() => initCarousel());
 </script>
 
