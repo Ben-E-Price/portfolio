@@ -33,20 +33,24 @@
     setCorrectedOuterHeight(heightCorrected);
  }
 
-  function initCarousel():void {
-    compHeights.setHeights()
-    cloneSlideContent()
-    correctOuterHeight()
-    setSlideLimit(content.length)
-  }
-
   function cloneSlideContent():void {
     const firstSlide = content.slice(0, 1);
     const lastSlide = content.slice(-1);
     slideContent.value = [...lastSlide, ...content, ...firstSlide]
   }
 
-  onBeforeMount(() => cloneSlideContent());
+  function initCarousel():void {
+    compHeights.setHeights()
+    cloneSlideContent()
+    correctOuterHeight()
+  }
+
+  function initContent():void {
+    cloneSlideContent()
+    setSlideLimit(slideContent.value.length)
+  }
+
+  onBeforeMount(() => initContent());
 
   onMounted(() => initCarousel());
 </script>

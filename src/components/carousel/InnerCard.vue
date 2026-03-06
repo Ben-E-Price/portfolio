@@ -12,7 +12,7 @@
     currentSlide:number
   }>();
 
-  const setTransform = ():string => styles.value.transform = `translateX(${(slideNum - currentSlide) * 100}%)`;
+  const setTransform = ():string => styles.value.transform = `translateX(${((slideNum - 1) - currentSlide) * 100}%)`;
 
   const styles:Ref<object> = ref({
     transform: ``,

@@ -59,12 +59,22 @@
     setCurrentSlide(getIndicatorSlide(targetIndicator));
   }
 
+  function handleEndSlides(slideValue:number):number {
+    if(slideValue < 0) {
+      return slideList.length - 1
+    } if(slideValue === slideList.length) {
+      return 0
+    }
+
+    return slideValue;
+  }
+
   onMounted(() => {
     initActiveIndicator();
   })
 
   watch(currentSlide, (newVal) => {
-    const newIndicator:HTMLElement = elementFromClassList("indicator", newVal) as HTMLElement;
+    const newIndicator:HTMLElement = elementFromClassList("indicator", handleEndSlides(newVal)) as HTMLElement;
     handleActiveIndicator(newIndicator);
   })
 </script>
