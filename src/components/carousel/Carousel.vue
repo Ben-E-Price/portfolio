@@ -5,7 +5,7 @@
 
   import {useCurrentSlide} from "@/stores/carousel-current-slide.ts";
   import {useCarouselHeights} from "@/stores/carousel-comps-height.ts";
-  import {onMounted, ref} from "vue";
+  import {onBeforeMount, onMounted, ref} from "vue";
 
   import type {Ref} from "vue";
   import type {LiveExample} from "@/types/content.ts";
@@ -19,6 +19,8 @@
   const slide = useCurrentSlide();
   const {increaseSlide, decreaseSlide, setSlideLimit} = slide;
   const {currentSlide} = storeToRefs(slide);
+
+  const slideContent:Ref<LiveExample[]> = ref([]);
 
   const correctedOuterHeight:Ref<string> = ref("");
   const controlsTransformPer:number = 1;
@@ -41,9 +43,10 @@
   function cloneSlideContent():void {
     const firstSlide = content.slice(0, 1);
     const lastSlide = content.slice(-1);
-
-    console.log([...lastSlide, ...content, ...firstSlide]);
+    slideContent.value = [...lastSlide, ...content, ...firstSlide]
   }
+
+  onBeforeMount(() => cloneSlideContent());
 
   onMounted(() => initCarousel());
 </script>
@@ -52,7 +55,7 @@
     <div id="carousel-outer">
       <div id="slides-wrapper">
         <InnerCard
-          v-for="(data, index) in content"
+          v-for="(data, index) in slideContent"
           :currentSlide="currentSlide"
           :slideNum="index"
           :content="data" />
