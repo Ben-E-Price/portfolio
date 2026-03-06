@@ -18,7 +18,7 @@ export const useCurrentSlide = defineStore("current-slide", () => {
   }
 
   function increaseSlide():void {
-    _currentSlide.value === slideLimit.value - 1 ? _currentSlide.value = 0 : _currentSlide.value++;
+    _currentSlide.value === slideLimit.value - 2 ? _currentSlide.value = 0 : _currentSlide.value++;
   }
 
   function decreaseSlide():void {
