@@ -5,7 +5,7 @@
 
   import {useCurrentSlide} from "@/stores/carousel-current-slide.ts";
   import {useCarouselHeights} from "@/stores/carousel-comps-height.ts";
-  import {onBeforeMount, onMounted, ref} from "vue";
+  import {onBeforeMount, onMounted, ref, watch} from "vue";
 
   import type {Ref} from "vue";
   import type {LiveExample} from "@/types/content.ts";
@@ -17,7 +17,7 @@
   const {heightOuter, heightControls} = storeToRefs(compHeights);
 
   const slide = useCurrentSlide();
-  const {increaseSlide, decreaseSlide, setSlideLimit} = slide;
+  const {increaseSlide, decreaseSlide, setSlideLimit, setCurrentSlide} = slide;
   const {currentSlide} = storeToRefs(slide);
 
   const slideContent:Ref<LiveExample[]> = ref([]);
@@ -25,6 +25,8 @@
   const correctedOuterHeight:Ref<string> = ref("");
   const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
+
+  const slideTransition:Ref<string> = ref("0.5s");
 
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
@@ -37,6 +39,25 @@
     const firstSlide = content.slice(0, 1);
     const lastSlide = content.slice(-1);
     slideContent.value = [...lastSlide, ...content, ...firstSlide]
+  }
+
+  const setTransition = (value:string):string => slideTransition.value = value;
+  const hideTransition = ():string => setTransition("none");
+  const resetTransition = ():string => setTransition("0.5s");
+
+  function handleSlideWrapping(slideNum: number):void {
+    const lastSlide:number = slideContent.value.length - 3;
+    let moveTo:number = 0;
+
+    if (slideNum >= 0 && slideNum <= lastSlide) {
+      return
+    } else if (slideNum === slideContent.value.length - 2) {
+      moveTo = 0;
+    } else {
+      moveTo = lastSlide;
+    }
+
+    setCurrentSlide(moveTo);
   }
 
   function initCarousel():void {
@@ -53,6 +74,8 @@
   onBeforeMount(() => initContent());
 
   onMounted(() => initCarousel());
+
+  watch(currentSlide, (newSlide) => handleSlideWrapping(newSlide))
 </script>
 
 <template>
@@ -62,7 +85,9 @@
           v-for="(data, index) in slideContent"
           :currentSlide="currentSlide"
           :slideNum="index"
-          :content="data" />
+          :content="data"
+          :styleTransition="slideTransition"
+        />
       </div>
 
       <div id="carousel-controls">

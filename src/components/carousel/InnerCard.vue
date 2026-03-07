@@ -5,22 +5,20 @@
   const {
     content,
     slideNum,
-    currentSlide
+    currentSlide,
+    styleTransition,
   } = defineProps<{
     content: LiveExample,
     slideNum:number,
-    currentSlide:number
+    currentSlide:number,
+    styleTransition:string,
   }>();
 
-  const transition:Ref<string> = ref("0.5");
   const stylesInline:Ref<object> = ref({
     transform: ``,
   })
 
   const setTransform = ():string => stylesInline.value.transform = `translateX(${((slideNum - 1) - currentSlide) * 100}%)`;
-  const setTransition = (value:string):void => transition.value = value
-  const hideTransition = ():void => setTransition("none");
-  const resetTransition = ():void => setTransition("0.5");
 
   watch(() => currentSlide, () => {
     setTransform();
@@ -38,7 +36,7 @@
 
 <style scoped>
   .carousel-card {
-    transition: v-bind(transition);
+    transition: v-bind(styleTransition);
     min-width: 100%;
     height: 250px;
     border: red solid 1px;
