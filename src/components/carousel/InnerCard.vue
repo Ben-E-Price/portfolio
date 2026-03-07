@@ -12,11 +12,15 @@
     currentSlide:number
   }>();
 
-  const setTransform = ():string => styles.value.transform = `translateX(${((slideNum - 1) - currentSlide) * 100}%)`;
-
-  const styles:Ref<object> = ref({
+  const transition:Ref<string> = ref("0.5");
+  const stylesInline:Ref<object> = ref({
     transform: ``,
   })
+
+  const setTransform = ():string => stylesInline.value.transform = `translateX(${((slideNum - 1) - currentSlide) * 100}%)`;
+  const setTransition = (value:string):void => transition.value = value
+  const hideTransition = ():void => setTransition("none");
+  const resetTransition = ():void => setTransition("0.5");
 
   watch(() => currentSlide, () => {
     setTransform();
@@ -27,14 +31,14 @@
 </script>
 
 <template>
-  <span class="carousel-card" :style="styles">
+  <span class="carousel-card" :style="stylesInline">
 
   </span>
 </template>
 
 <style scoped>
   .carousel-card {
-    transition: 0.5s;
+    transition: v-bind(transition);
     min-width: 100%;
     height: 250px;
     border: red solid 1px;
