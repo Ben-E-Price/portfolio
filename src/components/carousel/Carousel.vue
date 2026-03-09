@@ -57,7 +57,7 @@
       moveTo = lastSlide;
     }
 
-    setCurrentSlide(moveTo);
+    setTimeout(setCurrentSlide, 600, moveTo);
   }
 
   function initCarousel():void {
