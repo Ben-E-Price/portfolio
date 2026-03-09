@@ -41,15 +41,17 @@
     slideContent.value = [...lastSlide, ...content, ...firstSlide]
   }
 
-  const setTransition = (value:string):string => slideTransition.value = value;
-  const hideTransition = ():string => setTransition("none");
-  const resetTransition = ():string => setTransition("0.5s");
+
+  function isClone():boolean {
+    const slide:number = currentSlide.value;
+    return slide < 0 || slide === slideContent.value.length - 2
+  }
 
   function handleSlideWrapping(slideNum: number):void {
     const lastSlide:number = slideContent.value.length - 3;
     let moveTo:number = 0;
 
-    if (slideNum >= 0 && slideNum <= lastSlide) {
+    if (!isClone()) {
       return
     } else if (slideNum === slideContent.value.length - 2) {
       moveTo = 0;
@@ -57,7 +59,7 @@
       moveTo = lastSlide;
     }
 
-    setTimeout(setCurrentSlide, 600, moveTo);
+    setTimeout(setCurrentSlide, 550, moveTo);
   }
 
   function initCarousel():void {
@@ -82,11 +84,11 @@
     <div id="carousel-outer">
       <div id="slides-wrapper">
         <InnerCard
+          @transitionend="checkTransition(currentSlide)"
           v-for="(data, index) in slideContent"
           :currentSlide="currentSlide"
           :slideNum="index"
           :content="data"
-          :styleTransition="slideTransition"
         />
       </div>
 

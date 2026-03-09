@@ -6,19 +6,31 @@
     content,
     slideNum,
     currentSlide,
-    styleTransition,
   } = defineProps<{
     content: LiveExample,
     slideNum:number,
     currentSlide:number,
-    styleTransition:string,
   }>();
 
   const stylesInline:Ref<object> = ref({
     transform: ``,
   })
 
+  const styleTransition:Ref<string> = ref("0.5s");
+
   const setTransform = ():string => stylesInline.value.transform = `translateX(${((slideNum - 1) - currentSlide) * 100}%)`;
+
+  const setTransition = (value:string):string => slideTransition.value = value;
+  const hideTransition = ():string => setTransition("0s");
+  const resetTransition = ():string => setTransition("0.5s");
+
+  function checkTransition():void {
+    if(isClone()) {
+      hideTransition();
+    } else {
+      resetTransition();
+    }
+  }
 
   watch(() => currentSlide, () => {
     setTransform();
@@ -29,7 +41,11 @@
 </script>
 
 <template>
-  <span class="carousel-card" :style="stylesInline">
+  <span
+    @transitionend="checkTransition"
+    class="carousel-card"
+    :style="stylesInline"
+  >
 
   </span>
 </template>
