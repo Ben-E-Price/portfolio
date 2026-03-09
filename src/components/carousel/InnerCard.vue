@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import type {LiveExample} from "@/types/content.ts";
   import {onBeforeMount, type Ref, ref, watch} from "vue";
+  import {useCurrentSlide} from "@/stores/carousel-current-slide.ts";
 
   const {
     content,
@@ -12,6 +13,9 @@
     currentSlide:number,
   }>();
 
+  const slide = useCurrentSlide();
+  const {isClone} = slide;
+
   const stylesInline:Ref<object> = ref({
     transform: ``,
   })
@@ -20,7 +24,7 @@
 
   const setTransform = ():string => stylesInline.value.transform = `translateX(${((slideNum - 1) - currentSlide) * 100}%)`;
 
-  const setTransition = (value:string):string => slideTransition.value = value;
+  const setTransition = (value:string):string => styleTransition.value = value;
   const hideTransition = ():string => setTransition("0s");
   const resetTransition = ():string => setTransition("0.5s");
 

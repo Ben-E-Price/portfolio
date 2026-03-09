@@ -17,7 +17,7 @@
   const {heightOuter, heightControls} = storeToRefs(compHeights);
 
   const slide = useCurrentSlide();
-  const {increaseSlide, decreaseSlide, setSlideLimit, setCurrentSlide} = slide;
+  const {increaseSlide, decreaseSlide, setSlideLimit, setCurrentSlide, isClone} = slide;
   const {currentSlide} = storeToRefs(slide);
 
   const slideContent:Ref<LiveExample[]> = ref([]);
@@ -25,8 +25,6 @@
   const correctedOuterHeight:Ref<string> = ref("");
   const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
-
-  const slideTransition:Ref<string> = ref("0.5s");
 
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
@@ -39,12 +37,6 @@
     const firstSlide = content.slice(0, 1);
     const lastSlide = content.slice(-1);
     slideContent.value = [...lastSlide, ...content, ...firstSlide]
-  }
-
-
-  function isClone():boolean {
-    const slide:number = currentSlide.value;
-    return slide < 0 || slide === slideContent.value.length - 2
   }
 
   function handleSlideWrapping(slideNum: number):void {
@@ -84,7 +76,6 @@
     <div id="carousel-outer">
       <div id="slides-wrapper">
         <InnerCard
-          @transitionend="checkTransition(currentSlide)"
           v-for="(data, index) in slideContent"
           :currentSlide="currentSlide"
           :slideNum="index"
