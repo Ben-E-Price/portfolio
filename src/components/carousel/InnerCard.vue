@@ -7,10 +7,12 @@
     content,
     slideNum,
     currentSlide,
+    transitionSpeed,
   } = defineProps<{
     content: LiveExample,
     slideNum:number,
     currentSlide:number,
+    transitionSpeed:number,
   }>();
 
   const slide = useCurrentSlide();
@@ -57,7 +59,7 @@
 
 <style scoped>
   .carousel-card {
-    transition: 0.5s;
+    transition: v-bind('`${transitionSpeed}s`');
     min-width: 100%;
     height: 250px;
     border: red solid 1px;

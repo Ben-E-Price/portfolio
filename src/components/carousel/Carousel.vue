@@ -26,6 +26,8 @@
   const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
 
+  const slideTransitionSpeed:number = 0.5;
+
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
   function correctOuterHeight():void  {
@@ -39,8 +41,9 @@
     slideContent.value = [...lastSlide, ...content, ...firstSlide]
   }
 
-  function handleSlideWrapping(slideNum: number):void {
+  function handleSlideWrapping(slideNum: number, transitionDuration:number):void {
     const lastSlide:number = slideContent.value.length - 3;
+    const moveDelay:number = (transitionDuration * 1000) + 25;
     let moveTo:number = 0;
 
     if (!isClone()) {
@@ -51,7 +54,7 @@
       moveTo = lastSlide;
     }
 
-    setTimeout(setCurrentSlide, 550, moveTo);
+    setTimeout(setCurrentSlide, moveDelay, moveTo);
   }
 
   function initCarousel():void {
@@ -69,7 +72,7 @@
 
   onMounted(() => initCarousel());
 
-  watch(currentSlide, (newSlide) => handleSlideWrapping(newSlide))
+  watch(currentSlide, (newSlide) => handleSlideWrapping(newSlide, slideTransitionSpeed))
 </script>
 
 <template>
@@ -80,6 +83,7 @@
           :currentSlide="currentSlide"
           :slideNum="index"
           :content="data"
+          :transitionSpeed="slideTransitionSpeed"
         />
       </div>
 
