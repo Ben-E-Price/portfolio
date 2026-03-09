@@ -20,19 +20,20 @@
     transform: ``,
   })
 
-  const styleTransition:Ref<string> = ref("0.5s");
+  const classList:Ref<string[]> = ref(["carousel-card"]);
+  const disableTransition:string = "disable-transition";
 
   const setTransform = ():string => stylesInline.value.transform = `translateX(${((slideNum - 1) - currentSlide) * 100}%)`;
+  const hideTransition = (name:string):string => classList.value.push(name);
 
-  const setTransition = (value:string):string => styleTransition.value = value;
-  const hideTransition = ():string => setTransition("0s");
-  const resetTransition = ():string => setTransition("0.5s");
+  function enableTransition(name:string):void {
+    classList.value = classList.value.filter(string => string !== name);
+  }
 
-  function checkTransition():void {
+  function handleCloneTransition():void {
     if(isClone()) {
-      hideTransition();
-    } else {
-      resetTransition();
+      hideTransition(disableTransition);
+      setTimeout(enableTransition, 50, disableTransition);
     }
   }
 
@@ -46,8 +47,8 @@
 
 <template>
   <span
-    @transitionend="checkTransition"
-    class="carousel-card"
+    @transitionend="handleCloneTransition"
+    :class="classList"
     :style="stylesInline"
   >
 
@@ -56,10 +57,14 @@
 
 <style scoped>
   .carousel-card {
-    transition: v-bind(styleTransition);
+    transition: 0.5s;
     min-width: 100%;
     height: 250px;
     border: red solid 1px;
+  }
+
+  .disable-transition {
+    transition: none;
   }
 
 </style>

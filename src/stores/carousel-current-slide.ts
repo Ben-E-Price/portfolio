@@ -26,7 +26,7 @@ export const useCurrentSlide = defineStore("current-slide", () => {
   }
 
   function isClone():boolean {
-    return _currentSlide.value < 0 || _currentSlide.value === slideLimit.value;
+    return _currentSlide.value < 0 || _currentSlide.value === slideLimit.value - 2;
   }
 
   return {currentSlide, increaseSlide, decreaseSlide, setCurrentSlide, setSlideLimit, isClone};
