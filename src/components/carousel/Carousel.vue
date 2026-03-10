@@ -81,17 +81,33 @@
   const setDragEndPos = (key:string, value:number):number => dragEndPos.value[key] = value;
   const getDocumentWidth = ():number => document.getElementsByTagName("html")[0].getBoundingClientRect().width
 
-  function calcDragEndPos(slide:HTMLElement):void {
+  function handleScreenEdge(docWidth: number, endPoint:number):number {
+    const edgeMargin:number = 10;
+
+    if(endPoint > 0 && endPoint < docWidth) {
+      return endPoint
+    } else if (endPoint >= docWidth) {
+      return docWidth - edgeMargin
+    } else {
+      return edgeMargin
+    }
+  }
+
+  function calcDragEndPos():void {
     const docWidth:number = getDocumentWidth();
     const endOffset:number = docWidth * 0.1;
-    setDragEndPos("increase", getDragStartPos() - endOffset);
-    setDragEndPos("decrease", getDragStartPos() + endOffset);
+
+    const increaseOffset:number = handleScreenEdge(docWidth, getDragStartPos() - endOffset);
+    const decreaseOffset:number = handleScreenEdge(docWidth, getDragStartPos() + endOffset);
+
+    setDragEndPos("increase", increaseOffset);
+    setDragEndPos("decrease", decreaseOffset);
   }
 
   function handleDragStart(event:MouseEvent):void {
     if(!hasStartPos() && !isClicked()){
       setDragStartPos(event.clientX);
-      calcDragEndPos(event.target as HTMLElement);
+      calcDragEndPos();
       clickTrue();
     }
   }
