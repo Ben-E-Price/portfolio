@@ -84,8 +84,8 @@
   function calcDragEndPos(slide:HTMLElement):void {
     const docWidth:number = getDocumentWidth();
     const endOffset:number = docWidth * 0.1;
-    setDragEndPos("increase", getDragStartPos() + endOffset);
-    setDragEndPos("decrease", getDragStartPos() - endOffset);
+    setDragEndPos("increase", getDragStartPos() - endOffset);
+    setDragEndPos("decrease", getDragStartPos() + endOffset);
   }
 
   function handleDragStart(event:MouseEvent):void {
