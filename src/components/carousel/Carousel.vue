@@ -120,6 +120,12 @@
     }
   }
 
+  function resetSlideDrag():void {
+    resetStartPos();
+    resetDragEndPos();
+    clickFalse();
+  }
+
   function handleSlideDrag(event:MouseEvent):void {
     if(isClicked()){
     }
