@@ -29,6 +29,7 @@
   const slideTransitionSpeed:number = 0.5;
 
   const clicked:Ref<boolean> = ref(false);
+  const dragStartPos:Ref<number> = ref(0);
 
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
@@ -60,11 +61,33 @@
   }
 
   const setClicked = (value:boolean):boolean => clicked.value = value;
-  const clickTrue = () => setClicked(true);
-  const clickFalse = () => setClicked(false);
+  const isClicked = ():boolean => clicked.value;
+  const clickTrue = ():boolean => setClicked(true);
+  const clickFalse = ():boolean => setClicked(false);
+
+  const setDragStartPos = (value:number):number => dragStartPos.value = value;
+  const resetStartPos = ():number => setDragStartPos(0);
+  const hasStartPos = () => dragStartPos.value > 0;
+
+  function calcDragEndPos(slide:HTMLElement):void {
+    console.log(slide.getBoundingClientRect());
+  }
+
+  function initDrag(event:MouseEvent):void {
+    setDragStartPos(event.clientX);
+    clickTrue();
+  }
+
+  function handleDragStart(event:MouseEvent):void {
+    if(!hasStartPos() && !isClicked()){
+      initDrag(event);
+      calcDragEndPos(event.target as HTMLElement);
+    }
+  }
 
   function handleSlideDrag(event:MouseEvent):void {
-    console.log(event);
+    if(isClicked()){
+    }
   }
 
   function initCarousel():void {
@@ -88,8 +111,9 @@
 <template>
     <div
       id="carousel-outer"
-      @mousedown="clickTrue"
+      @mousedown="handleDragStart"
       @mouseup="clickFalse"
+      @mouseleave="clickFalse"
       @mousemove="handleSlideDrag"
     >
       <div id="slides-wrapper">
