@@ -28,8 +28,14 @@
 
   const slideTransitionSpeed:number = 0.5;
 
+  interface DragEndPosition {
+    increaseSlide: number;
+    decreaseSlide: number;
+  }
+
   const clicked:Ref<boolean> = ref(false);
   const dragStartPos:Ref<number> = ref(0);
+  const dragEndPos:Ref<DragEndPosition> = ref(0);
 
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
