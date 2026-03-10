@@ -79,6 +79,14 @@
   const getDragStartPos = ():number => dragStartPos.value
 
   const setDragEndPos = (key:string, value:number):number => dragEndPos.value[key] = value;
+  const getDragEndPos = ():DragEndPosition => dragEndPos.value;
+
+  function resetDragEndPos():void {
+      Object.keys(getDragEndPos()).forEach((key)=>{
+        setDragEndPos(key, 0);
+      })
+  }
+
   const getDocumentWidth = ():number => document.getElementsByTagName("html")[0].getBoundingClientRect().width
 
   function handleScreenEdge(docWidth: number, endPoint:number):number {
