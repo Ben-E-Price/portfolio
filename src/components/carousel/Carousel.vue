@@ -28,6 +28,8 @@
 
   const slideTransitionSpeed:number = 0.5;
 
+  const clicked:Ref<boolean> = ref(false);
+
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
   function correctOuterHeight():void  {
@@ -57,6 +59,10 @@
     setTimeout(setCurrentSlide, moveDelay, moveTo);
   }
 
+  const setClicked = (value:boolean):boolean => clicked.value = value;
+  const isClicked = () => setClicked(true);
+  const resetClicked = () => setClicked(false);
+
   function initCarousel():void {
     compHeights.setHeights()
     cloneSlideContent()
@@ -76,7 +82,11 @@
 </script>
 
 <template>
-    <div id="carousel-outer">
+    <div
+      id="carousel-outer"
+      @mousedown="isClicked"
+      @mouseup="resetClicked"
+    >
       <div id="slides-wrapper">
         <InnerCard
           v-for="(data, index) in slideContent"
