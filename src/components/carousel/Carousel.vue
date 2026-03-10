@@ -29,13 +29,15 @@
   const slideTransitionSpeed:number = 0.5;
 
   interface DragEndPosition {
-    increaseSlide: number;
-    decreaseSlide: number;
+    [index:string]:number;
+
+    increase: number;
+    decrease: number;
   }
 
   const clicked:Ref<boolean> = ref(false);
   const dragStartPos:Ref<number> = ref(0);
-  const dragEndPos:Ref<DragEndPosition> = ref(0);
+  const dragEndPos:Ref<DragEndPosition> = ref({});
 
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
@@ -74,23 +76,23 @@
   const setDragStartPos = (value:number):number => dragStartPos.value = value;
   const resetStartPos = ():number => setDragStartPos(0);
   const hasStartPos = () => dragStartPos.value > 0;
+  const getDragStartPos = ():number => dragStartPos.value
 
+  const setDragEndPos = (key:string, value:number):number => dragEndPos.value[key] = value;
   const getDocumentWidth = ():number => document.getElementsByTagName("html")[0].getBoundingClientRect().width
 
   function calcDragEndPos(slide:HTMLElement):void {
     const docWidth:number = getDocumentWidth();
-    console.log(docWidth);
-  }
-
-  function initDrag(event:MouseEvent):void {
-    setDragStartPos(event.clientX);
-    clickTrue();
+    const endOffset:number = docWidth * 0.1;
+    setDragEndPos("increase", getDragStartPos() + endOffset);
+    setDragEndPos("decrease", getDragStartPos() - endOffset);
   }
 
   function handleDragStart(event:MouseEvent):void {
     if(!hasStartPos() && !isClicked()){
-      initDrag(event);
+      setDragStartPos(event.clientX);
       calcDragEndPos(event.target as HTMLElement);
+      clickTrue();
     }
   }
 
