@@ -38,6 +38,7 @@
   const clicked:Ref<boolean> = ref(false);
   const dragStartPos:Ref<number> = ref(0);
   const dragEndPos:Ref<DragEndPosition> = ref({});
+  const dragDiffrence:Ref<number> = ref(0);
 
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
@@ -87,6 +88,10 @@
       })
   }
 
+  const getCurrentDiff = ():number => dragDiffrence.value;
+  const setCurrentDiff = (diff:number):number => dragDiffrence.value = diff;
+  const resetCurrentDiff = ():number => setCurrentDiff(0);
+
   const getDocumentWidth = ():number => document.getElementsByTagName("html")[0].getBoundingClientRect().width
 
   function handleScreenEdge(docWidth: number, endPoint:number):number {
@@ -128,6 +133,7 @@
 
   function handleSlideDrag(event:MouseEvent):void {
     if(isClicked()){
+
     }
   }
 
@@ -153,8 +159,8 @@
     <div
       id="carousel-outer"
       @mousedown="handleDragStart"
-      @mouseup="clickFalse"
-      @mouseleave="clickFalse"
+      @mouseup="resetSlideDrag"
+      @mouseleave="resetSlideDrag"
       @mousemove="handleSlideDrag"
     >
       <div id="slides-wrapper">
