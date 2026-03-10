@@ -39,6 +39,7 @@
   const dragStartPos:Ref<number> = ref(0);
   const dragEndPos:Ref<DragEndPosition> = ref({});
   const dragDiffrence:Ref<number> = ref(0);
+  const currentPosition:Ref<number> = ref(0);
 
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
@@ -117,11 +118,12 @@
     setDragEndPos("decrease", decreaseOffset);
   }
 
-  const getMousePosition = (mouse:MouseEvent):number => mouse.clientX;
+  const setCurrentMousePos = (mouse:MouseEvent):number => currentPosition.value = mouse.clientX;
+  const getCurrentMousePos = ():number => currentPosition.value;
 
   function handleDragStart(event:MouseEvent):void {
     if(!hasStartPos() && !isClicked()){
-      setDragStartPos(getMousePosition(event));
+      setDragStartPos(setCurrentMousePos(event));
       calcDragEndPos();
       clickTrue();
     }
@@ -135,11 +137,15 @@
   }
 
   function calcCurrentDiff(event:MouseEvent):void {
-    setCurrentDiff((getDragStartPos() - getMousePosition(event)) * -1);
+    setCurrentDiff((getDragStartPos() - getCurrentMousePos()) * -1);
+  }
+
+  function checkSlideChange():void {
   }
 
   function handleSlideDrag(event:MouseEvent):void {
     if(isClicked()){
+      setCurrentMousePos(event);
       calcCurrentDiff(event);
     }
   }
