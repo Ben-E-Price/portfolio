@@ -117,9 +117,11 @@
     setDragEndPos("decrease", decreaseOffset);
   }
 
+  const getMousePosition = (mouse:MouseEvent):number => mouse.clientX;
+
   function handleDragStart(event:MouseEvent):void {
     if(!hasStartPos() && !isClicked()){
-      setDragStartPos(event.clientX);
+      setDragStartPos(getMousePosition(event));
       calcDragEndPos();
       clickTrue();
     }
@@ -128,12 +130,17 @@
   function resetSlideDrag():void {
     resetStartPos();
     resetDragEndPos();
+    resetCurrentDiff()
     clickFalse();
+  }
+
+  function calcCurrentDiff():void {
+
   }
 
   function handleSlideDrag(event:MouseEvent):void {
     if(isClicked()){
-
+      calcDragEndPos(event);
     }
   }
 
