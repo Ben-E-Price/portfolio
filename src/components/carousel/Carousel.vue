@@ -60,8 +60,12 @@
   }
 
   const setClicked = (value:boolean):boolean => clicked.value = value;
-  const isClicked = () => setClicked(true);
-  const resetClicked = () => setClicked(false);
+  const clickTrue = () => setClicked(true);
+  const clickFalse = () => setClicked(false);
+
+  function handleSlideDrag(event:MouseEvent):void {
+    console.log(event);
+  }
 
   function initCarousel():void {
     compHeights.setHeights()
@@ -84,8 +88,9 @@
 <template>
     <div
       id="carousel-outer"
-      @mousedown="isClicked"
-      @mouseup="resetClicked"
+      @mousedown="clickTrue"
+      @mouseup="clickFalse"
+      @mousemove="handleSlideDrag"
     >
       <div id="slides-wrapper">
         <InnerCard
