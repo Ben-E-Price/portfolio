@@ -134,13 +134,13 @@
     clickFalse();
   }
 
-  function calcCurrentDiff():void {
-
+  function calcCurrentDiff(event:MouseEvent):void {
+    setCurrentDiff((getDragStartPos() - getMousePosition(event)) * -1);
   }
 
   function handleSlideDrag(event:MouseEvent):void {
     if(isClicked()){
-      calcDragEndPos(event);
+      calcCurrentDiff(event);
     }
   }
 
