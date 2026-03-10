@@ -109,7 +109,7 @@
 
   function calcDragEndPos():void {
     const docWidth:number = getDocumentWidth();
-    const endOffset:number = docWidth * 0.1;
+    const endOffset:number = docWidth * 0.2;
 
     const increaseOffset:number = handleScreenEdge(docWidth, getDragStartPos() - endOffset);
     const decreaseOffset:number = handleScreenEdge(docWidth, getDragStartPos() + endOffset);
@@ -136,17 +136,30 @@
     clickFalse();
   }
 
-  function calcCurrentDiff(event:MouseEvent):void {
+  function calcCurrentDiff():void {
     setCurrentDiff((getDragStartPos() - getCurrentMousePos()) * -1);
   }
 
   function checkSlideChange():void {
+    const {increase, decrease} = getDragEndPos()
+    const mousePos:number = getCurrentMousePos();
+
+    if(mousePos <= increase){
+      increaseSlide()
+    } else if (mousePos >= decrease) {
+      decreaseSlide()
+    } else {
+      return
+    }
+
+    resetSlideDrag()
   }
 
   function handleSlideDrag(event:MouseEvent):void {
     if(isClicked()){
       setCurrentMousePos(event);
-      calcCurrentDiff(event);
+      calcCurrentDiff();
+      checkSlideChange();
     }
   }
 
