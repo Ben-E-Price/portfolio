@@ -75,8 +75,11 @@
   const resetStartPos = ():number => setDragStartPos(0);
   const hasStartPos = () => dragStartPos.value > 0;
 
+  const getDocumentWidth = ():number => document.getElementsByTagName("html")[0].getBoundingClientRect().width
+
   function calcDragEndPos(slide:HTMLElement):void {
-    console.log(slide.getBoundingClientRect());
+    const docWidth:number = getDocumentWidth();
+    console.log(docWidth);
   }
 
   function initDrag(event:MouseEvent):void {
