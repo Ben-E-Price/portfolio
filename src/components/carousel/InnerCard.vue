@@ -28,13 +28,9 @@
   const disableTransition:string = "disable-transition";
 
   const setTransform = ():string => stylesInline.value.transform = calcCombinedOffset();
+  const calcCombinedOffset = ():string => `translateX(${calcIndexOffset() + handleDragDiff()}%)`;
   const calcIndexOffset = ():number => ((slideNum - 1) - currentSlide) * 100
   const hideTransition = (name:string):string => classList.value.push(name);
-
-  function calcCombinedOffset() {
-    const offset:number = dragDistance === 0 ? calcIndexOffset() : calcIndexOffset() + handleDragDiff();
-    return `translateX(${offset}%)`
-  }
 
   function enableTransition(name:string):void {
     classList.value = classList.value.filter(string => string !== name);
@@ -53,8 +49,16 @@
     return Number.isInteger(diff) ? diff : Number(Number.parseFloat(diff).toFixed(2));
   }
 
+  const slidePresent = (check:any):boolean => check instanceof Element;
+
   function handleDragDiff(diff:number = dragDistance):number {
-    const slideWidth:number = document.getElementsByClassName("carousel-card")[0].getBoundingClientRect().width;
+    const slide:Element | undefined = document.getElementsByClassName("carousel-card")[0];
+
+    if(!slidePresent(slide)) {
+      return 0
+    }
+
+    const slideWidth:number = slide.getBoundingClientRect().width;
     const percentDiff:number = calcDragDiff(diff, slideWidth);
 
     return parseDiff(percentDiff);
