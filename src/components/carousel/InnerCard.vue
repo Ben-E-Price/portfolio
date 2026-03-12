@@ -27,7 +27,8 @@
   const classList:Ref<string[]> = ref(["carousel-card"]);
   const disableTransition:string = "disable-transition";
 
-  const setTransform = ():string => stylesInline.value.transform = `translateX(${calcSlidePosition()}%)`
+  const setTransform = ():string => stylesInline.value.transform = transformString(calcSlidePosition(), handleDragDiff(dragDistance))
+  const transformString = (slidePos:number, dragDiff:number):string => `translateX(${slidePos + dragDiff}%)`
   const calcSlidePosition = ():number => ((slideNum - 1) - currentSlide) * 100
   const hideTransition = (name:string):string => classList.value.push(name);
 
@@ -59,7 +60,7 @@
     setTransform();
   })
 
-  watch(() => dragDistance, (diff) => handleDragDiff(diff))
+  watch(() => dragDistance, () => setTransform());
 
   onBeforeMount(() => setTransform())
 
