@@ -41,7 +41,15 @@
     }
   }
 
-  const calcDragDiff = (dragAmount:number, slideWidth:number):number => (dragAmount / slideWidth) * 100
+  const calcDragDiff = (dragAmount:number, slideWidth:number):number => (dragAmount / slideWidth) * 100;
+
+  function parseDiff(diff:number):string {
+    if(Number.isInteger(diff)){
+      return String(diff);
+    }
+
+    return Number.parseFloat(diff).toFixed(2);
+  }
 
   function handleDragDiff(diff:number) {
     const slideWidth:number = document.getElementsByClassName("carousel-card")[0].getBoundingClientRect().width;
