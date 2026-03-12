@@ -5,14 +5,14 @@
 
   const {
     content,
-    slideNum,
-    currentSlide,
+    slideIndex,
+    activeSlide,
     transitionSpeed,
     dragDistance,
   } = defineProps<{
     content: LiveExample,
-    slideNum:number,
-    currentSlide:number,
+    slideIndex:number,
+    activeSlide:number,
     transitionSpeed:number,
     dragDistance:number,
   }>();
@@ -28,8 +28,8 @@
   const disableTransition:string = "disable-transition";
 
   const setTransform = ():string => stylesInline.value.transform = calcCombinedOffset();
-  const calcCombinedOffset = ():string => `translateX(${calcIndexOffset() + handleDragDiff()}%)`;
-  const calcIndexOffset = ():number => ((slideNum - 1) - currentSlide) * 100
+  const calcCombinedOffset = ():string => `translateX(${calcIndexOffset() + handleDragOffset()}%)`;
+  const calcIndexOffset = ():number => ((slideIndex - 1) - activeSlide) * 100
   const hideTransition = (name:string):string => classList.value.push(name);
 
   function enableTransition(name:string):void {
@@ -43,15 +43,15 @@
     }
   }
 
-  const calcDragDiff = (dragAmount:number, slideWidth:number):number => (dragAmount / slideWidth) * 100;
+  const calcDragOffset = (dragAmount:number, slideWidth:number):number => (dragAmount / slideWidth) * 100;
 
-  function parseDiff(diff:number):number {
+  function truncateOffset(diff:number):number {
     return Number.isInteger(diff) ? diff : Number(Number.parseFloat(diff).toFixed(2));
   }
 
   const slidePresent = (check:any):boolean => check instanceof Element;
 
-  function handleDragDiff(diff:number = dragDistance):number {
+  function handleDragOffset(diff:number = dragDistance):number {
     const slide:Element | undefined = document.getElementsByClassName("carousel-card")[0];
 
     if(!slidePresent(slide)) {
@@ -59,12 +59,12 @@
     }
 
     const slideWidth:number = slide.getBoundingClientRect().width;
-    const percentDiff:number = calcDragDiff(diff, slideWidth);
+    const percentOffset:number = calcDragOffset(diff, slideWidth);
 
-    return parseDiff(percentDiff);
+    return truncateOffset(percentOffset);
   }
 
-  watch([() => currentSlide, () => dragDistance], () => setTransform());
+  watch([() => activeSlide, () => dragDistance], () => setTransform());
 
   onBeforeMount(() => setTransform())
 

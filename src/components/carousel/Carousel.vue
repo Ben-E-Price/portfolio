@@ -192,8 +192,8 @@
       <div id="slides-wrapper">
         <InnerCard
           v-for="(data, index) in slideContent"
-          :currentSlide="currentSlide"
-          :slideNum="index"
+          :activeSlide="currentSlide"
+          :slideIndex="index"
           :content="data"
           :transitionSpeed="slideTransitionSpeed"
           :dragDistance="dragDiffrence"
