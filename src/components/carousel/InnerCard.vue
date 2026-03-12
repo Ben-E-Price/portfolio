@@ -44,17 +44,20 @@
 
   const calcDragDiff = (dragAmount:number, slideWidth:number):number => (dragAmount / slideWidth) * 100;
 
-  function parseDiff(diff:number):string {
-    if(Number.isInteger(diff)){
-      return String(diff);
+  function parseDiff(diff:number):number {
+    if(!Number.isInteger(diff)){
+      return Number(Number.parseFloat(diff).toFixed(2));
+
     }
 
-    return Number.parseFloat(diff).toFixed(2);
+    return diff
   }
 
-  function handleDragDiff(diff:number) {
+  function handleDragDiff(diff:number):number {
     const slideWidth:number = document.getElementsByClassName("carousel-card")[0].getBoundingClientRect().width;
     const percentDiff:number = calcDragDiff(diff,slideWidth);
+
+    return parseDiff(percentDiff);
   }
 
   watch(() => currentSlide, () => {
