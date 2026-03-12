@@ -18,7 +18,7 @@
 
   const slide = useCurrentSlide();
   const {increaseSlide, decreaseSlide, setSlideLimit, setCurrentSlide, isClone} = slide;
-  const {currentSlide} = storeToRefs(slide);
+  const {activeSlide} = storeToRefs(slide);
 
   const slideContent:Ref<LiveExample[]> = ref([]);
 
@@ -178,7 +178,7 @@
 
   onMounted(() => initCarousel());
 
-  watch(currentSlide, (newSlide) => handleSlideWrapping(newSlide, slideTransitionSpeed))
+  watch(activeSlide, (newSlide) => handleSlideWrapping(newSlide, slideTransitionSpeed))
 </script>
 
 <template>
@@ -192,7 +192,7 @@
       <div id="slides-wrapper">
         <InnerCard
           v-for="(data, index) in slideContent"
-          :activeSlide="currentSlide"
+          :activeSlide="activeSlide"
           :slideIndex="index"
           :content="data"
           :transitionSpeed="slideTransitionSpeed"

@@ -17,7 +17,7 @@
 
   const slideStore = useCurrentSlide();
   const {setCurrentSlide} = slideStore;
-  const {currentSlide} = storeToRefs(slideStore);
+  const {activeSlide} = storeToRefs(slideStore);
 
   const activeClass:string = "active-indicator";
 
@@ -73,7 +73,7 @@
     initActiveIndicator();
   })
 
-  watch(currentSlide, (newVal) => {
+  watch(activeSlide, (newVal) => {
     const newIndicator:HTMLElement = elementFromClassList("indicator", handleEndSlides(newVal)) as HTMLElement;
     handleActiveIndicator(newIndicator);
   })
