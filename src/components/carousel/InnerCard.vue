@@ -45,12 +45,7 @@
   const calcDragDiff = (dragAmount:number, slideWidth:number):number => (dragAmount / slideWidth) * 100;
 
   function parseDiff(diff:number):number {
-    if(!Number.isInteger(diff)){
-      return Number(Number.parseFloat(diff).toFixed(2));
-
-    }
-
-    return diff
+    return Number.isInteger(diff) ? diff : Number(Number.parseFloat(diff).toFixed(2));
   }
 
   function handleDragDiff(diff:number):number {
