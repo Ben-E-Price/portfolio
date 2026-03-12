@@ -3,7 +3,7 @@
   import Button from "@/components/carousel/Button.vue";
   import IndicatorContainer from "@/components/carousel/IdicatorContainer.vue";
 
-  import {useCurrentSlide} from "@/stores/carousel-current-slide.ts";
+  import {useActiveSlide} from "@/stores/carousel-active-slide.ts";
   import {useCarouselHeights} from "@/stores/carousel-comps-height.ts";
   import {onBeforeMount, onMounted, ref, watch} from "vue";
 
@@ -16,7 +16,7 @@
   const compHeights = useCarouselHeights();
   const {heightOuter, heightControls} = storeToRefs(compHeights);
 
-  const slide = useCurrentSlide();
+  const slide = useActiveSlide();
   const {increaseSlide, decreaseSlide, setSlideLimit, setCurrentSlide, isClone} = slide;
   const {activeSlide} = storeToRefs(slide);
 

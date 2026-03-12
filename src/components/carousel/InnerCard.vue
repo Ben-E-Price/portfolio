@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import type {LiveExample} from "@/types/content.ts";
   import {onBeforeMount, type Ref, ref, watch} from "vue";
-  import {useCurrentSlide} from "@/stores/carousel-current-slide.ts";
+  import {useActiveSlide} from "@/stores/carousel-active-slide.ts";
 
   const {
     content,
@@ -17,7 +17,7 @@
     dragDistance:number,
   }>();
 
-  const slide = useCurrentSlide();
+  const slide = useActiveSlide();
   const {isClone} = slide;
 
   const stylesInline:Ref<object> = ref({

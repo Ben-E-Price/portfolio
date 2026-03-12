@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import Indicator from "@/components/carousel/Indicator.vue";
 
-  import {useCurrentSlide} from "@/stores/carousel-current-slide.ts";
+  import {useActiveSlide} from "@/stores/carousel-active-slide.ts";
   import {onMounted, watch} from "vue";
 
   import type {LiveExample} from "@/types/content.ts";
@@ -15,7 +15,7 @@
 
   const {slideList} = defineProps<{slideList:LiveExample[]}>();
 
-  const slideStore = useCurrentSlide();
+  const slideStore = useActiveSlide();
   const {setCurrentSlide} = slideStore;
   const {activeSlide} = storeToRefs(slideStore);
 

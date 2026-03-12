@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {computed, type ComputedRef, type Ref, ref} from "vue";
 
-export const useCurrentSlide = defineStore("current-slide", () => {
+export const useActiveSlide = defineStore("active-slide", () => {
   const _activeSlide:Ref<number> = ref(0);
   const slideLimit:Ref<number> = ref(0);
 
