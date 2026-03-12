@@ -8,11 +8,13 @@
     slideNum,
     currentSlide,
     transitionSpeed,
+    dragDistance,
   } = defineProps<{
     content: LiveExample,
     slideNum:number,
     currentSlide:number,
     transitionSpeed:number,
+    dragDistance:number,
   }>();
 
   const slide = useCurrentSlide();

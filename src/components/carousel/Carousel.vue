@@ -196,6 +196,7 @@
           :slideNum="index"
           :content="data"
           :transitionSpeed="slideTransitionSpeed"
+          :dragDistance="dragDiffrence"
         />
       </div>
 
