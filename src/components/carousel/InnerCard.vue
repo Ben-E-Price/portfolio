@@ -41,9 +41,15 @@
     }
   }
 
+  function calcDragDiff(diff:number) {
+    console.log(diff);
+  }
+
   watch(() => currentSlide, () => {
     setTransform();
   })
+
+  watch(() => dragDistance, (diff) => calcDragDiff(diff))
 
   onBeforeMount(() => setTransform())
 
