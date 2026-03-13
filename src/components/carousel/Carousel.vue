@@ -24,7 +24,7 @@
 
   //Carousel Outer Height Correction
   const correctedOuterHeight:Ref<string> = ref("");
-  const controlsTransformPer:number = 0.5;
+  const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
 
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
@@ -39,7 +39,11 @@
   const setButtonTransform = (value:number):number => buttonTransform.value = value;
 
   function calcButtonTransform():void {
-    setButtonTransform((heightOuter.value / 2) - heightButton.value);
+    const controlOverhang:number = heightControls.value - (heightControls.value * controlsTransformPer);
+    const outerVertCenter:number = heightOuter.value / 2;
+    const buttonVertPosition:number = (outerVertCenter + controlOverhang) - heightButton.value;
+
+    setButtonTransform(buttonVertPosition);
   }
 
   //Slide Cloning/Wrapping
@@ -181,6 +185,7 @@
     compHeights.setHeights()
     cloneSlideContent()
     correctOuterHeight()
+    calcButtonTransform()
   }
 
   function initContent():void {
@@ -242,7 +247,7 @@
     --correct-height: v-bind('correctedOuterHeight');
     height: var(--correct-height);
     display: grid;
-    grid-template-rows: auto auto;
+    grid-template-rows: fit-content(100%) auto;
     border: black solid 1px;
     width: 100%;
     padding: 5px;
