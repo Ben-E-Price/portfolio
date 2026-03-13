@@ -21,7 +21,7 @@
   const size:string = "30px";
   const position:string = btnJustify === "next" ? "end" : "start";
 
-  const setTransform = (transValue:number) => transformStyle.value = `-${transValue}px`;
+  const setTransform = () => transformStyle.value = `-${vertTransform}px`;
 
   function calcButtonTransform():void {
     setTransform((heightOuter.value / 2) - heightButton.value);

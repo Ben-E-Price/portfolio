@@ -14,7 +14,7 @@
   const {content} = defineProps<{content: LiveExample[]}>();
 
   const compHeights = useCarouselHeights();
-  const {heightOuter, heightControls} = storeToRefs(compHeights);
+  const {heightOuter, heightControls, heightButton} = storeToRefs(compHeights);
 
   const slide = useActiveSlide();
   const {increaseSlide, decreaseSlide, setSlideLimit, setCurrentSlide, isClone} = slide;
@@ -35,6 +35,12 @@
  }
 
   //Button Vertical Transform
+  const buttonTransform:Ref<number> = ref(0)
+  const setButtonTransform = (value:number):number => buttonTransform.value = value;
+
+  function calcButtonTransform():void {
+    setButtonTransform((heightOuter.value / 2) - heightButton.value);
+  }
 
   //Slide Cloning/Wrapping
   const slideContent:Ref<LiveExample[]> = ref([]);
@@ -213,6 +219,7 @@
         <Button
           id="btn-prev"
           @click="decreaseSlide"
+          :vertTransform="buttonTransform"
           :btnJustify="'prev'"
         />
         <IndicatorContainer
@@ -223,6 +230,7 @@
         <Button
           id="btn-next"
           @click="increaseSlide"
+          :vertTransform="buttonTransform"
           :btnJustify="'next'"
         />
       </div>
