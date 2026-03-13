@@ -20,26 +20,12 @@
   const {increaseSlide, decreaseSlide, setSlideLimit, setCurrentSlide, isClone} = slide;
   const {activeSlide} = storeToRefs(slide);
 
-  const slideContent:Ref<LiveExample[]> = ref([]);
+  const slideTransitionSpeed:number = 0.5;
 
+  //Carousel Outer Height Correction
   const correctedOuterHeight:Ref<string> = ref("");
   const controlsTransformPer:number = 1;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
-
-  const slideTransitionSpeed:number = 0.5;
-
-  interface DragEndPosition {
-    [index:string]:number;
-
-    increase: number;
-    decrease: number;
-  }
-
-  const clicked:Ref<boolean> = ref(false);
-  const dragStartPos:Ref<number> = ref(0);
-  const dragEndPos:Ref<DragEndPosition> = ref({});
-  const dragDiffrence:Ref<number> = ref(0);
-  const currentPosition:Ref<number> = ref(0);
 
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
@@ -47,6 +33,9 @@
     const heightCorrected: number = heightOuter.value - (heightControls.value * controlsTransformPer);
     setCorrectedOuterHeight(heightCorrected);
  }
+
+  //Slide Cloning/Wrapping
+  const slideContent:Ref<LiveExample[]> = ref([]);
 
   function cloneSlideContent():void {
     const firstSlide = content.slice(0, 1);
@@ -70,13 +59,27 @@
     setTimeout(setCurrentSlide, moveDelay, moveTo);
   }
 
+  //Slide Dragging
+  interface DragEndPosition {
+    [index:string]:number;
+
+    increase: number;
+    decrease: number;
+  }
+
+  const clicked:Ref<boolean> = ref(false);
+  const dragStartPos:Ref<number> = ref(0);
+  const dragEndPos:Ref<DragEndPosition> = ref({});
+  const dragDiffrence:Ref<number> = ref(0);
+  const currentPosition:Ref<number> = ref(0);
+
   const setClicked = (value:boolean):boolean => clicked.value = value;
   const isClicked = ():boolean => clicked.value;
   const clickTrue = ():boolean => setClicked(true);
   const clickFalse = ():boolean => setClicked(false);
 
   const setDragStartPos = (value:number):number => dragStartPos.value = value;
-  const resetStartPos = ():number => setDragStartPos(0);
+  const resetDragStartPos = ():number => setDragStartPos(0);
   const hasStartPos = () => dragStartPos.value > 0;
   const getDragStartPos = ():number => dragStartPos.value
 
@@ -89,7 +92,6 @@
       })
   }
 
-  const getCurrentDiff = ():number => dragDiffrence.value;
   const setCurrentDiff = (diff:number):number => dragDiffrence.value = diff;
   const resetCurrentDiff = ():number => setCurrentDiff(0);
 
@@ -130,7 +132,7 @@
   }
 
   function resetSlideDrag():void {
-    resetStartPos();
+    resetDragStartPos();
     resetDragEndPos();
     resetCurrentDiff()
     clickFalse();
@@ -162,6 +164,8 @@
       checkSlideChange();
     }
   }
+
+  //Component Initialisation
 
   function initCarousel():void {
     compHeights.setHeights()
