@@ -24,7 +24,7 @@
 
   //Carousel Outer Height Correction
   const correctedOuterHeight:Ref<string> = ref("");
-  const controlsTransformPer:number = 1;
+  const controlsTransformPer:number = 0.5;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
 
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
@@ -33,6 +33,8 @@
     const heightCorrected: number = heightOuter.value - (heightControls.value * controlsTransformPer);
     setCorrectedOuterHeight(heightCorrected);
  }
+
+  //Button Vertical Transform
 
   //Slide Cloning/Wrapping
   const slideContent:Ref<LiveExample[]> = ref([]);
@@ -69,9 +71,12 @@
 
   const clicked:Ref<boolean> = ref(false);
   const dragStartPos:Ref<number> = ref(0);
-  const dragEndPos:Ref<DragEndPosition> = ref({});
-  const dragDiffrence:Ref<number> = ref(0);
+  const dragDifference:Ref<number> = ref(0);
   const currentPosition:Ref<number> = ref(0);
+  const dragEndPos:Ref<DragEndPosition> = ref({
+    increase: 0,
+    decrease:0
+  });
 
   const setClicked = (value:boolean):boolean => clicked.value = value;
   const isClicked = ():boolean => clicked.value;
@@ -92,7 +97,7 @@
       })
   }
 
-  const setCurrentDiff = (diff:number):number => dragDiffrence.value = diff;
+  const setCurrentDiff = (diff:number):number => dragDifference.value = diff;
   const resetCurrentDiff = ():number => setCurrentDiff(0);
 
   const getDocumentWidth = ():number => document.getElementsByTagName("html")[0].getBoundingClientRect().width
@@ -166,7 +171,6 @@
   }
 
   //Component Initialisation
-
   function initCarousel():void {
     compHeights.setHeights()
     cloneSlideContent()
@@ -196,21 +200,28 @@
       <div id="slides-wrapper">
         <Slide
           v-for="(data, index) in slideContent"
+          v-bind:key="`slide-${index}`"
           :activeSlide="activeSlide"
           :slideIndex="index"
           :content="data"
           :transitionSpeed="slideTransitionSpeed"
-          :dragDistance="dragDiffrence"
+          :dragDistance="dragDifference"
         />
       </div>
 
       <div id="carousel-controls">
         <Button
+          id="btn-prev"
           @click="decreaseSlide"
           :btnJustify="'prev'"
         />
-        <IndicatorContainer :slideList="content" />
+        <IndicatorContainer
+          id="indicator-container"
+          :slideList="content"
+        />
+
         <Button
+          id="btn-next"
           @click="increaseSlide"
           :btnJustify="'next'"
         />
@@ -241,6 +252,9 @@
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 100%;
+  }
+
+  #indicator-container {
   }
 
 </style>

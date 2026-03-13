@@ -6,7 +6,13 @@
   import type { Ref } from "vue";
   type ButtonTypes = "next" | "prev";
 
-  const {btnJustify} = defineProps<{btnJustify: ButtonTypes}>();
+  const {
+    vertTransform,
+    btnJustify
+  } = defineProps<{
+    vertTransform: number
+    btnJustify: ButtonTypes
+  }>();
 
   const compHeights = useCarouselHeights();
   const {heightOuter, heightButton} = storeToRefs(compHeights);
