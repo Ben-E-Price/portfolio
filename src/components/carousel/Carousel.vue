@@ -81,6 +81,8 @@
     decrease: number;
   }
 
+  type DragEvent = MouseEvent | TouchEvent;
+
   const clicked:Ref<boolean> = ref(false);
   const dragStartPos:Ref<number> = ref(0);
   const dragDifference:Ref<number> = ref(0);
@@ -137,12 +139,19 @@
     setDragEndPos("decrease", decreaseOffset);
   }
 
-  const setCurrentMousePos = (mouse:MouseEvent):number => currentPosition.value = mouse.clientX;
-  const getCurrentMousePos = ():number => currentPosition.value;
+  const setCurrentDragPos = (pos:number):number => currentPosition.value = pos;
+  const getCurrentDragPos = ():number => currentPosition.value;
 
-  function handleDragStart(event:MouseEvent):void {
+  const getCurrentMousePos = (mouse:MouseEvent):number => mouse.clientX;
+  const getCurrentTouchPos = (touch:TouchEvent): number => touch.changedTouches[0].clientX;
+
+  function getEventPos (event:DragEvent):number {
+    return event instanceof MouseEvent ? getCurrentMousePos(event) : getCurrentTouchPos(event);
+  }
+
+  function handleDragStart(event:DragEvent):void {
     if(!hasStartPos() && !isClicked()){
-      setDragStartPos(setCurrentMousePos(event));
+      setDragStartPos(getEventPos(event));
       calcDragEndPos();
       clickTrue();
     }
@@ -156,12 +165,12 @@
   }
 
   function calcCurrentDiff():void {
-    setCurrentDiff((getDragStartPos() - getCurrentMousePos()) * -1);
+    setCurrentDiff((getDragStartPos() - getCurrentDragPos()) * -1);
   }
 
   function checkSlideChange():void {
     const {increase, decrease} = getDragEndPos()
-    const mousePos:number = getCurrentMousePos();
+    const mousePos:number = getCurrentDragPos();
 
     if(mousePos <= increase){
       increaseSlide()
@@ -174,9 +183,9 @@
     resetSlideDrag()
   }
 
-  function handleSlideDrag(event:MouseEvent):void {
+  function handleSlideDrag(event:DragEvent):void {
     if(isClicked()){
-      setCurrentMousePos(event);
+      setCurrentDragPos(getEventPos(event));
       calcCurrentDiff();
       checkSlideChange();
     }
