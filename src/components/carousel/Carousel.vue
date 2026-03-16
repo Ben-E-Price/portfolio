@@ -24,13 +24,15 @@
 
   //Carousel Outer Height Correction
   const correctedOuterHeight:Ref<string> = ref("");
-  const controlsTransformPer:number = 1;
+  const controlsTransformPer:number = 0.5;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
+
+  const controlsTransformDifference = ():number => heightControls.value * controlsTransformPer;
 
   const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
 
   function correctOuterHeight():void  {
-    const heightCorrected: number = heightOuter.value - (heightControls.value * controlsTransformPer);
+    const heightCorrected: number = heightOuter.value - controlsTransformDifference();
     setCorrectedOuterHeight(heightCorrected);
  }
 
@@ -39,8 +41,8 @@
   const setButtonTransform = (value:number):number => buttonTransform.value = value;
 
   function calcButtonTransform():void {
-    const controlOverhang:number = heightControls.value - (heightControls.value * controlsTransformPer);
-    const outerVertCenter:number = heightOuter.value / 2;
+    const controlOverhang:number = heightControls.value - controlsTransformDifference();
+    const outerVertCenter:number = (heightOuter.value - controlsTransformDifference()) / 2;
     const buttonVertPosition:number = (outerVertCenter + controlOverhang) - heightButton.value;
 
     setButtonTransform(buttonVertPosition);
@@ -207,6 +209,10 @@
       @mouseup="resetSlideDrag"
       @mouseleave="resetSlideDrag"
       @mousemove="handleSlideDrag"
+
+      @touchstart="handleDragStart"
+      @touchmove="handleSlideDrag"
+      @touchend="resetSlideDrag"
     >
       <div id="slides-wrapper">
         <Slide
