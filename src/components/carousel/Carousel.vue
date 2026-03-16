@@ -105,6 +105,9 @@
   const setDragEndPos = (key:string, value:number):number => dragEndPos.value[key] = value;
   const getDragEndPos = ():DragEndPosition => dragEndPos.value;
 
+  const setCurrentDragPos = (pos:number):number => currentPosition.value = pos;
+  const getCurrentDragPos = ():number => currentPosition.value;
+
   function resetDragEndPos():void {
       Object.keys(getDragEndPos()).forEach((key)=>{
         setDragEndPos(key, 0);
@@ -138,9 +141,6 @@
     setDragEndPos("increase", increaseOffset);
     setDragEndPos("decrease", decreaseOffset);
   }
-
-  const setCurrentDragPos = (pos:number):number => currentPosition.value = pos;
-  const getCurrentDragPos = ():number => currentPosition.value;
 
   const getCurrentMousePos = (mouse:MouseEvent):number => mouse.clientX;
   const getCurrentTouchPos = (touch:TouchEvent): number => touch.changedTouches[0].clientX;

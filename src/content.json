@@ -31,32 +31,36 @@
     {
       "linkLive": "Place Holder",
       "linkRepo": "Place Holder",
-      "title": "First Slide",
-      "description": "Place Holder"
+      "title": "Slide 1",
+      "description": "Place Holder",
+      "madeWith": ["Place Holder"]
     },
 
 
     {
       "linkLive": "Place Holder",
       "linkRepo": "Place Holder",
-      "title": "Place Holder",
-      "description": "Place Holder"
+      "title": "Slide 2",
+      "description": "Place Holder",
+      "madeWith": ["Place Holder", "Place Holder"]
     },
 
 
     {
       "linkLive": "Place Holder",
       "linkRepo": "Place Holder",
-      "title": "Place Holder",
-      "description": "Place Holder"
+      "title": "Slide 3",
+      "description": "Place Holder",
+      "madeWith": ["Place Holder"]
     },
 
 
     {
       "linkLive": "Place Holder",
       "linkRepo": "Place Holder",
-      "title": "Last Slide",
-      "description": "Place Holder"
+      "title": "Slide 4",
+      "description": "Place Holder",
+      "madeWith": ["Place Holder"]
     }
 
   ]

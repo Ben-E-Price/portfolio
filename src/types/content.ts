@@ -33,6 +33,7 @@ interface LiveExample {
   "linkRepo": string;
   "title": string;
   "description": string;
+  "madeWith": string[];
 }
 
 

@@ -83,8 +83,8 @@
   <ul id="indicator-container">
     <Indicator
       @click="handleClick"
-      v-for="(_, index) in slideList"
-      :slideNum="index"
+      v-for="index in slideList.length"
+      :slideNum="index -1"
       :key="`ind-${index}`"
     />
   </ul>
