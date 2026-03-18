@@ -24,7 +24,7 @@
 
   //Carousel Outer Height Correction
   const correctedOuterHeight:Ref<string> = ref("");
-  const controlsTransformPer:number = 0.5;
+  const controlsTransformPer:number = 0.7;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
 
   const controlsTransformDifference = ():number => heightControls.value * controlsTransformPer;
@@ -43,7 +43,7 @@
   function calcButtonTransform():void {
     const controlOverhang:number = heightControls.value - controlsTransformDifference();
     const outerVertCenter:number = (heightOuter.value - controlsTransformDifference()) / 2;
-    const buttonVertPosition:number = (outerVertCenter + controlOverhang) - heightButton.value;
+    const buttonVertPosition:number = ((outerVertCenter + controlOverhang) - heightButton.value) * -1;
 
     setButtonTransform(buttonVertPosition);
   }
@@ -239,7 +239,7 @@
         <Button
           id="btn-prev"
           @click="decreaseSlide"
-          :vertTransform="buttonTransform"
+          :transformY="buttonTransform"
           :btnJustify="'prev'"
         />
         <IndicatorContainer
@@ -250,7 +250,7 @@
         <Button
           id="btn-next"
           @click="increaseSlide"
-          :vertTransform="buttonTransform"
+          :transformY="buttonTransform"
           :btnJustify="'next'"
         />
       </div>
@@ -265,8 +265,8 @@
     grid-template-rows: fit-content(100%) auto;
     border: black solid 1px;
     width: 100%;
-    padding: 5px;
     overflow: hidden;
+    padding: 5px;
   }
 
   #carousel-controls {
