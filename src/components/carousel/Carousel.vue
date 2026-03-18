@@ -16,12 +16,6 @@
   const compHeights = useCarouselHeights();
   const {heightOuter, heightControls, heightButton} = storeToRefs(compHeights);
 
-  const slide = useActiveSlide();
-  const {increaseSlide, decreaseSlide, setSlideLimit, setCurrentSlide, isClone} = slide;
-  const {activeSlide} = storeToRefs(slide);
-
-  const slideTransitionSpeed:number = 0.5;
-
   //Carousel Outer Height Correction
   const correctedOuterHeight:Ref<number> = ref(0);
   const correctedHeightStyle:Ref<string> = ref("");
@@ -53,6 +47,12 @@
   }
 
   //Slide Cloning/Wrapping
+  const slide = useActiveSlide();
+  const {increaseSlide, decreaseSlide, setSlideLimit, setCurrentSlide, isClone} = slide;
+  const {activeSlide} = storeToRefs(slide);
+
+  const slideTransitionSpeed:number = 0.5;
+
   const slideContent:Ref<LiveExample[]> = ref([]);
 
   function cloneSlideContent():void {
