@@ -23,17 +23,21 @@
   const slideTransitionSpeed:number = 0.5;
 
   //Carousel Outer Height Correction
-  const correctedOuterHeight:Ref<string> = ref("");
+  const correctedOuterHeight:Ref<number> = ref(0);
+  const correctedHeightStyle:Ref<string> = ref("");
   const controlsTransformPer:number = 0.7;
   const controlsTransStyle:string = `-${controlsTransformPer * 100}%`;
 
   const controlsTransformDifference = ():number => heightControls.value * controlsTransformPer;
 
-  const setCorrectedOuterHeight = (height:number) => correctedOuterHeight.value = `${height}px`
+  const setOuterHeightStyle = () => correctedHeightStyle.value = `${getCorrectedOuterHeight()}px`
+
+  const calcCorrectedOuterHeight = ():number => correctedOuterHeight.value = heightOuter.value - controlsTransformDifference();
+  const getCorrectedOuterHeight = ():number => correctedOuterHeight.value;
 
   function correctOuterHeight():void  {
-    const heightCorrected: number = heightOuter.value - controlsTransformDifference();
-    setCorrectedOuterHeight(heightCorrected);
+    calcCorrectedOuterHeight();
+    setOuterHeightStyle();
  }
 
   //Button Vertical Transform
@@ -42,7 +46,7 @@
 
   function calcButtonTransform():void {
     const controlOverhang:number = heightControls.value - controlsTransformDifference();
-    const outerVertCenter:number = (heightOuter.value - controlsTransformDifference()) / 2;
+    const outerVertCenter:number = getCorrectedOuterHeight() / 2;
     const buttonVertPosition:number = ((outerVertCenter + controlOverhang) - heightButton.value) * -1;
 
     setButtonTransform(buttonVertPosition);
@@ -259,7 +263,7 @@
 
 <style scoped>
   #carousel-outer {
-    --correct-height: v-bind('correctedOuterHeight');
+    --correct-height: v-bind('correctedHeightStyle');
     height: var(--correct-height);
     display: grid;
     grid-template-rows: fit-content(100%) auto;
