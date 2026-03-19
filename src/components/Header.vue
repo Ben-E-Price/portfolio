@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, type Ref, ref, watch} from "vue";
+import {onMounted, type Ref, ref, type TemplateRef, useTemplateRef, watch} from "vue";
 import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
 import {storeToRefs} from "pinia";
 
@@ -24,16 +24,13 @@ import {storeToRefs} from "pinia";
   }
 
   //Sticky Heading
-  const header:Ref<HTMLHeadingElement> = ref(undefined);
-  const setHeader= (el:HTMLHeadingElement):HTMLHeadingElement => header.value = el;
-  const getHeader = ():HTMLHeadingElement => header.value;
-  const findHeader = ():HTMLHeadingElement => document.getElementsByTagName("header")[0];
+  const header:TemplateRef<HTMLHeadingElement> = useTemplateRef("header");
+  const getHeader = ():HTMLHeadingElement => header.value as HTMLHeadingElement;
 
   const headHeight:Ref<number> = ref(0);
   const setHeadHeight = (height:number):number => headHeight.value = height;
 
   function initHeading():void {
-    setHeader(findHeader() as HTMLHeadingElement);
     setHeadHeight(getHeader().getBoundingClientRect().height);
   }
 
@@ -49,7 +46,7 @@ import {storeToRefs} from "pinia";
 </script>
 
 <template>
-  <header>
+  <header ref="header">
     <span id="menu-icon-wrapper" @click="toggleNavLinks">
 
     </span>
