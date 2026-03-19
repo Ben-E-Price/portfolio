@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {type Ref, ref, watch} from "vue";
+import {onMounted, type Ref, ref, watch} from "vue";
 import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
 import {storeToRefs} from "pinia";
 
@@ -22,6 +22,27 @@ import {storeToRefs} from "pinia";
       setNavLinkVis(false);
     }
   }
+
+  //Sticky Heading
+  const header:Ref<HTMLHeadingElement> = ref(undefined);
+  const setHeader= (el:HTMLHeadingElement):HTMLHeadingElement => header.value = el;
+  const getHeader = ():HTMLHeadingElement => header.value;
+  const findHeader = ():HTMLHeadingElement => document.getElementsByTagName("header")[0];
+
+  const headHeight:Ref<number> = ref(0);
+  const setHeadHeight = (height:number):number => headHeight.value = height;
+
+  function initHeading():void {
+    setHeader(findHeader() as HTMLHeadingElement);
+    setHeadHeight(getHeader().getBoundingClientRect().height);
+  }
+
+  function initStickyHeader():void {
+    initHeading();
+  }
+
+  onMounted(() => initStickyHeader());
+
   watch(breakPointState, (newState) => {
     handleNavLinkBreakPoint(newState);
   })
@@ -51,6 +72,8 @@ import {storeToRefs} from "pinia";
     width: 100%;
     display: grid;
     grid-template-rows: auto 1fr;
+    top: 0px;
+    position: sticky;
   }
 
   #heading-wrapper {
