@@ -2,6 +2,7 @@
 import {onMounted, type Ref, ref, type TemplateRef, useTemplateRef, watch} from "vue";
 import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
 import {storeToRefs} from "pinia";
+import type {InterceptorOptions} from "vite/module-runner";
 
   const breakPointStore = useCompLayoutState();
   const {breakPointState} = storeToRefs(breakPointStore);
@@ -29,13 +30,27 @@ import {storeToRefs} from "pinia";
 
   const headHeight:Ref<number> = ref(0);
   const setHeadHeight = (height:number):number => headHeight.value = height;
+  const getHeadHieght = ():number => headHeight.value;
 
   function initHeading():void {
     setHeadHeight(getHeader().getBoundingClientRect().height);
   }
 
+  function initObserver():void {
+    const margin:string = `${getHeadHieght()}px`
+    const options:IntersectionObserverInit = {
+      root: null,
+      rootMargin: margin,
+      threshold: 1,
+    }
+
+    const observer:IntersectionObserver = new IntersectionObserver((entries, observer) => console.log(entries[0], ) , options);
+    observer.observe(getHeader());
+  }
+
   function initStickyHeader():void {
     initHeading();
+    initObserver()
   }
 
   onMounted(() => initStickyHeader());
@@ -69,8 +84,6 @@ import {storeToRefs} from "pinia";
     width: 100%;
     display: grid;
     grid-template-rows: auto 1fr;
-    top: 0px;
-    position: sticky;
   }
 
   #heading-wrapper {
