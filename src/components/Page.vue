@@ -7,23 +7,29 @@
   import type {Ref} from "vue";
 
   //Sticky Heading
-  type PageElement = Ref<HTMLElement>;
+  const stickClass:string = "sticky"
 
-  const getElementByTag = (tag: string):HTMLElement => document.getElementById(tag);
+  type PageElement = Ref<HTMLElement>;
 
   const header:PageElement = ref();
   const getHeader = ():HTMLHeadingElement => header.value.elHead as HTMLHeadingElement;
 
   const main:PageElement = ref();
-  const getMain = ():HTMLElement => main.value.elMain as HTMLElement;
+  const getAbout = ():HTMLElement => main.value.elMain.getElementsByClassName("about")[0] as HTMLElement;
 
   const headHeight:Ref<number> = ref(0);
-  const setHeadHeight = (height:number):number => headHeight.value = height;
+  const setHeadHeight = ():number => headHeight.value = getHeader().getBoundingClientRect().height;
   const getHeadHeight = ():number => headHeight.value;
 
-  function initHeading():void {
-    console.log(getHeader(), getMain());
-    setHeadHeight(getHeader().getBoundingClientRect().height);
+  const obvOptions:Ref<IntersectionObserverInit> = ref({
+    root: null,
+    rootMargin: "0px",
+    threshold: 1,
+  })
+
+  const updateMargin = ():string => {
+    setHeadHeight();
+    obvOptions.value.rootMargin = `-${getHeadHeight()}px`
   }
 
   type HeaderClassHandler = (el:HTMLElement, elClass:string) => string
@@ -31,27 +37,19 @@
   const classAdd:HeaderClassHandler = (el, elClass) => el.classList.add(elClass);
   const classRemove:HeaderClassHandler = (el, elClass) => el.classList.remove(elClass);
 
-  function handleHeading([entry]:IntersectionObserverEntry[]):void {
-    const {target, isIntersecting} = entry;
-    const className:string = "sticky"
+  function handleStickyHeading(entries:IntersectionObserverEntry[]):void {
+    const {isIntersecting} = entries[0];
+    updateMargin();
 
-    isIntersecting ? classRemove(target, className) : classAdd(target, className)
+    isIntersecting ? classRemove(getHeader(), stickClass) :  classAdd(getHeader(), stickClass);
   }
 
   function initObserver():void {
-    const margin:string = `${getHeadHeight()}px`
-    const options:IntersectionObserverInit = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0,
-    }
-
-    const observer:IntersectionObserver = new IntersectionObserver((entries) => handleHeading(entries) , options);
-    observer.observe(getHeader());
+    const observer:IntersectionObserver = new IntersectionObserver((entries) => handleStickyHeading(entries) , obvOptions.value);
+    observer.observe(getAbout());
   }
 
   function initStickyHeader():void {
-    initHeading();
     initObserver()
   }
 

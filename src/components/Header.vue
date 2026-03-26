@@ -61,7 +61,7 @@ import { ref, useTemplateRef, watch} from "vue";
   }
 
   .sticky {
-    top: 0;
+    top: 0px;
     position: sticky;
   }
 

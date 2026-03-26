@@ -26,7 +26,7 @@
 
 <template>
   <section class="sec-wrapper" id="sec-about">
-    <div id="about">
+    <div id="about" class="about">
       <DynamicHeading
         :id="idAbout"
         :text="idAbout"

@@ -28,7 +28,7 @@
 
 <template>
   <main ref="main">
-    <About :content="about" />
+    <About :content="about"/>
     <AccordionSection
       :section-name="`experience`"
       :content="experience"
