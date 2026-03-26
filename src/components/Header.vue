@@ -2,7 +2,6 @@
 import {onMounted, type Ref, ref, type TemplateRef, useTemplateRef, watch} from "vue";
 import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
 import {storeToRefs} from "pinia";
-import type {InterceptorOptions} from "vite/module-runner";
 
   const breakPointStore = useCompLayoutState();
   const {breakPointState} = storeToRefs(breakPointStore);
@@ -36,15 +35,27 @@ import type {InterceptorOptions} from "vite/module-runner";
     setHeadHeight(getHeader().getBoundingClientRect().height);
   }
 
+  type HeaderClassHandler = (el:HTMLElement, elClass:string) => string
+
+  const classAdd:HeaderClassHandler = (el, elClass) => el.classList.add(elClass);
+  const classRemove:HeaderClassHandler = (el, elClass) => el.classList.remove(elClass);
+
+  function handleHeading([entry]:IntersectionObserverEntry[]):void {
+    const {target, isIntersecting} = entry;
+    const className:string = "sticky"
+
+    isIntersecting ? classRemove(target, className) : classAdd(target, className)
+  }
+
   function initObserver():void {
     const margin:string = `${getHeadHieght()}px`
     const options:IntersectionObserverInit = {
       root: null,
-      rootMargin: margin,
-      threshold: 1,
+      rootMargin: "0px",
+      threshold: 0,
     }
 
-    const observer:IntersectionObserver = new IntersectionObserver((entries, observer) => console.log(entries[0], ) , options);
+    const observer:IntersectionObserver = new IntersectionObserver((entries) => handleHeading(entries) , options);
     observer.observe(getHeader());
   }
 
@@ -84,6 +95,11 @@ import type {InterceptorOptions} from "vite/module-runner";
     width: 100%;
     display: grid;
     grid-template-rows: auto 1fr;
+  }
+
+  .sticky {
+    top: 0;
+    position: sticky;
   }
 
   #heading-wrapper {
