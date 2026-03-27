@@ -9,31 +9,27 @@
   //Sticky Heading
   const stickClass:string = "sticky"
 
-  type PageElement = Ref<HTMLElement>;
+  const header:Ref<HTMLElement | undefined> = ref();
+  const getHeader = ():HTMLElement => header.value.elHead;
 
-  const header:PageElement = ref();
-  const getHeader = ():HTMLHeadingElement => header.value.elHead as HTMLHeadingElement;
-
-  const main:PageElement = ref();
-  const getAbout = ():HTMLElement => main.value.elMain.getElementsByClassName("about")[0] as HTMLElement;
+  const getAbout = ():HTMLElement => document.getElementById("about") as HTMLElement;
 
   const headHeight:Ref<number> = ref(0);
   const setHeadHeight = ():number => headHeight.value = getHeader().getBoundingClientRect().height;
   const getHeadHeight = ():number => headHeight.value;
 
-  const obvOptions:Ref<IntersectionObserverInit> = ref({
+  const obsOptions:Ref<IntersectionObserverInit> = ref({
     root: null,
     rootMargin: "0px",
     threshold: 1,
   })
 
-  const updateMargin = ():string => {
+  const updateMargin = ():void => {
     setHeadHeight();
-    obvOptions.value.rootMargin = `-${getHeadHeight()}px`
+    obsOptions.value.rootMargin = `-${getHeadHeight()}px`
   }
 
-  type HeaderClassHandler = (el:HTMLElement, elClass:string) => string
-
+  type HeaderClassHandler = (el:HTMLElement, elClass:string) => void
   const classAdd:HeaderClassHandler = (el, elClass) => el.classList.add(elClass);
   const classRemove:HeaderClassHandler = (el, elClass) => el.classList.remove(elClass);
 
@@ -45,22 +41,18 @@
   }
 
   function initObserver():void {
-    const observer:IntersectionObserver = new IntersectionObserver((entries) => handleStickyHeading(entries) , obvOptions.value);
+    const observer:IntersectionObserver = new IntersectionObserver((entries) => handleStickyHeading(entries) , obsOptions.value);
     observer.observe(getAbout());
   }
 
-  function initStickyHeader():void {
-    initObserver()
-  }
-
   onMounted(() => {
-    initStickyHeader()
+    initObserver()
   })
 </script>
 
 <template>
   <Header ref="header"/>
-  <Main  ref="main"/>
+  <Main />
   <Footer />
 </template>
 

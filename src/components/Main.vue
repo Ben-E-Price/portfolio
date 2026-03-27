@@ -2,14 +2,10 @@
   import About from "@/components/main-sections/About.vue";
   import AccordionSection from "@/components/accordion/AccordionSection.vue";
   import WorkExample from "@/components/main-sections/WorkExample.vue";
-  import {useTemplateRef} from "vue";
 
   import type {SiteContent} from "@/types/content.ts";
-  import  type {TemplateRef} from "vue";
 
   import content from "@/content.json";
-
-  const elMain:TemplateRef<HTMLElement> = useTemplateRef("main");
 
   function validateSiteContent(content: any): content is SiteContent {
     return (
@@ -22,12 +18,10 @@
 
   validateSiteContent(content)
   const {about, experience, education, liveExample} = content;
-
-  defineExpose({elMain})
 </script>
 
 <template>
-  <main ref="main">
+  <main>
     <About :content="about"/>
     <AccordionSection
       :section-name="`experience`"
