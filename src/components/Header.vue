@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, useTemplateRef, watch} from "vue";
-  import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
+  import { ref, useTemplateRef, watch} from "vue";
   import {storeToRefs} from "pinia";
+  import Hamburger from "@/components/hambuger/Hamburger.vue";
+  import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
 
   import type { Ref, TemplateRef } from "vue";
 
@@ -20,11 +21,7 @@ import { ref, useTemplateRef, watch} from "vue";
   }
 
   function handleNavLinkBreakPoint(stateCheck:number):void {
-    if (stateCheck !== 0) {
-      setNavLinkVis(true);
-    } else {
-      setNavLinkVis(false);
-    }
+    stateCheck !== 0 ? setNavLinkVis(true) : setNavLinkVis(false);
   }
 
   watch(breakPointState, (newState) => {
@@ -37,7 +34,7 @@ import { ref, useTemplateRef, watch} from "vue";
 <template>
   <header ref="header">
     <span id="menu-icon-wrapper" @click="toggleNavLinks">
-
+      <Hamburger :size="40"/>
     </span>
     <span id="heading-wrapper">
       <h1 v-to-heading>heading</h1>
@@ -58,6 +55,8 @@ import { ref, useTemplateRef, watch} from "vue";
     width: 100%;
     display: grid;
     grid-template-rows: auto 1fr;
+    background: white;
+    opacity: 0.9;
   }
 
   .sticky {
