@@ -24,6 +24,14 @@
     stateCheck !== 0 ? setNavLinkVis(true) : setNavLinkVis(false);
   }
 
+  const menuClickState:Ref<boolean> = ref(false);
+  const toggleClickState = ():boolean => menuClickState.value = !menuClickState.value
+
+  function handleMenuClick():void {
+    toggleNavLinks()
+    toggleClickState()
+  }
+
   watch(breakPointState, (newState) => {
     handleNavLinkBreakPoint(newState);
   })
@@ -33,8 +41,11 @@
 
 <template>
   <header ref="header">
-    <span id="menu-icon-wrapper" @click="toggleNavLinks">
-      <Hamburger :size="40"/>
+    <span id="menu-icon-wrapper">
+      <Hamburger
+        @click="handleMenuClick"
+        :isClicked="menuClickState"
+        :size="40"/>
     </span>
     <span id="heading-wrapper">
       <h1 v-to-heading>heading</h1>

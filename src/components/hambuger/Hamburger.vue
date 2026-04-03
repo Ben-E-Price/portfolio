@@ -1,14 +1,27 @@
 <script setup lang="ts">
+  import {ref} from "vue";
+  import Bars from "@/components/hambuger/Bars.vue";
 
-  const {size} = defineProps<{size: number}>();
-  const barClass:string[] = ["bar"];
+  import type {Ref} from "vue";
+
+  const {size, isClicked} = defineProps<{size: number, isClicked: boolean}>();
+
+  const hoverState:Ref<boolean> = ref(false);
+  const toggleHoverState = ():boolean => hoverState.value = !hoverState.value;
+
+  function handleHover():void {
+    toggleHoverState();
+  }
+
 </script>
 
 <template>
-  <div id="hambuger-outer">
-    <span :class="barClass"></span>
-    <span :class="barClass"></span>
-    <span :class="barClass"></span>
+  <div
+    id="hambuger-outer"
+    @mouseenter="handleHover"
+    @mouseleave="handleHover"
+  >
+    <Bars :is-hovered="hoverState" v-if="!isClicked"/>
   </div>
 </template>
 
@@ -18,7 +31,6 @@
     --menu-colour: grey;
     display: grid;
     grid-template-rows: 10% 10% 10%;
-    border: black solid 1px;
     border-radius: 5px;
     width: var(--icon-size);
     height: var(--icon-size);
@@ -27,9 +39,14 @@
     padding: 5px;
   }
 
-  .bar {
-    border-radius: 10px;
-    width: 100%;
-    background-color: black;
+  #hambuger-outer:hover{
+   .top-bar {
+      transform: rotateZ(45deg);
+    }
+
+    .bottom-bar {
+      transform: rotateZ(-45deg);
+    }
   }
+
 </style>
