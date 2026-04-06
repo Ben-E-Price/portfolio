@@ -40,10 +40,17 @@
     })
   }
 
-  const hoverType = (e:MouseEvent):boolean => e.type === 'mouseenter';
+  function transformCross():void {
+  }
+
+  function handleChildEvents():void {
+    isClicked ? transformCross() : handleSeqTransform();
+  }
+
+  const hoverType = (e:MouseEvent):boolean => e.type === 'mouseover';
 
   function handleHover(e:MouseEvent):void {
-    hoverType(e) ? handleSeqTransform() : removeBarTransform();
+    hoverType(e) ? handleChildEvents() : removeBarTransform();
   }
 
   watch(() => isClicked, handleClick);
@@ -54,7 +61,7 @@
   <div
     ref="outer"
     id="hambuger-outer"
-    @mouseenter="handleHover"
+    @mouseover="handleHover"
     @mouseleave="handleHover"
   >
     <Bars
