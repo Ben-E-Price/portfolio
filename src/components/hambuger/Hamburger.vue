@@ -24,7 +24,7 @@
   const getChildren = ():ChildEls => setChildren(Array.from(outer.value?.children));
   const children = ():ChildEls => _children.value;
 
-  const setElementLength = (el:Element, length:number):string => el.style.transform = `scale(${length}%)`;
+  const setElementLength = (el:Element, length:number):string => el.style.width = `${length}%`;
   const setChildrenLength = (length:number):void => children().forEach((bar:Element) => setElementLength(bar, length));
   const removeBarTransform = ():void => setChildrenLength(100);
 
