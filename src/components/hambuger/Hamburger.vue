@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, useTemplateRef, watch} from "vue";
+import {onMounted, ref, useTemplateRef, watch} from "vue";
   import Bars from "@/components/hambuger/Bars.vue";
   import Cross from "@/components/hambuger/Cross.vue";
 
@@ -10,18 +10,40 @@ import {ref, useTemplateRef, watch} from "vue";
 
   const outer:TemplateRef<HTMLElement> = useTemplateRef("outer");
   const activeClass:string = "active"
-  const toggleActiveClass = () => outer.value?.classList.toggle(activeClass);
+  const toggleOuterActive = () => outer.value?.classList.toggle(activeClass);
 
   function handleClick():void {
-    toggleActiveClass();
+    toggleOuterActive();
   }
 
-  const hoverState:Ref<boolean> = ref(false);
-  const toggleHoverState = ():boolean => hoverState.value = !hoverState.value;
+  const barClass:string[] = ["bar"];
+  let bars:Bars = []
 
-  function handleHover():void {
-    toggleHoverState();
+  const setBars = ():Bars => bars = Array.from(document.getElementsByClassName(barClass[0])) as Bars;
+
+  const setElementLength = (el:Element, length:number):string => el.style.transform = `scale(${length}%)`;
+  const setBarsLength = (length:number):void => bars.forEach((bar:Element) => setElementLength(bar, length));
+  const removeBarTransform = ():void => setBarsLength(100);
+
+  function addBarTransform():void {
+    const length:number = bars[0].getBoundingClientRect().width;
+    const modifier = 1.25;
+
+    bars.forEach((bar:Element, index:number) => {
+      const percentDifference = (index / 10) * modifier
+      const percentDecimal:number = 1 - percentDifference;
+      const barLength:number =  percentDecimal * 100;
+      setElementLength(bar, barLength);
+    })
   }
+
+  function handleHover(state:boolean):void {
+    state ? addBarTransform() : removeBarTransform();
+  }
+
+  onMounted(() => {
+    setBars();
+  })
 
   watch(() => isClicked, handleClick);
 
@@ -34,7 +56,7 @@ import {ref, useTemplateRef, watch} from "vue";
     @mouseenter="handleHover"
     @mouseleave="handleHover"
   >
-    <Bars :is-hovered="hoverState" v-if="!isClicked"/>
+    <Bars v-if="!isClicked"/>
     <Cross v-if="isClicked"/>
   </div>
 </template>
