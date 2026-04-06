@@ -1,3 +1,3 @@
-type Bars = [Element, Element, Element];
+type Bars = Element[];
 
 export type { Bars };

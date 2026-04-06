@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {onMounted, ref, useTemplateRef, watch} from "vue";
+  import {onMounted, ref, useTemplateRef, watch} from "vue";
   import Bars from "@/components/hambuger/Bars.vue";
   import Cross from "@/components/hambuger/Cross.vue";
 
-  import type {Ref, TemplateRef} from "vue";
+  import type {TemplateRef, Ref} from "vue";
 
   const {size, isClicked} = defineProps<{size: number, isClicked: boolean}>();
   const rowHeight:number = 10;
@@ -16,20 +16,21 @@ import {onMounted, ref, useTemplateRef, watch} from "vue";
     toggleOuterActive();
   }
 
-  const barClass:string[] = ["bar"];
-  let bars:Bars = []
+  const barClass:string = ["bar"];
+  const children:Ref<Bars> = ref(null);
 
-  const setBars = ():Bars => bars = Array.from(document.getElementsByClassName(barClass[0])) as Bars;
+  const setChildren = (elements:Bars):Bars => children.value = elements;
+  const getChildren = ():Bars => setChildren(Array.from(outer.value?.children));
 
   const setElementLength = (el:Element, length:number):string => el.style.transform = `scale(${length}%)`;
-  const setBarsLength = (length:number):void => bars.forEach((bar:Element) => setElementLength(bar, length));
-  const removeBarTransform = ():void => setBarsLength(100);
+  const setChildrenLength = (length:number):void => children.value.forEach((bar:Element) => setElementLength(bar, length));
+  const removeBarTransform = ():void => setChildrenLength(100);
 
   function addBarTransform():void {
-    const length:number = bars[0].getBoundingClientRect().width;
+    const length:number = children.value[0].getBoundingClientRect().width;
     const modifier = 1.25;
 
-    bars.forEach((bar:Element, index:number) => {
+    children.value.forEach((bar:Element, index:number) => {
       const percentDifference = (index / 10) * modifier
       const percentDecimal:number = 1 - percentDifference;
       const barLength:number =  percentDecimal * 100;
@@ -37,12 +38,14 @@ import {onMounted, ref, useTemplateRef, watch} from "vue";
     })
   }
 
-  function handleHover(state:boolean):void {
-    state ? addBarTransform() : removeBarTransform();
+  const hoverType = (e:MouseEvent):boolean => e.type === 'mouseenter';
+
+  function handleHover(e:MouseEvent):void {
+    hoverType(e) ? addBarTransform() : removeBarTransform();
   }
 
   onMounted(() => {
-    setBars();
+    getChildren();
   })
 
   watch(() => isClicked, handleClick);
@@ -56,8 +59,14 @@ import {onMounted, ref, useTemplateRef, watch} from "vue";
     @mouseenter="handleHover"
     @mouseleave="handleHover"
   >
-    <Bars v-if="!isClicked"/>
-    <Cross v-if="isClicked"/>
+    <Bars
+      v-if="!isClicked"
+      :classList="barClass"
+    />
+    <Cross
+      v-if="isClicked"
+      :classList="barClass"
+    />
   </div>
 </template>
 
