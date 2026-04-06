@@ -43,7 +43,7 @@
 
 <style scoped>
   .bar {
-    transition: 0.5s;
+    transition: 0.25s;
     transform-origin: left;
     border-radius: 10px;
     width: 100%;
