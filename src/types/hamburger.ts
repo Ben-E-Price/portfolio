@@ -1,3 +1,3 @@
-type Bars = Element[];
+type ChildEls = Element[];
 
-export type { Bars };
+export type { ChildEls };

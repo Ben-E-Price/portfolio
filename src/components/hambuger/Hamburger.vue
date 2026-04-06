@@ -4,6 +4,7 @@
   import Cross from "@/components/hambuger/Cross.vue";
 
   import type {TemplateRef, Ref} from "vue";
+  import type {ChildEls} from "@/types/hamburger.ts";
 
   const {size, isClicked} = defineProps<{size: number, isClicked: boolean}>();
   const rowHeight:number = 10;
@@ -16,21 +17,22 @@
     toggleOuterActive();
   }
 
-  const barClass:string = ["bar"];
-  const children:Ref<Bars> = ref(null);
+  const barClass:string[] = ["bar"];
+  const _children:Ref<ChildEls> = ref(null);
 
-  const setChildren = (elements:Bars):Bars => children.value = elements;
-  const getChildren = ():Bars => setChildren(Array.from(outer.value?.children));
+  const setChildren = (elements:ChildEls):ChildEls => _children.value = elements;
+  const getChildren = ():ChildEls => setChildren(Array.from(outer.value?.children));
+  const children = ():ChildEls => _children.value;
 
   const setElementLength = (el:Element, length:number):string => el.style.transform = `scale(${length}%)`;
-  const setChildrenLength = (length:number):void => children.value.forEach((bar:Element) => setElementLength(bar, length));
+  const setChildrenLength = (length:number):void => children().forEach((bar:Element) => setElementLength(bar, length));
   const removeBarTransform = ():void => setChildrenLength(100);
 
-  function addBarTransform():void {
-    const length:number = children.value[0].getBoundingClientRect().width;
+  function handleSeqTransform():void {
+    const length:number = children()[0].getBoundingClientRect().width;
     const modifier = 1.25;
 
-    children.value.forEach((bar:Element, index:number) => {
+    children().forEach((bar:Element, index:number) => {
       const percentDifference = (index / 10) * modifier
       const percentDecimal:number = 1 - percentDifference;
       const barLength:number =  percentDecimal * 100;
@@ -41,12 +43,8 @@
   const hoverType = (e:MouseEvent):boolean => e.type === 'mouseenter';
 
   function handleHover(e:MouseEvent):void {
-    hoverType(e) ? addBarTransform() : removeBarTransform();
+    hoverType(e) ? handleSeqTransform() : removeBarTransform();
   }
-
-  onMounted(() => {
-    getChildren();
-  })
 
   watch(() => isClicked, handleClick);
 
@@ -60,10 +58,12 @@
     @mouseleave="handleHover"
   >
     <Bars
+      @vue:mounted="getChildren"
       v-if="!isClicked"
       :classList="barClass"
     />
     <Cross
+      @vue:mounted="getChildren"
       v-if="isClicked"
       :classList="barClass"
     />
