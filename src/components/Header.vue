@@ -41,7 +41,7 @@
 
 <template>
   <header ref="header">
-    <span id="menu-icon-wrapper">
+    <span id="hamburger-wrapper">
       <Hamburger
         @click="handleMenuClick"
         :isClicked="menuClickState"
@@ -80,9 +80,8 @@
     justify-content: center;
   }
 
-  #menu-icon-wrapper {
+  #hamburger-wrapper {
     display: none;
-    border: solid 1px black;
   }
 
   #link-wrapper {
@@ -105,7 +104,7 @@
       width: 100%;
     }
 
-    #menu-icon-wrapper{
+    #hamburger-wrapper{
       display: block;
     }
   }

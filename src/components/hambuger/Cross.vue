@@ -11,7 +11,7 @@
 <style scoped>
   .cross {
     background-color: black;
-    width: 95%;
+    width: 100%;
     margin: 0px auto;
   }
 

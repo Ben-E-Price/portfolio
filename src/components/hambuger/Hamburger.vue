@@ -41,6 +41,7 @@
   }
 
   function transformCross():void {
+    setChildrenLength(90);
   }
 
   function handleChildEvents():void {
@@ -86,6 +87,7 @@
     display: grid;
     grid-template-rows: var(--row-height) var(--row-height) var(--row-height);
     border-radius: 5px;
+    border: 1px solid black;
     width: var(--icon-size);
     height: var(--icon-size);
     align-content: center;

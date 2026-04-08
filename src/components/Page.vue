@@ -7,7 +7,7 @@
   import type {Ref} from "vue";
 
   //Sticky Heading
-  const stickClass:string = "sticky"
+  const headerClass:string[] = ["sticky", "collapse"];
 
   const header:Ref<HTMLElement | undefined> = ref();
   const getHeader = ():HTMLElement => header.value.elHead;
@@ -26,18 +26,18 @@
 
   const updateMargin = ():void => {
     setHeadHeight();
-    obsOptions.value.rootMargin = `-${getHeadHeight()}px`
+    obsOptions.value.rootMargin = `-${getHeadHeight() / 2}px`
   }
 
-  type HeaderClassHandler = (el:HTMLElement, elClass:string) => void
-  const classAdd:HeaderClassHandler = (el, elClass) => el.classList.add(elClass);
-  const classRemove:HeaderClassHandler = (el, elClass) => el.classList.remove(elClass);
+  type HeaderClassHandler = (el:HTMLElement, classList:string[]) => void
+  const classAdd:HeaderClassHandler = (el, classList) => classList.forEach(curClass => el.classList.add(curClass));
+  const classRemove:HeaderClassHandler = (el, classList) => classList.forEach(curClass => el.classList.remove(curClass));
 
   function handleStickyHeading(entries:IntersectionObserverEntry[]):void {
     const {isIntersecting} = entries[0];
     updateMargin();
 
-    isIntersecting ? classRemove(getHeader(), stickClass) :  classAdd(getHeader(), stickClass);
+    isIntersecting ? classRemove(getHeader(), headerClass) :  classAdd(getHeader(), headerClass);
   }
 
   function initObserver():void {
@@ -51,7 +51,7 @@
 </script>
 
 <template>
-  <Header ref="header"/>
+  <Header ref="header" @vue:mounted="initObserver"/>
   <Main />
   <Footer />
 </template>
