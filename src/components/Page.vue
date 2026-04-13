@@ -10,26 +10,12 @@
   const headerClass:string[] = ["collapse"];
 
   const collapseState:Ref<boolean> = ref(false);
+  const toggleCollapseState = ():boolean => collapseState.value = !collapseState.value
 
   const header:Ref<HTMLElement | undefined> = ref();
   const getHeader = ():HTMLElement => header.value.elHead;
 
   const getAbout = ():HTMLElement => document.getElementById("about") as HTMLElement;
-
-  const headHeight:Ref<number> = ref(0);
-  const setHeadHeight = ():number => headHeight.value = getHeader().getBoundingClientRect().height;
-  const getHeadHeight = ():number => headHeight.value;
-
-  const obsOptions:Ref<IntersectionObserverInit> = ref({
-    root: null,
-    rootMargin: "0px",
-    threshold: 1,
-  })
-
-  const updateMargin = ():void => {
-    setHeadHeight();
-    obsOptions.value.rootMargin = `-${getHeadHeight() / 2}px`
-  }
 
   type HeaderClassHandler = (el:HTMLElement, classList:string[]) => void
   const classAdd:HeaderClassHandler = (el, classList) => classList.forEach(curClass => el.classList.add(curClass));
@@ -37,13 +23,16 @@
 
   function handleStickyHeading(entries:IntersectionObserverEntry[]):void {
     const {isIntersecting} = entries[0];
-    updateMargin();
-
     isIntersecting ? classRemove(getHeader(), headerClass) :  classAdd(getHeader(), headerClass);
   }
 
   function initObserver():void {
-    const observer:IntersectionObserver = new IntersectionObserver((entries) => handleStickyHeading(entries) , obsOptions.value);
+    const options:IntersectionObserverInit = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 1,
+    }
+    const observer:IntersectionObserver = new IntersectionObserver((entries) => handleStickyHeading(entries) , options);
     observer.observe(getAbout());
   }
 

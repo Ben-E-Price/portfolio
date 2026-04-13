@@ -38,6 +38,10 @@
     handleNavLinkBreakPoint(newState);
   })
 
+  watch(() => collapse, (newState) => {
+
+  })
+
   defineExpose({elHead})
 </script>
 
