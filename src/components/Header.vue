@@ -39,7 +39,7 @@
   })
 
   watch(() => collapse, (newState) => {
-
+    console.log(newState)
   })
 
   defineExpose({elHead})

@@ -10,15 +10,13 @@
   const headerClass:string[] = ["collapse"];
 
   const collapseState:Ref<boolean> = ref(false);
-  const toggleCollapseState = ():boolean => collapseState.value = !collapseState.value
+  const setCollapseState = (state:boolean):boolean => collapseState.value = state;
 
   const getAbout = ():HTMLElement => document.getElementById("about") as HTMLElement;
 
-  function handleStickyHeading(entries:IntersectionObserverEntry[]):void {
+  function handleHeadingCollapse(entries:IntersectionObserverEntry[]):void {
     const {isIntersecting} = entries[0];
-    if (isIntersecting) {
-      toggleCollapseState();
-    }
+    setCollapseState(isIntersecting);
   }
 
   function initObserver():void {
@@ -27,7 +25,7 @@
       rootMargin: "0px",
       threshold: 1,
     }
-    const observer:IntersectionObserver = new IntersectionObserver((entries) => handleStickyHeading(entries) , options);
+    const observer:IntersectionObserver = new IntersectionObserver((entries) => handleHeadingCollapse(entries) , options);
     observer.observe(getAbout());
   }
 
