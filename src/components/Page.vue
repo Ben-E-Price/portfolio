@@ -12,18 +12,13 @@
   const collapseState:Ref<boolean> = ref(false);
   const toggleCollapseState = ():boolean => collapseState.value = !collapseState.value
 
-  const header:Ref<HTMLElement | undefined> = ref();
-  const getHeader = ():HTMLElement => header.value.elHead;
-
   const getAbout = ():HTMLElement => document.getElementById("about") as HTMLElement;
-
-  type HeaderClassHandler = (el:HTMLElement, classList:string[]) => void
-  const classAdd:HeaderClassHandler = (el, classList) => classList.forEach(curClass => el.classList.add(curClass));
-  const classRemove:HeaderClassHandler = (el, classList) => classList.forEach(curClass => el.classList.remove(curClass));
 
   function handleStickyHeading(entries:IntersectionObserverEntry[]):void {
     const {isIntersecting} = entries[0];
-    isIntersecting ? classRemove(getHeader(), headerClass) :  classAdd(getHeader(), headerClass);
+    if (isIntersecting) {
+      toggleCollapseState();
+    }
   }
 
   function initObserver():void {
@@ -43,7 +38,6 @@
 
 <template>
   <Header
-    ref="header"
     :collapse="collapseState"
     @vue:mounted="initObserver"
   />
