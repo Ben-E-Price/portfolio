@@ -6,6 +6,8 @@
 
   import type { Ref, TemplateRef } from "vue";
 
+  const {collapse} = defineProps<{collapse: boolean}>();
+
   const elHead:TemplateRef<HTMLElement> = useTemplateRef("header")
 
   const breakPointStore = useCompLayoutState();
@@ -68,9 +70,7 @@
     grid-template-rows: auto 1fr;
     background: white;
     opacity: 0.9;
-  }
 
-  .sticky {
     top: 0px;
     position: sticky;
   }
@@ -87,6 +87,14 @@
   #link-wrapper {
     width: 100%;
     grid-column-start: span 2;
+  }
+
+  .collapse {
+    #hamburger-wrapper {
+      display: block;
+    }
+    height: 40px;
+    background: #e4e4e4;
   }
 
   @media (max-width: 600px) {

@@ -6,8 +6,10 @@
 
   import type {Ref} from "vue";
 
-  //Sticky Heading
-  const headerClass:string[] = ["sticky", "collapse"];
+  //Collapse Heading
+  const headerClass:string[] = ["collapse"];
+
+  const collapseState:Ref<boolean> = ref(false);
 
   const header:Ref<HTMLElement | undefined> = ref();
   const getHeader = ():HTMLElement => header.value.elHead;
@@ -51,7 +53,11 @@
 </script>
 
 <template>
-  <Header ref="header" @vue:mounted="initObserver"/>
+  <Header
+    ref="header"
+    :collapse="collapseState"
+    @vue:mounted="initObserver"
+  />
   <Main />
   <Footer />
 </template>
