@@ -34,12 +34,16 @@
     toggleClickState()
   }
 
+  function handleHeadCollapse(state:boolean):void {
+    elHead.value?.classList.toggle("collapse");
+  }
+
   watch(breakPointState, (newState) => {
     handleNavLinkBreakPoint(newState);
   })
 
   watch(() => collapse, (newState) => {
-    console.log(newState)
+    handleHeadCollapse(newState);
   })
 
   defineExpose({elHead})

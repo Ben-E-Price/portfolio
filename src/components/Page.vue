@@ -7,8 +7,6 @@
   import type {Ref} from "vue";
 
   //Collapse Heading
-  const headerClass:string[] = ["collapse"];
-
   const collapseState:Ref<boolean> = ref(false);
   const setCollapseState = (state:boolean):boolean => collapseState.value = state;
 
@@ -16,7 +14,7 @@
 
   function handleHeadingCollapse(entries:IntersectionObserverEntry[]):void {
     const {isIntersecting} = entries[0];
-    setCollapseState(isIntersecting);
+    setCollapseState(!isIntersecting);
   }
 
   function initObserver():void {
@@ -25,6 +23,7 @@
       rootMargin: "0px",
       threshold: 1,
     }
+
     const observer:IntersectionObserver = new IntersectionObserver((entries) => handleHeadingCollapse(entries) , options);
     observer.observe(getAbout());
   }
