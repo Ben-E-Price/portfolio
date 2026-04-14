@@ -26,6 +26,10 @@
     stateCheck !== 0 ? setNavLinkVis(true) : setNavLinkVis(false);
   }
 
+  function handleNavLinkCollapse(stateCheck:boolean):void {
+    stateCheck ? setNavLinkVis(false) : setNavLinkVis(true);
+  }
+
   const menuClickState:Ref<boolean> = ref(false);
   const toggleClickState = ():boolean => menuClickState.value = !menuClickState.value
 
@@ -36,6 +40,7 @@
 
   function handleHeadCollapse(state:boolean):void {
     elHead.value?.classList.toggle("collapse");
+    handleNavLinkCollapse(state);
   }
 
   watch(breakPointState, (newState) => {
@@ -51,23 +56,35 @@
 
 <template>
   <header ref="header">
-    <span id="hamburger-wrapper">
-      <Hamburger
-        @click="handleMenuClick"
-        :isClicked="menuClickState"
-        :size="40"/>
-    </span>
-    <span id="heading-wrapper">
-      <h1 v-to-heading>heading</h1>
-    </span>
+    <div
+      id="head-top"
+      :class="`dis-flex`"
+    >
+      <span id="hamburger-wrapper">
+        <Hamburger
+          @click="handleMenuClick"
+          :isClicked="menuClickState"
+          :size="40"/>
+      </span>
+        <span id="heading-wrapper">
+        <h1 v-to-heading>heading</h1>
+      </span>
+    </div>
 
-    <nav id="link-wrapper" v-if="navLinkVisibility">
-      <a class="head-link" >Link</a>
-      <a class="head-link">Link</a>
-      <a class="head-link">Link</a>
-      <a class="head-link">Link</a>
-      <a class="head-link">Link</a>
-    </nav>
+    <div
+      id="head-bottom"
+      v-if="navLinkVisibility"
+    >
+      <nav
+        id="link-wrapper"
+      >
+        <a class="head-link" >Link</a>
+        <a class="head-link">Link</a>
+        <a class="head-link">Link</a>
+        <a class="head-link">Link</a>
+        <a class="head-link">Link</a>
+      </nav>
+    </div>
   </header>
 </template>
 
@@ -77,7 +94,6 @@
     display: grid;
     grid-template-rows: auto 1fr;
     background: white;
-    opacity: 0.9;
 
     top: 0px;
     position: sticky;
@@ -95,19 +111,29 @@
   #link-wrapper {
     width: 100%;
     grid-column-start: span 2;
+    z-index: -1;
+  }
+
+  .hide {
+    transform: translateY(-100%);
   }
 
   .collapse {
+    height: 40px;
+    background: #e4e4e4;
+
+    header {
+      grid-template-columns: auto auto;
+    }
+
     #hamburger-wrapper {
       display: block;
     }
-    height: 40px;
-    background: #e4e4e4;
   }
 
   @media (max-width: 600px) {
     header {
-      grid-template-columns: 25vw auto;
+      grid-template-rows: auto auto;
     }
 
     #link-wrapper{
