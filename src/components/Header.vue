@@ -8,6 +8,8 @@
 
   const {collapse} = defineProps<{collapse: boolean}>();
 
+  const classCollapse:string = "collapse";
+
   const elHead:TemplateRef<HTMLElement> = useTemplateRef("header")
 
   const breakPointStore = useCompLayoutState();
@@ -26,10 +28,6 @@
     stateCheck !== 0 ? setNavLinkVis(true) : setNavLinkVis(false);
   }
 
-  function handleNavLinkCollapse(stateCheck:boolean):void {
-    stateCheck ? setNavLinkVis(false) : setNavLinkVis(true);
-  }
-
   const menuClickState:Ref<boolean> = ref(false);
   const toggleClickState = ():boolean => menuClickState.value = !menuClickState.value
 
@@ -38,8 +36,18 @@
     toggleClickState()
   }
 
+  const breakPointStateCheck = ():boolean => breakPointState.value !== 0
+
+  function handleNavLinkCollapse(collapseState:boolean):void {
+    if(breakPointStateCheck()) {
+      collapseState ? setNavLinkVis(false) : setNavLinkVis(true);
+    }
+  }
+
+  const toggleHeadCollapse = ():boolean | undefined => elHead.value?.classList.toggle(classCollapse);
+
   function handleHeadCollapse(state:boolean):void {
-    elHead.value?.classList.toggle("collapse");
+    toggleHeadCollapse();
     handleNavLinkCollapse(state);
   }
 
@@ -50,15 +58,12 @@
   watch(() => collapse, (newState) => {
     handleHeadCollapse(newState);
   })
-
-  defineExpose({elHead})
 </script>
 
 <template>
   <header ref="header">
     <div
       id="head-top"
-      :class="`dis-flex`"
     >
       <span id="hamburger-wrapper">
         <Hamburger
@@ -92,7 +97,6 @@
   header {
     width: 100%;
     display: grid;
-    grid-template-rows: auto 1fr;
     background: white;
 
     top: 0px;
@@ -114,6 +118,11 @@
     z-index: -1;
   }
 
+  #head-top {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
   .hide {
     transform: translateY(-100%);
   }
@@ -121,10 +130,6 @@
   .collapse {
     height: 40px;
     background: #e4e4e4;
-
-    header {
-      grid-template-columns: auto auto;
-    }
 
     #hamburger-wrapper {
       display: block;
