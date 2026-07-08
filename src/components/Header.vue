@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref, useTemplateRef, watch} from "vue";
+import {ref, useTemplateRef, watch} from "vue";
   import {storeToRefs} from "pinia";
   import Hamburger from "@/components/hambuger/Hamburger.vue";
   import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
@@ -10,10 +10,15 @@
 
   const classCollapse:string = "collapse";
 
-  const elHead:TemplateRef<HTMLElement> = useTemplateRef("header")
+  const elHead:TemplateRef<HTMLElement> = useTemplateRef("header");
 
   const breakPointStore = useCompLayoutState();
   const {breakPointState} = storeToRefs(breakPointStore);
+
+  const navLinks:TemplateRef<HTMLElement> = useTemplateRef("nav-links");
+  const slideTime:Ref<number> = ref(1);
+
+  //link-wrapper visibility
   const navLinkVisibility:Ref = ref(false);
 
   function toggleNavLinks():void {
@@ -28,6 +33,19 @@
     stateCheck !== 0 ? setNavLinkVis(true) : setNavLinkVis(false);
   }
 
+
+  //Nav sliding
+  function handleNavSlide():void {
+    navLinks.value?.classList.toggle("hide");
+    elHead.value?.classList.toggle("no-nav");
+  }
+
+  function handleNavHide(): void {
+    handleNavSlide();
+    setTimeout(setNavLinkVis, slideTime.value * 1000, false)
+  }
+
+  //Click state handling
   const menuClickState:Ref<boolean> = ref(false);
   const toggleClickState = ():boolean => menuClickState.value = !menuClickState.value
 
@@ -36,6 +54,7 @@
     toggleClickState()
   }
 
+  //Heading collapse
   const breakPointStateCheck = ():boolean => breakPointState.value !== 0
 
   function handleNavLinkCollapse(collapseState:boolean):void {
@@ -61,10 +80,8 @@
 </script>
 
 <template>
-  <header ref="header">
-    <div
-      id="head-top"
-    >
+  <header ref="header" @click="handleNavHide">
+    <div id="head-top">
       <span id="hamburger-wrapper">
         <Hamburger
           @click="handleMenuClick"
@@ -77,12 +94,11 @@
     </div>
 
     <div
+      ref="nav-links"
       id="head-bottom"
       v-if="navLinkVisibility"
     >
-      <nav
-        id="link-wrapper"
-      >
+      <nav id="link-wrapper">
         <a class="head-link" >Link</a>
         <a class="head-link">Link</a>
         <a class="head-link">Link</a>
@@ -95,12 +111,23 @@
 
 <style scoped>
   header {
+    --slide-time: v-bind(slideTime + "s");
+
     width: 100%;
+    height: auto;
     display: grid;
+    grid-template-rows: 1fr 0.5fr;
     background: white;
+    padding: 0.5rem;
 
     top: 0px;
     position: sticky;
+    z-index: 0;
+    transition: grid-template-rows 1.1s;
+  }
+
+  .no-nav {
+    grid-template-rows: 1fr 0fr;
   }
 
   #heading-wrapper {
@@ -115,12 +142,18 @@
   #link-wrapper {
     width: 100%;
     grid-column-start: span 2;
-    z-index: -1;
   }
 
   #head-top {
     display: grid;
     grid-template-columns: auto auto;
+    background-color: inherit;
+  }
+
+  #head-bottom {
+    transition: var(--slide-time);
+    z-index: -1;
+    overflow: hidden;
   }
 
   .hide {
@@ -128,8 +161,8 @@
   }
 
   .collapse {
-    height: 40px;
-    background: #e4e4e4;
+    grid-template-rows: 1fr 0fr ;
+    padding: 0.2rem 0.5rem;
 
     #hamburger-wrapper {
       display: block;
