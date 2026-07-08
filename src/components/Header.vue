@@ -36,13 +36,13 @@ import {ref, useTemplateRef, watch} from "vue";
 
   //Nav sliding
   function handleNavSlide():void {
-    navLinks.value?.classList.toggle("hide");
+    // navLinks.value?.classList.toggle("hide");
     elHead.value?.classList.toggle("no-nav");
   }
 
   function handleNavHide(): void {
     handleNavSlide();
-    setTimeout(setNavLinkVis, slideTime.value * 1000, false)
+    // setTimeout(setNavLinkVis, slideTime.value * 1000, false)
   }
 
   //Click state handling
@@ -80,7 +80,7 @@ import {ref, useTemplateRef, watch} from "vue";
 </script>
 
 <template>
-  <header ref="header" @click="handleNavHide">
+  <header ref="header" @click="toggleNavLinks">
     <div id="head-top">
       <span id="hamburger-wrapper">
         <Hamburger
@@ -93,19 +93,21 @@ import {ref, useTemplateRef, watch} from "vue";
       </span>
     </div>
 
-    <div
-      ref="nav-links"
-      id="head-bottom"
-      v-if="navLinkVisibility"
-    >
-      <nav id="link-wrapper">
-        <a class="head-link" >Link</a>
-        <a class="head-link">Link</a>
-        <a class="head-link">Link</a>
-        <a class="head-link">Link</a>
-        <a class="head-link">Link</a>
-      </nav>
-    </div>
+    <Transition name="nav-slide">
+      <div
+        ref="nav-links"
+        id="head-bottom"
+        v-if="navLinkVisibility"
+      >
+        <nav id="link-wrapper">
+          <a class="head-link" >Link</a>
+          <a class="head-link">Link</a>
+          <a class="head-link">Link</a>
+          <a class="head-link">Link</a>
+          <a class="head-link">Link</a>
+        </nav>
+      </div>
+    </Transition>
   </header>
 </template>
 
@@ -116,18 +118,14 @@ import {ref, useTemplateRef, watch} from "vue";
     width: 100%;
     height: auto;
     display: grid;
-    grid-template-rows: 1fr 0.5fr;
+    grid-template-rows: 1fr auto;
     background: white;
     padding: 0.5rem;
 
     top: 0px;
     position: sticky;
     z-index: 0;
-    transition: grid-template-rows 1.1s;
-  }
-
-  .no-nav {
-    grid-template-rows: 1fr 0fr;
+    transition: all var(--slide-time) ease-in-out;
   }
 
   #heading-wrapper {
@@ -151,23 +149,20 @@ import {ref, useTemplateRef, watch} from "vue";
   }
 
   #head-bottom {
-    transition: var(--slide-time);
     z-index: -1;
     overflow: hidden;
   }
 
-  .hide {
+  .nav-slide-enter-active,
+  .nav-slide-leave-active {
+    transition: all var(--slide-time) ease-in-out;
+  }
+
+  .nav-slide-enter-from,
+  .nav-slide-leave-to {
     transform: translateY(-100%);
   }
 
-  .collapse {
-    grid-template-rows: 1fr 0fr ;
-    padding: 0.2rem 0.5rem;
-
-    #hamburger-wrapper {
-      display: block;
-    }
-  }
 
   @media (max-width: 600px) {
     header {
