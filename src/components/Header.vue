@@ -55,9 +55,11 @@
   //Heading collapse horizontal
   const breakPointStateCheck = ():boolean => breakPointState.value !== 0
 
-  function handleNavLinkCollapse(collapseState:boolean):void {
-    if(breakPointStateCheck()) {
-      collapseState ? setNavLinkVis(false) : setNavLinkVis(true);
+  function handleBreakPointChange(checkState:boolean):void {
+    if(getUserState()) {
+      return
+    } else {
+      checkState ? setNavLinkVis(false) : setNavLinkVis(true);
     }
   }
   const toggleHamburger = ():void => elHamburger.value?.classList.toggle()
@@ -86,7 +88,7 @@
   })
 
   watch(breakPointState, (newState) => {
-    // handleNavLinkBreakPoint(newState);
+    handleBreakPointChange(newState);
   })
 
   watch(() => collapse, (newState) => {
