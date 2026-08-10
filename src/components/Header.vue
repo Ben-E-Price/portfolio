@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, useTemplateRef, watch} from "vue";
+  import {ref, useTemplateRef, watch, computed} from "vue";
   import {storeToRefs} from "pinia";
   import Hamburger from "@/components/hambuger/Hamburger.vue";
   import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
@@ -81,6 +81,10 @@ import {ref, useTemplateRef, watch} from "vue";
     setNavLinkVis(true);
   }
 
+  const displayNavLinks = computed(() => {
+    return navLinkVisibility.value || userSetState.value;
+  })
+
   watch(breakPointState, (newState) => {
     // handleNavLinkBreakPoint(newState);
   })
@@ -109,7 +113,7 @@ import {ref, useTemplateRef, watch} from "vue";
       <div
         ref="nav-links"
         id="head-bottom"
-        v-if="navLinkVisibility"
+        v-if="displayNavLinks"
       >
         <nav id="link-wrapper">
           <a class="head-link" >Link</a>
