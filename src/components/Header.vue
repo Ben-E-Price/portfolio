@@ -70,7 +70,9 @@
   const getHead = ():HTMLElement | null => elHead.value;
 
   function handleHeadCollapseState(state:boolean):void {
-    state ? toggleHeadCollapse() : toggleHeadExpansion()
+    if(breakPointStateCheck()) {
+      state ? toggleHeadCollapse() : toggleHeadExpansion();
+    }
   }
 
   function toggleHeadCollapse(addClass:string = classCollapse):void {
