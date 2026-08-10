@@ -11,6 +11,7 @@ import {ref, useTemplateRef, watch} from "vue";
   const classCollapse:string = "collapse";
 
   const elHead:TemplateRef<HTMLElement> = useTemplateRef("header");
+  const elHamburger:TemplateRef<HTMLElement> = useTemplateRef("hamburger");
 
   const breakPointStore = useCompLayoutState();
   const {breakPointState} = storeToRefs(breakPointStore);
@@ -64,18 +65,19 @@ import {ref, useTemplateRef, watch} from "vue";
   }
 
   const toggleHeadCollapse = ():boolean | undefined => elHead.value?.classList.toggle(classCollapse);
+  const toggleHamburger = ():void => elHamburger.value?.classList.toggle()
 
-  function handleHeadCollapse(state:boolean):void {
+  function handleHeadCollapseState(state:boolean):void {
     toggleHeadCollapse();
     handleNavLinkCollapse(state);
   }
 
   watch(breakPointState, (newState) => {
-    handleNavLinkBreakPoint(newState);
+    // handleNavLinkBreakPoint(newState);
   })
 
   watch(() => collapse, (newState) => {
-    handleHeadCollapse(newState);
+    handleHeadCollapseState(newState);
   })
 </script>
 
@@ -84,6 +86,7 @@ import {ref, useTemplateRef, watch} from "vue";
     <div id="head-top">
       <span id="hamburger-wrapper">
         <Hamburger
+          ref="hamburger"
           @click="handleMenuClick"
           :isClicked="menuClickState"
           :size="40"/>
@@ -128,13 +131,13 @@ import {ref, useTemplateRef, watch} from "vue";
     transition: all var(--slide-time) ease-in-out;
   }
 
+  .no-nav {
+   grid-template-rows: 1fr 0fr;
+  }
+
   #heading-wrapper {
     display: flex;
     justify-content: center;
-  }
-
-  #hamburger-wrapper {
-    display: none;
   }
 
   #link-wrapper {
