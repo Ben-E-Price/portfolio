@@ -54,18 +54,19 @@
 
   //Heading collapse horizontal
   const breakPointStateCheck = ():boolean => breakPointState.value !== 0
+  const hideNavOnBreakPoint = (breakPointState):boolean => breakPointStateCheck() && !collapse
 
   function handleBreakPointChange(checkState:boolean):void {
     if(getUserState()) {
       return
     } else {
-      checkState ? setNavLinkVis(false) : setNavLinkVis(true);
+      hideNavOnBreakPoint(checkState) ? setNavLinkVis(false) : setNavLinkVis(true);
     }
   }
+
   const toggleHamburger = ():void => elHamburger.value?.classList.toggle()
 
   //Heading collapse vertical
-
   const getHead = ():HTMLElement | null => elHead.value;
 
   function handleHeadCollapseState(state:boolean):void {
