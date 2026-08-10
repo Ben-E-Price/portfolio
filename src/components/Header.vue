@@ -63,9 +63,9 @@ import {ref, useTemplateRef, watch} from "vue";
       collapseState ? setNavLinkVis(false) : setNavLinkVis(true);
     }
   }
-
-  const toggleHeadCollapse = ():boolean | undefined => elHead.value?.classList.toggle(classCollapse);
   const toggleHamburger = ():void => elHamburger.value?.classList.toggle()
+
+  const getHead = ():HTMLElement | null => elHead.value;
 
   function handleHeadCollapseState(state:boolean):void {
     toggleHeadCollapse();
