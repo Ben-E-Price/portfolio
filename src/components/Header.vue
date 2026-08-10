@@ -68,7 +68,7 @@ import {ref, useTemplateRef, watch} from "vue";
   const getHead = ():HTMLElement | null => elHead.value;
 
   function handleHeadCollapseState(state:boolean):void {
-    handleNavLinkCollapse(state);
+    state ? toggleHeadExpansion() : toggleHeadCollapse()
   }
 
   function toggleHeadCollapse(addClass:string = classCollapse):void {
