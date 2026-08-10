@@ -46,16 +46,13 @@ import {ref, useTemplateRef, watch} from "vue";
     // setTimeout(setNavLinkVis, slideTime.value * 1000, false)
   }
 
-  //Click state handling
-  const menuClickState:Ref<boolean> = ref(false);
-  const toggleClickState = ():boolean => menuClickState.value = !menuClickState.value
+  //User click Nav state
+  const userSetState:Ref<boolean> = ref(false);
+  const getUserState = ():boolean => userSetState.value;
+  const toggleUserState = ():boolean => userSetState.value = !userSetState.value
+  const setUserState = (state:boolean):void => userSetState.value = state
 
-  function handleMenuClick():void {
-    toggleNavLinks()
-    toggleClickState()
-  }
-
-  //Heading collapse
+  //Heading collapse horizontal
   const breakPointStateCheck = ():boolean => breakPointState.value !== 0
 
   function handleNavLinkCollapse(collapseState:boolean):void {
@@ -64,6 +61,8 @@ import {ref, useTemplateRef, watch} from "vue";
     }
   }
   const toggleHamburger = ():void => elHamburger.value?.classList.toggle()
+
+  //Heading collapse vertical
 
   const getHead = ():HTMLElement | null => elHead.value;
 
@@ -78,6 +77,7 @@ import {ref, useTemplateRef, watch} from "vue";
 
   function  toggleHeadExpansion(removeClass:string = classCollapse):void {
     getHead()?.classList.remove(removeClass);
+    setUserState(false);
     setNavLinkVis(true);
   }
 
@@ -96,8 +96,8 @@ import {ref, useTemplateRef, watch} from "vue";
       <span id="hamburger-wrapper">
         <Hamburger
           ref="hamburger"
-          @click="handleMenuClick"
-          :isClicked="menuClickState"
+          @click="toggleUserState"
+          :isClicked="userSetState"
           :size="40"/>
       </span>
         <span id="heading-wrapper">
