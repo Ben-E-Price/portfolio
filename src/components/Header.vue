@@ -60,7 +60,7 @@
     if(getUserState()) {
       return
     } else {
-      hideNavOnBreakPoint(checkState) ? setNavLinkVis(false) : setNavLinkVis(true);
+      hideNavOnBreakPoint(checkState) ? setNavLinkVis(true) : setNavLinkVis(false);
     }
   }
 
