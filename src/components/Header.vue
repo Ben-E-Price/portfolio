@@ -68,8 +68,17 @@ import {ref, useTemplateRef, watch} from "vue";
   const getHead = ():HTMLElement | null => elHead.value;
 
   function handleHeadCollapseState(state:boolean):void {
-    toggleHeadCollapse();
     handleNavLinkCollapse(state);
+  }
+
+  function toggleHeadCollapse(addClass:string = classCollapse):void {
+    getHead()?.classList.add(addClass);
+    setNavLinkVis(false);
+  }
+
+  function  toggleHeadExpansion(removeClass:string = classCollapse):void {
+    getHead()?.classList.remove(removeClass);
+    setNavLinkVis(true);
   }
 
   watch(breakPointState, (newState) => {
