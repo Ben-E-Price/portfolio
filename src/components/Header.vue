@@ -18,12 +18,13 @@
   const slideTime:Ref<number> = ref(1);
 
   const hamburgerVisibility:Ref<boolean> = ref(false);
-  const setHamburgerVisibility = (visible:boolean):boolean => hamburgerVisibility.value = visible;
+  const displayHamburger = ():boolean => hamburgerVisibility.value = true;
+  const hideHamburger = ():boolean => hamburgerVisibility.value = false;
 
   //link-wrapper visibility
   const navLinkVisibility:Ref = ref(false);
-  const displayNavLinks = ():void => navLinkVisibility.value = true;
-  const hideNavLinks = ():void => navLinkVisibility.value = false;
+  const displayNavLinks = ():boolean => navLinkVisibility.value = true;
+  const hideNavLinks = ():boolean => navLinkVisibility.value = false;
 
   //User click Nav state
   const userSetState:Ref<boolean> = ref(false);
@@ -37,12 +38,12 @@
 
   function configHeadMobile():void {
     hideNavLinks()
-    setHamburgerVisibility(true);
+    displayHamburger()
   }
 
   function configHeadDesktop():void {
     displayNavLinks();
-    setHamburgerVisibility(false);
+    hideHamburger()
   }
 
   function handleResponsiveChange():void {
@@ -65,14 +66,14 @@
   function toggleHeadCollapse(addClass:string = classCollapse):void {
     getHead()?.classList.add(addClass);
     hideNavLinks()
-    setHamburgerVisibility(true);
+    displayHamburger()
   }
 
   function  toggleHeadExpansion(removeClass:string = classCollapse):void {
     getHead()?.classList.remove(removeClass);
     setUserState(false);
     displayNavLinks();
-    setHamburgerVisibility(false);
+    hideHamburger()
   }
 
   const navVisibility = computed(() => {
