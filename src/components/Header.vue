@@ -22,10 +22,8 @@
 
   //link-wrapper visibility
   const navLinkVisibility:Ref = ref(false);
-
-  function setNavLinkVis(status:boolean):void {
-    navLinkVisibility.value = status;
-  }
+  const displayNavLinks = ():void => navLinkVisibility.value = true;
+  const hideNavLinks = ():void => navLinkVisibility.value = false;
 
   //User click Nav state
   const userSetState:Ref<boolean> = ref(false);
@@ -96,7 +94,6 @@
       <span id="hamburger-wrapper">
         <Hamburger
           v-if="hamburgerVisibility"
-          ref="hamburger"
           @click="toggleUserState"
           :isClicked="userSetState"
           :size="40"/>
@@ -108,7 +105,6 @@
 
     <Transition name="nav-slide">
       <div
-        ref="nav-links"
         id="head-bottom"
         v-if="displayNavLinks"
       >
