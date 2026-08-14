@@ -59,11 +59,21 @@
   const breakPointStateCheck = ():boolean => breakPointState.value !== 0
   const hideNavOnBreakPoint = (breakPointState):boolean => breakPointStateCheck() && !collapse
 
-  function handleBreakPointChange(checkState:boolean):void {
+  function configHeadMobile():void {
+    setNavLinkVis(false);
+    setHamburgerVisibility(true);
+  }
+
+  function configHeadDesktop():void {
+    setNavLinkVis(true);
+    setHamburgerVisibility(false);
+  }
+
+  function handleResponsiveChange(checkState:boolean):void {
     if(getUserState()) {
       return
     } else {
-      hideNavOnBreakPoint(checkState) ? setNavLinkVis(true) : setNavLinkVis(false);
+      hideNavOnBreakPoint(checkState) ? configHeadDesktop() : configHeadMobile();
     }
   }
 
@@ -81,12 +91,14 @@
   function toggleHeadCollapse(addClass:string = classCollapse):void {
     getHead()?.classList.add(addClass);
     setNavLinkVis(false);
+    setHamburgerVisibility(true);
   }
 
   function  toggleHeadExpansion(removeClass:string = classCollapse):void {
     getHead()?.classList.remove(removeClass);
     setUserState(false);
     setNavLinkVis(true);
+    setHamburgerVisibility(false);
   }
 
   const displayNavLinks = computed(() => {
@@ -94,7 +106,7 @@
   })
 
   watch(breakPointState, (newState) => {
-    handleBreakPointChange(newState);
+    handleResponsiveChange(newState);
   })
 
   watch(() => collapse, (newState) => {
@@ -103,7 +115,7 @@
 </script>
 
 <template>
-  <header ref="header" @click="toggleNavLinks">
+  <header ref="header">
     <div id="head-top">
       <span id="hamburger-wrapper">
         <Hamburger
