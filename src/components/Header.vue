@@ -75,7 +75,7 @@
     setHamburgerVisibility(false);
   }
 
-  const displayNavLinks = computed(() => {
+  const navVisibility = computed(() => {
     return navLinkVisibility.value || userSetState.value;
   })
 
@@ -106,7 +106,7 @@
     <Transition name="nav-slide">
       <div
         id="head-bottom"
-        v-if="displayNavLinks"
+        v-if="navVisibility"
       >
         <nav id="link-wrapper">
           <a class="head-link" >Link</a>
