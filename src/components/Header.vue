@@ -19,6 +19,9 @@
   const navLinks:TemplateRef<HTMLElement> = useTemplateRef("nav-links");
   const slideTime:Ref<number> = ref(1);
 
+  const hamburgerVisibility:Ref<boolean> = ref(false);
+  const setHamburgerVisibility = (visible:boolean):boolean => hamburgerVisibility.value = visible;
+
   //link-wrapper visibility
   const navLinkVisibility:Ref = ref(false);
 
@@ -104,6 +107,7 @@
     <div id="head-top">
       <span id="hamburger-wrapper">
         <Hamburger
+          v-if="hamburgerVisibility"
           ref="hamburger"
           @click="toggleUserState"
           :isClicked="userSetState"
