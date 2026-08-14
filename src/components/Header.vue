@@ -11,12 +11,10 @@
   const classCollapse:string = "collapse";
 
   const elHead:TemplateRef<HTMLElement> = useTemplateRef("header");
-  const elHamburger:TemplateRef<HTMLElement> = useTemplateRef("hamburger");
 
   const breakPointStore = useCompLayoutState();
   const {breakPointState} = storeToRefs(breakPointStore);
 
-  const navLinks:TemplateRef<HTMLElement> = useTemplateRef("nav-links");
   const slideTime:Ref<number> = ref(1);
 
   const hamburgerVisibility:Ref<boolean> = ref(false);
@@ -25,28 +23,8 @@
   //link-wrapper visibility
   const navLinkVisibility:Ref = ref(false);
 
-  function toggleNavLinks():void {
-    navLinkVisibility.value = !navLinkVisibility.value;
-  }
-
   function setNavLinkVis(status:boolean):void {
     navLinkVisibility.value = status;
-  }
-
-  function handleNavLinkBreakPoint(stateCheck:number):void {
-    stateCheck !== 0 ? setNavLinkVis(true) : setNavLinkVis(false);
-  }
-
-
-  //Nav sliding
-  function handleNavSlide():void {
-    // navLinks.value?.classList.toggle("hide");
-    elHead.value?.classList.toggle("no-nav");
-  }
-
-  function handleNavHide(): void {
-    handleNavSlide();
-    // setTimeout(setNavLinkVis, slideTime.value * 1000, false)
   }
 
   //User click Nav state
@@ -57,7 +35,7 @@
 
   //Heading collapse horizontal
   const breakPointStateCheck = ():boolean => breakPointState.value !== 0
-  const hideNavOnBreakPoint = (breakPointState):boolean => breakPointStateCheck() && !collapse
+  const hideNavOnBreakPoint = ():boolean => breakPointStateCheck() && !collapse
 
   function configHeadMobile():void {
     setNavLinkVis(false);
@@ -69,15 +47,13 @@
     setHamburgerVisibility(false);
   }
 
-  function handleResponsiveChange(checkState:boolean):void {
+  function handleResponsiveChange():void {
     if(getUserState()) {
       return
     } else {
-      hideNavOnBreakPoint(checkState) ? configHeadDesktop() : configHeadMobile();
+      hideNavOnBreakPoint() ? configHeadDesktop() : configHeadMobile();
     }
   }
-
-  const toggleHamburger = ():void => elHamburger.value?.classList.toggle()
 
   //Heading collapse vertical
   const getHead = ():HTMLElement | null => elHead.value;
