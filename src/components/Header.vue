@@ -36,12 +36,12 @@
   const hideNavOnBreakPoint = ():boolean => breakPointStateCheck() && !collapse
 
   function configHeadMobile():void {
-    setNavLinkVis(false);
+    hideNavLinks()
     setHamburgerVisibility(true);
   }
 
   function configHeadDesktop():void {
-    setNavLinkVis(true);
+    displayNavLinks();
     setHamburgerVisibility(false);
   }
 
@@ -64,14 +64,14 @@
 
   function toggleHeadCollapse(addClass:string = classCollapse):void {
     getHead()?.classList.add(addClass);
-    setNavLinkVis(false);
+    hideNavLinks()
     setHamburgerVisibility(true);
   }
 
   function  toggleHeadExpansion(removeClass:string = classCollapse):void {
     getHead()?.classList.remove(removeClass);
     setUserState(false);
-    setNavLinkVis(true);
+    displayNavLinks();
     setHamburgerVisibility(false);
   }
 
