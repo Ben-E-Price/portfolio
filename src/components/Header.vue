@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import {ref, useTemplateRef, watch, computed} from "vue";
+  import {ref, useTemplateRef, watch, computed, onBeforeMount} from "vue";
   import {storeToRefs} from "pinia";
   import Hamburger from "@/components/hambuger/Hamburger.vue";
   import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
@@ -15,7 +15,7 @@
   const breakPointStore = useCompLayoutState();
   const {breakPointState} = storeToRefs(breakPointStore);
 
-  const slideTime:Ref<number> = ref(1);
+  const slideTime:Ref<number> = ref(0.5);
 
   const hamburgerVisibility:Ref<boolean> = ref(false);
   const displayHamburger = ():boolean => hamburgerVisibility.value = true;
@@ -30,7 +30,7 @@
   const userSetState:Ref<boolean> = ref(false);
   const getUserState = ():boolean => userSetState.value;
   const toggleUserState = ():boolean => userSetState.value = !userSetState.value
-  const setUserState = (state:boolean):void => userSetState.value = state
+  const setUserState = (state:boolean):boolean => userSetState.value = state
 
   //Heading collapse horizontal
   const breakPointStateCheck = ():boolean => breakPointState.value !== 0
@@ -52,6 +52,10 @@
     } else {
       hideNavOnBreakPoint() ? configHeadDesktop() : configHeadMobile();
     }
+  }
+
+  function initHamburgerState():void {
+    breakPointState.value === 0 ? displayHamburger() : hideHamburger();
   }
 
   //Heading collapse vertical
@@ -79,6 +83,10 @@
   const navVisibility = computed(() => {
     return navLinkVisibility.value || userSetState.value;
   })
+
+  onBeforeMount(() => {
+    initHamburgerState();
+  });
 
   watch(breakPointState, (newState) => {
     handleResponsiveChange(newState);
@@ -129,8 +137,6 @@
     height: auto;
     display: grid;
     grid-template-rows: 1fr auto;
-    background: white;
-    padding: 0.5rem;
 
     top: 0px;
     position: sticky;
@@ -155,12 +161,14 @@
   #head-top {
     display: grid;
     grid-template-columns: auto auto;
-    background-color: inherit;
+    background-color: white;
+    padding: 0.3rem;
   }
 
   #head-bottom {
     z-index: -1;
     overflow: hidden;
+    background-color: green;
   }
 
   .nav-slide-enter-active,
@@ -181,7 +189,6 @@
 
     #link-wrapper{
       width: 100%;
-      background: blue;
     }
 
     .head-link {
