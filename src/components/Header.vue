@@ -27,10 +27,10 @@
   const hideNavLinks = ():boolean => navLinkVisibility.value = false;
 
   //User click Nav state
-  const userSetState:Ref<boolean> = ref(false);
-  const getUserState = ():boolean => userSetState.value;
-  const toggleUserState = ():boolean => userSetState.value = !userSetState.value
-  const setUserState = (state:boolean):boolean => userSetState.value = state
+  const clickState:Ref<boolean> = ref(false);
+  const getUserState = ():boolean => clickState.value;
+  const toggleUserState = ():boolean => clickState.value = !clickState.value
+  const setUserState = (state:boolean):boolean => clickState.value = state
 
   //Heading collapse horizontal
   const breakPointStateCheck = ():boolean => breakPointState.value !== 0
@@ -55,7 +55,7 @@
   }
 
   function initHamburgerState():void {
-    breakPointState.value === 0 ? displayHamburger() : hideHamburger();
+    !breakPointStateCheck() ? displayHamburger() : hideHamburger();
   }
 
   //Heading collapse vertical
@@ -81,15 +81,15 @@
   }
 
   const navVisibility = computed(() => {
-    return navLinkVisibility.value || userSetState.value;
+    return navLinkVisibility.value || clickState.value;
   })
 
   onBeforeMount(() => {
     initHamburgerState();
   });
 
-  watch(breakPointState, (newState) => {
-    handleResponsiveChange(newState);
+  watch(breakPointState, () => {
+    handleResponsiveChange();
   })
 
   watch(() => collapse, (newState) => {
@@ -104,7 +104,7 @@
         <Hamburger
           v-if="hamburgerVisibility"
           @click="toggleUserState"
-          :isClicked="userSetState"
+          :isClicked="clickState"
           :size="40"/>
       </span>
         <span id="heading-wrapper">
