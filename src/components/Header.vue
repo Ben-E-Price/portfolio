@@ -7,10 +7,8 @@
   import type { Ref, TemplateRef } from "vue";
 
   const {collapse} = defineProps<{collapse: boolean}>();
-
-  const classCollapse:string = "collapse";
-
-  const elHead:TemplateRef<HTMLElement> = useTemplateRef("header");
+  
+  const headBottom:TemplateRef<HTMLElement> = useTemplateRef("head-bottom");
 
   const breakPointStore = useCompLayoutState();
   const {breakPointState} = storeToRefs(breakPointStore);
@@ -59,22 +57,18 @@
   }
 
   //Heading collapse vertical
-  const getHead = ():HTMLElement | null => elHead.value;
-
   function handleHeadCollapseState(state:boolean):void {
     if(breakPointStateCheck()) {
       state ? toggleHeadCollapse() : toggleHeadExpansion();
     }
   }
 
-  function toggleHeadCollapse(addClass:string = classCollapse):void {
-    getHead()?.classList.add(addClass);
+  function toggleHeadCollapse():void {
     hideNavLinks()
     displayHamburger()
   }
 
-  function toggleHeadExpansion(removeClass:string = classCollapse):void {
-    getHead()?.classList.remove(removeClass);
+  function toggleHeadExpansion():void {
     setUserState(false);
     displayNavLinks();
     hideHamburger()
@@ -98,7 +92,7 @@
 </script>
 
 <template>
-  <header ref="header">
+  <header>
     <div id="head-top">
       <span id="hamburger-wrapper">
         <Hamburger
@@ -113,7 +107,7 @@
     </div>
 
 
-    <div id="head-bottom">
+    <div id="head-bottom" ref="head-bottom">
       <Transition name="nav-slide">
         <nav id="link-wrapper" v-if="navVisibility">
           <a class="head-link">Link</a>
