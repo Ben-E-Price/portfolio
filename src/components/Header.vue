@@ -114,8 +114,8 @@
 
 
     <div id="head-bottom">
-      <Transition name="nav-slide" v-show="navVisibility">
-        <nav id="link-wrapper">
+      <Transition name="nav-slide">
+        <nav id="link-wrapper" v-if="navVisibility">
           <a class="head-link">Link</a>
           <a class="head-link" >Link</a>
           <a class="head-link">Link</a>
