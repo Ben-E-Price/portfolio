@@ -73,7 +73,7 @@
     displayHamburger()
   }
 
-  function  toggleHeadExpansion(removeClass:string = classCollapse):void {
+  function toggleHeadExpansion(removeClass:string = classCollapse):void {
     getHead()?.classList.remove(removeClass);
     setUserState(false);
     displayNavLinks();
@@ -112,20 +112,18 @@
       </span>
     </div>
 
-    <Transition name="nav-slide">
-      <div
-        id="head-bottom"
-        v-if="navVisibility"
-      >
+
+    <div id="head-bottom">
+      <Transition name="nav-slide" v-show="navVisibility">
         <nav id="link-wrapper">
+          <a class="head-link">Link</a>
           <a class="head-link" >Link</a>
           <a class="head-link">Link</a>
           <a class="head-link">Link</a>
           <a class="head-link">Link</a>
-          <a class="head-link">Link</a>
         </nav>
-      </div>
-    </Transition>
+      </Transition>
+    </div>
   </header>
 </template>
 
@@ -156,6 +154,7 @@
   #link-wrapper {
     width: 100%;
     grid-column-start: span 2;
+    background-color: green;
   }
 
   #head-top {
@@ -168,7 +167,6 @@
   #head-bottom {
     z-index: -1;
     overflow: hidden;
-    background-color: green;
   }
 
   .nav-slide-enter-active,
