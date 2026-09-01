@@ -2,6 +2,7 @@
   import {ref, useTemplateRef, watch, computed, onBeforeMount} from "vue";
   import {storeToRefs} from "pinia";
   import Hamburger from "@/components/hambuger/Hamburger.vue";
+  import TheNavLinks from "@/components/nav-links/TheNavLinks.vue";
   import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
 
   import type { Ref, TemplateRef } from "vue";
@@ -121,13 +122,7 @@
           mode="out-in"
           appear
         >
-          <nav id="link-wrapper" v-if="navVisibility">
-            <a class="head-link">Link</a>
-            <a class="head-link" >Link</a>
-            <a class="head-link">Link</a>
-            <a class="head-link">Link</a>
-            <a class="head-link">Link</a>
-          </nav>
+          <TheNavLinks :isVisible="navVisibility" />
         </Transition>
       </div>
   </header>
@@ -160,11 +155,6 @@
   #heading-wrapper {
     display: flex;
     justify-content: center;
-  }
-
-  #link-wrapper {
-    width: 100%;
-    grid-column-start: span 2;
   }
 
   #head-top {
