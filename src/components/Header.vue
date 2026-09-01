@@ -7,8 +7,8 @@
   import type { Ref, TemplateRef } from "vue";
 
   const {collapse} = defineProps<{collapse: boolean}>();
-  
-  const headBottom:TemplateRef<HTMLElement> = useTemplateRef("head-bottom");
+
+  const _headBottom:TemplateRef<HTMLElement> = useTemplateRef("head-bottom");
 
   const breakPointStore = useCompLayoutState();
   const {breakPointState} = storeToRefs(breakPointStore);
@@ -57,6 +57,10 @@
   }
 
   //Heading collapse vertical
+  const headBottom = ():HTMLElement|null => _headBottom.value;
+  const hideBottom = ():void => headBottom()?.classList.add("bottom-hide");
+  const displayBottom = ():void => headBottom()?.classList.remove("bottom-hide");
+
   function handleHeadCollapseState(state:boolean):void {
     if(breakPointStateCheck()) {
       state ? toggleHeadCollapse() : toggleHeadExpansion();
@@ -64,12 +68,14 @@
   }
 
   function toggleHeadCollapse():void {
+    // hideBottom()
     hideNavLinks()
     displayHamburger()
   }
 
   function toggleHeadExpansion():void {
     setUserState(false);
+    // displayBottom()
     displayNavLinks();
     hideHamburger()
   }
@@ -106,22 +112,38 @@
       </span>
     </div>
 
-
-    <div id="head-bottom" ref="head-bottom">
-      <Transition name="nav-slide">
-        <nav id="link-wrapper" v-if="navVisibility">
-          <a class="head-link">Link</a>
-          <a class="head-link" >Link</a>
-          <a class="head-link">Link</a>
-          <a class="head-link">Link</a>
-          <a class="head-link">Link</a>
-        </nav>
-      </Transition>
-    </div>
+      <div
+        id="head-bottom"
+        ref="head-bottom"
+      >
+        <Transition
+          name="nav-slide"
+          mode="out-in"
+          appear
+        >
+          <nav id="link-wrapper" v-if="navVisibility">
+            <a class="head-link">Link</a>
+            <a class="head-link" >Link</a>
+            <a class="head-link">Link</a>
+            <a class="head-link">Link</a>
+            <a class="head-link">Link</a>
+          </nav>
+        </Transition>
+      </div>
   </header>
 </template>
 
 <style scoped>
+  @keyframes bottomHide {
+    from  {
+      height: 100%;
+    }
+
+    to {
+      height: 0%;
+    }
+  }
+
   header {
     --slide-time: v-bind(slideTime + "s");
 
@@ -133,11 +155,6 @@
     top: 0px;
     position: sticky;
     z-index: 0;
-    transition: all var(--slide-time) ease-in-out;
-  }
-
-  .no-nav {
-   grid-template-rows: 1fr 0fr;
   }
 
   #heading-wrapper {
@@ -148,7 +165,6 @@
   #link-wrapper {
     width: 100%;
     grid-column-start: span 2;
-    background-color: green;
   }
 
   #head-top {
@@ -161,6 +177,21 @@
   #head-bottom {
     z-index: -1;
     overflow: hidden;
+    background-color: green;
+  }
+
+  #head-bottom.bottom-hide  {
+    animation: bottomHide var(--slide-time) ease-in-out;
+  }
+
+  .bottom-hide-enter-active,
+  .bottom-hide-leave-active {
+    transition: all var(--slide-time) ease-in-out;
+  }
+
+  .bottom-hide-enter-from,
+  .bottom-hide-leave-to {
+    height: 0%;
   }
 
   .nav-slide-enter-active,
@@ -172,7 +203,6 @@
   .nav-slide-leave-to {
     transform: translateY(-100%);
   }
-
 
   @media (max-width: 600px) {
     header {
