@@ -15,6 +15,7 @@
   const {breakPointState} = storeToRefs(breakPointStore);
 
   const slideTime:Ref<number> = ref(0.5);
+  const slideDuration:string = `${slideTime.value}s`;
 
   const hamburgerVisibility:Ref<boolean> = ref(false);
   const displayHamburger = ():boolean => hamburgerVisibility.value = true;
@@ -113,17 +114,8 @@
       </span>
     </div>
 
-      <div
-        id="head-bottom"
-        ref="head-bottom"
-      >
-        <Transition
-          name="nav-slide"
-          mode="out-in"
-          appear
-        >
-          <TheNavLinks :isVisible="navVisibility" />
-        </Transition>
+      <div id="head-bottom" ref="head-bottom">
+        <TheNavLinks :isVisible="navVisibility" :slideTime="slideDuration"/>
       </div>
   </header>
 </template>
@@ -140,7 +132,7 @@
   }
 
   header {
-    --slide-time: v-bind(slideTime + "s");
+    --slide-time: v-bind(slideDuration);
 
     width: 100%;
     height: auto;
@@ -182,16 +174,6 @@
   .bottom-hide-enter-from,
   .bottom-hide-leave-to {
     height: 0%;
-  }
-
-  .nav-slide-enter-active,
-  .nav-slide-leave-active {
-    transition: all var(--slide-time) ease-in-out;
-  }
-
-  .nav-slide-enter-from,
-  .nav-slide-leave-to {
-    transform: translateY(-100%);
   }
 
   @media (max-width: 600px) {
