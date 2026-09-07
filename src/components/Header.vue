@@ -59,10 +59,6 @@
   }
 
   //Heading collapse vertical
-  const headBottom = ():HTMLElement|null => _headBottom.value;
-  const hideBottom = ():void => headBottom()?.classList.add("bottom-hide");
-  const displayBottom = ():void => headBottom()?.classList.remove("bottom-hide");
-
   function handleHeadCollapseState(state:boolean):void {
     if(breakPointStateCheck()) {
       state ? toggleHeadCollapse() : toggleHeadExpansion();
@@ -70,14 +66,12 @@
   }
 
   function toggleHeadCollapse():void {
-    // hideBottom()
     hideNavLinks()
     displayHamburger()
   }
 
   function toggleHeadExpansion():void {
     setUserState(false);
-    // displayBottom()
     displayNavLinks();
     hideHamburger()
   }
@@ -114,9 +108,9 @@
       </span>
     </div>
 
-      <div id="head-bottom" ref="head-bottom">
-        <TheNavLinks :isVisible="navVisibility" :slideTime="slideDuration"/>
-      </div>
+    <div id="head-bottom" :class="[navVisibility ? 'bottom-show' : 'bottom-hide']">
+      <TheNavLinks :isVisible="navVisibility" :slideTime="slideDuration"/>
+    </div>
   </header>
 </template>
 
@@ -131,6 +125,16 @@
     }
   }
 
+  @keyframes bottomShow {
+    from  {
+      height: 0%;
+    }
+
+    to {
+      height: 100%;
+    }
+  }
+
   header {
     --slide-time: v-bind(slideDuration);
 
@@ -141,7 +145,7 @@
 
     top: 0px;
     position: sticky;
-    z-index: 0;
+    z-index: 1;
   }
 
   #heading-wrapper {
@@ -162,18 +166,13 @@
     background-color: green;
   }
 
-  #head-bottom.bottom-hide  {
+  .bottom-hide  {
     animation: bottomHide var(--slide-time) ease-in-out;
+    animation-delay: 0.1s;
   }
 
-  .bottom-hide-enter-active,
-  .bottom-hide-leave-active {
-    transition: all var(--slide-time) ease-in-out;
-  }
-
-  .bottom-hide-enter-from,
-  .bottom-hide-leave-to {
-    height: 0%;
+  .bottom-show {
+    animation: bottomShow var(--slide-time) ease-in-out;
   }
 
   @media (max-width: 600px) {
