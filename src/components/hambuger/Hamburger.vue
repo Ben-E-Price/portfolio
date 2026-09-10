@@ -1,11 +1,15 @@
 <script setup lang="ts">
-  import {onMounted, ref, useTemplateRef, watch} from "vue";
+  import {ref, useTemplateRef, watch} from "vue";
+  import {useHamburgerStatus} from "@/stores/hamburger-status.ts";
+
   import Bars from "@/components/hambuger/Bars.vue";
   import Cross from "@/components/hambuger/Cross.vue";
   import TheBars from "@/components/hambuger/TheBars.vue"
 
   import type {TemplateRef, Ref} from "vue";
   import type {ChildEls} from "@/types/hamburger.ts";
+
+  const hamburgerStatus = useHamburgerStatus();
 
   const {size, isClicked} = defineProps<{size: number, isClicked: boolean}>();
   const rowHeight:number = 10;
@@ -52,7 +56,7 @@
   const hoverType = (e:MouseEvent):boolean => e.type === 'mouseover';
 
   function handleHover(e:MouseEvent):void {
-    hoverType(e) ? handleChildEvents() : removeBarTransform();
+    hoverType(e) ? hamburgerStatus.setIsHovered(true) : hamburgerStatus.setIsHovered(false);
   }
 
   watch(() => isClicked, handleClick);

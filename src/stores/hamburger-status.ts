@@ -11,6 +11,7 @@ export const useHamburgerStatus = defineStore("hamburger-status", () => {
   }
 
   function setIsHovered(value:boolean):void {
+    console.log("setIsHovered", value);
     _isHovered.value = value;
   }
 
