@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  const {classList} = defineProps<{classList: string[]}>();
+
 </script>
 
 <template>
-  <div :class="['bar', ...classList]"></div>
+  <div :class="['bar']"></div>
 </template>
 
 <style scoped>

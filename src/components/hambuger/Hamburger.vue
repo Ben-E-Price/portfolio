@@ -2,6 +2,7 @@
   import {onMounted, ref, useTemplateRef, watch} from "vue";
   import Bars from "@/components/hambuger/Bars.vue";
   import Cross from "@/components/hambuger/Cross.vue";
+  import TheBars from "@/components/hambuger/TheBars.vue"
 
   import type {TemplateRef, Ref} from "vue";
   import type {ChildEls} from "@/types/hamburger.ts";
@@ -65,6 +66,8 @@
     @mouseover="handleHover"
     @mouseleave="handleHover"
   >
+
+    <TheBars />
     <Bars
       @vue:mounted="getChildren"
       v-if="!isClicked"
