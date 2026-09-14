@@ -1,9 +1,12 @@
 <script setup lang="ts">
   import {ref, useTemplateRef, watch, computed, onBeforeMount} from "vue";
   import {storeToRefs} from "pinia";
+
   import Hamburger from "@/components/hambuger/Hamburger.vue";
   import TheNavLinks from "@/components/nav-links/TheNavLinks.vue";
+
   import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
+  import {useHamburgerStatus} from "@/stores/ham-click.ts";
 
   import type { Ref, TemplateRef } from "vue";
 

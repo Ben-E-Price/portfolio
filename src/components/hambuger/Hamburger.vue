@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import {ref, useTemplateRef, watch} from "vue";
-  import {useHamburgerStatus} from "@/stores/hamburger-status.ts";
+  import {useHamburgerStatus} from "@/stores/ham-click.ts";
 
   import Bars from "@/components/hambuger/Bars.vue";
   import Cross from "@/components/hambuger/Cross.vue";

@@ -2,7 +2,7 @@ import {defineStore} from "pinia";
 import {ref, computed} from "vue";
 import {type ComputedRef, type Ref} from "vue";
 
-export const useHamburgerStatus = defineStore("hamburger-status", () => {
+export const useHamburgerClickState = defineStore("hamburger-click-state", () => {
   const _isClicked: Ref<boolean> = ref(false);
   const _isHovered: Ref<boolean> = ref(false);
 
@@ -11,7 +11,6 @@ export const useHamburgerStatus = defineStore("hamburger-status", () => {
   }
 
   function setIsHovered(value:boolean):void {
-    console.log("setIsHovered", value);
     _isHovered.value = value;
   }
 
