@@ -4,17 +4,10 @@ import {type ComputedRef, type Ref} from "vue";
 
 export const useHamburgerClickState = defineStore("hamburger-click-state", () => {
   const _isClicked: Ref<boolean> = ref(false);
-  const _isHovered: Ref<boolean> = ref(false);
 
   function toggleClicked():void {
     _isClicked.value = !_isClicked.value;
   }
 
-  function setIsHovered(value:boolean):void {
-    _isHovered.value = value;
-  }
-
-  const crossStatus:ComputedRef<boolean> = computed(() => _isClicked.value || _isHovered.value);
-
-  return {toggleClicked, setIsHovered, crossStatus};
+  return {toggleClicked};
 })
