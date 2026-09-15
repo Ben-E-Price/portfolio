@@ -72,8 +72,9 @@
   <div
     ref="outer"
     id="hambuger-outer"
-    @mouseover="handleHover"
-    @mouseleave="handleHover"
+    @mouseover="toggleHovered"
+    @mouseleave="hoverState.$reset"
+    @click="toggleClicked"
   >
 
     <TheBars />
