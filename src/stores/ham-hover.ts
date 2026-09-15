@@ -8,6 +8,9 @@ export const useHamburgerHoverState = defineStore("hamburger-hover-state", () =>
     isHovered.value = !isHovered.value;
   }
 
+  function $reset():void {
+    isHovered.value = false;
+  }
 
   return {isHovered, toggleHovered};
 })
