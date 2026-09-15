@@ -31,7 +31,7 @@
 
   //User click Nav state
   const hamburgerClickState = useHamburgerClickState();
-  const {isClicked} = storeToRefs(hamburgerClickState)
+  const {isClicked} = storeToRefs(hamburgerClickState);
 
   const clickState:Ref<boolean> = ref(false);
   const getUserState = ():boolean => clickState.value;

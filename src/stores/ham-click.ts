@@ -9,7 +9,11 @@ export const useHamburgerClickState = defineStore("hamburger-click-state", () =>
     _isClicked.value = !_isClicked.value;
   }
 
+  function setIsClicked(newState:boolean):void {
+    _isClicked.value = newState;
+  }
+
   const isClicked = computed(() => _isClicked.value);
 
-  return {toggleClicked, isClicked};
+  return {setIsClicked, toggleClicked, isClicked};
 })
