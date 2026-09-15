@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import {ref, useTemplateRef, watch} from "vue";
-  import {useHamburgerStatus} from "@/stores/ham-click.ts";
+  import {useHamburgerClickState} from "@/stores/ham-click.ts";
+  import {useHamburgerHoverState} from "@/stores/ham-hover.ts";
 
   import Bars from "@/components/hambuger/Bars.vue";
   import Cross from "@/components/hambuger/Cross.vue";
@@ -9,10 +10,14 @@
   import type {TemplateRef, Ref} from "vue";
   import type {ChildEls} from "@/types/hamburger.ts";
 
-  const hamburgerStatus = useHamburgerStatus();
-
   const {size, isClicked} = defineProps<{size: number, isClicked: boolean}>();
   const rowHeight:number = 10;
+
+  const clickState = useHamburgerClickState();
+  const hoverState = useHamburgerHoverState();
+
+  const {toggleClicked} = clickState;
+  const {toggleHovered} = hoverState;
 
   const outer:TemplateRef<HTMLElement> = useTemplateRef("outer");
   const activeClass:string = "active"
