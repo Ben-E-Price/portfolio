@@ -6,7 +6,7 @@
   import TheNavLinks from "@/components/nav-links/TheNavLinks.vue";
 
   import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
-  import {useHamburgerStatus} from "@/stores/ham-click.ts";
+  import {useHamburgerClickState} from "@/stores/ham-click.ts";
 
   import type { Ref, TemplateRef } from "vue";
 
@@ -30,6 +30,9 @@
   const hideNavLinks = ():boolean => navLinkVisibility.value = false;
 
   //User click Nav state
+  const hamburgerClickState = useHamburgerClickState();
+  const {isClicked} = storeToRefs(hamburgerClickState)
+
   const clickState:Ref<boolean> = ref(false);
   const getUserState = ():boolean => clickState.value;
   const toggleUserState = ():boolean => clickState.value = !clickState.value
