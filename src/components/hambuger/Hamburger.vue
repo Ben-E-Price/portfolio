@@ -17,7 +17,7 @@
   const hoverState = useHamburgerHoverState();
 
   const {toggleClicked} = clickState;
-  const {toggleHovered} = hoverState;
+  const {toggleHovered, resetIsHovered} = hoverState;
 
   const outer:TemplateRef<HTMLElement> = useTemplateRef("outer");
   const activeClass:string = "active"
@@ -73,7 +73,7 @@
     ref="outer"
     id="hambuger-outer"
     @mouseover="toggleHovered"
-    @mouseleave="hoverState.$reset"
+    @mouseleave="resetIsHovered"
     @click="toggleClicked"
   >
 
