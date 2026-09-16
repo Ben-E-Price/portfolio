@@ -74,26 +74,19 @@
     @mouseleave="resetIsHovered"
     @click="toggleClicked"
   >
-
     <TheBars />
   </div>
 </template>
 
 <style scoped>
   #hambuger-outer {
-    --icon-size: v-bind(size + "px");
-    --row-height: v-bind(rowHeight + "%");
+    --icon-size: v-bind(100 + "px");
     --menu-colour: grey;
-
-    display: grid;
-    grid-template-rows: var(--row-height) var(--row-height) var(--row-height);
+    padding: 5px;
     border-radius: 5px;
     border: 1px solid black;
     width: var(--icon-size);
     height: var(--icon-size);
-    align-content: center;
-    gap: 20%;
-    padding: 5px;
   }
 
   #hambuger-outer.active {

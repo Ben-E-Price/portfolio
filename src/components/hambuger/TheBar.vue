@@ -8,8 +8,7 @@
 
 <style scoped>
   .bar {
-    border-radius: 10px;
-    width: 100%;
+    border-radius: 5px;
     background-color: black;
   }
 </style>
