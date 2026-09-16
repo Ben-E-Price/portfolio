@@ -13,9 +13,9 @@ export const useHamburgerClickState = defineStore("hamburger-click-state", () =>
     isClicked.value = newState;
   }
 
-  function $reset():void {
+  function resetIsClicked():void {
     isClicked.value = false;
   }
 
-  return {setIsClicked, toggleClicked, isClicked};
+  return {setIsClicked, toggleClicked, isClicked, resetIsClicked};
 })

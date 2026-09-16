@@ -31,6 +31,7 @@
 
   //User click Nav state
   const hamburgerClickState = useHamburgerClickState();
+  const {resetIsClicked} = hamburgerClickState
   const {isClicked} = storeToRefs(hamburgerClickState);
   const getUserState = ():boolean => isClicked.value;
 
@@ -73,13 +74,13 @@
   }
 
   function toggleHeadExpansion():void {
-    hamburgerClickState.$reset();
+    resetIsClicked();
     displayNavLinks();
     hideHamburger()
   }
 
   const navVisibility = computed(() => {
-    return navLinkVisibility.value || isClicked;
+    return navLinkVisibility.value || isClicked.value;
   })
 
   onBeforeMount(() => {
