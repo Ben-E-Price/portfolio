@@ -3,8 +3,6 @@
   import {useHamburgerClickState} from "@/stores/ham-click.ts";
   import {useHamburgerHoverState} from "@/stores/ham-hover.ts";
 
-  import Bars from "@/components/hambuger/Bars.vue";
-  import Cross from "@/components/hambuger/Cross.vue";
   import TheBars from "@/components/hambuger/TheBars.vue"
 
   import type {TemplateRef, Ref} from "vue";
@@ -78,16 +76,6 @@
   >
 
     <TheBars />
-    <Bars
-      @vue:mounted="getChildren"
-      v-if="!isClicked"
-      :classList="barClass"
-    />
-    <Cross
-      @vue:mounted="getChildren"
-      v-if="isClicked"
-      :classList="barClass"
-    />
   </div>
 </template>
 
