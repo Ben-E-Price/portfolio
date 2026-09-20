@@ -32,7 +32,7 @@
 
     display: grid;
     grid-template-rows: var(--bar-height) var(--bar-height) var(--bar-height);
-    gap: 20%;
+    align-content: space-evenly;
     width: 100%;
     height: 100%;
   }

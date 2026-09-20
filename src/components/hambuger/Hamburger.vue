@@ -80,7 +80,7 @@
 
 <style scoped>
   #hambuger-outer {
-    --icon-size: v-bind(100 + "px");
+    --icon-size: v-bind(size + "px");
     --menu-colour: grey;
     padding: 5px;
     border-radius: 5px;
