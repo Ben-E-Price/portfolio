@@ -56,10 +56,13 @@
     isClicked ? transformCross() : handleSeqTransform();
   }
 
-  const hoverType = (e:MouseEvent):boolean => e.type === 'mouseover';
+  const isMouseOver = (event:MouseEvent):boolean => event.type === 'mouseover';
+  const isHamburgerOuter = (event:MouseEvent):boolean => outer.value.isEqualNode(event.target);
 
   function handleHover(e:MouseEvent):void {
-    hoverType(e) ? hamburgerStatus.setIsHovered(true) : hamburgerStatus.setIsHovered(false);
+    if (isHamburgerOuter(e)) {
+      isMouseOver(e) ? toggleHovered() : resetIsHovered();
+    }
   }
 
   watch(() => isClicked, handleClick);
@@ -69,9 +72,9 @@
 <template>
   <div
     ref="outer"
-    id="hambuger-outer"
-    @mouseover="toggleHovered"
-    @mouseleave="resetIsHovered"
+    id="hamburger"
+    @mouseover="handleHover"
+    @mouseleave="handleHover"
     @click="toggleClicked"
   >
     <TheBars />
@@ -79,7 +82,7 @@
 </template>
 
 <style scoped>
-  #hambuger-outer {
+  #hamburger {
     --icon-size: v-bind(size + "px");
     --menu-colour: grey;
     padding: 5px;
@@ -89,12 +92,12 @@
     height: var(--icon-size);
   }
 
-  #hambuger-outer.active {
+  #hamburger.active {
     grid-template-rows: var(--row-height) var(--row-height);
     gap: 0%;
   }
 
-  #hambuger-outer:hover{
+  #hambuger:hover{
    .top-bar {
       transform: rotateZ(45deg);
     }

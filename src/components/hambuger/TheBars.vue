@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import TheBar from './TheBar.vue'
-  import {computed, ref} from "vue";
+  import {computed, ref, watch} from "vue";
   import {storeToRefs} from "pinia";
 
   import {useHamburgerClickState} from "@/stores/ham-click.ts";
@@ -14,14 +14,14 @@
 
   const barHeight:number = 10;
 
-  const crossTransition = computed(() => isHovered || isClicked);
+  const crossTransition = computed(() => isHovered.value || isClicked.value);
 
 </script>
 
 <template>
   <div id="bar-wrapper">
     <TheBar />
-    <TheBar />
+    <TheBar v-if="!crossTransition"/>
     <TheBar />
   </div>
 </template>
