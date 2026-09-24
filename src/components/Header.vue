@@ -2,7 +2,7 @@
   import {ref, useTemplateRef, watch, computed, onBeforeMount} from "vue";
   import {storeToRefs} from "pinia";
 
-  import Hamburger from "@/components/hambuger/Hamburger.vue";
+  import TheHamburger from "@/components/hambuger/TheHamburger.vue";
   import TheNavLinks from "@/components/nav-links/TheNavLinks.vue";
 
   import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
@@ -101,7 +101,7 @@
     <div id="head-top">
       <span id="hamburger-wrapper">
         <Transition name="ham-slide" mode="out-in" appear>
-          <Hamburger v-if="hamburgerVisibility" :size="40"/>
+          <TheHamburger v-if="hamburgerVisibility" :size="40"/>
         </Transition>
       </span>
 
