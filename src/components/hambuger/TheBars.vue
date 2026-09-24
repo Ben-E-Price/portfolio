@@ -44,7 +44,7 @@
 
   const barMovementString = (value:number):string => `${value}px`;
 
-  function handleBarMovementCalc():number {
+  function handleBarMovementCalc():void {
     const parent:HTMLElement = barWrapper.value;
     const child:HTMLElement = barWrapper.value?.children[0];
 
