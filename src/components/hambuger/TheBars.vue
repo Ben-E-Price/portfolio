@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import TheBar from './TheBar.vue'
-  import {computed, type ComputedGetter, onMounted, ref, useTemplateRef} from "vue";
+  import {computed, onMounted, ref, useTemplateRef} from "vue";
   import {storeToRefs} from "pinia";
   import {type Ref, type TemplateRef} from 'vue'
 

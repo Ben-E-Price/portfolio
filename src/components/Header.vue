@@ -100,11 +100,12 @@
   <header>
     <div id="head-top">
       <span id="hamburger-wrapper">
-        <Hamburger
-          v-if="hamburgerVisibility"
-          :size="40"/>
+        <Transition name="ham-slide" mode="out-in" appear>
+          <Hamburger v-if="hamburgerVisibility" :size="40"/>
+        </Transition>
       </span>
-        <span id="heading-wrapper">
+
+      <span id="heading-wrapper">
         <h1 v-to-heading>heading</h1>
       </span>
     </div>
@@ -122,13 +123,13 @@
     }
 
     to {
-      height: 0%;
+      height: 0;
     }
   }
 
   @keyframes bottomShow {
     from  {
-      height: 0%;
+      height: 0;
     }
 
     to {
@@ -174,6 +175,16 @@
 
   .bottom-show {
     animation: bottomShow var(--slide-time) ease-in-out;
+  }
+
+  .ham-slide-enter-active,
+  .ham-slide-leave-active {
+    transition: all var(--slide-time) ease-in-out;
+  }
+
+  .ham-slide-enter-from,
+  .ham-slide-leave-to {
+    transform: translateX(-100%);
   }
 
   @media (max-width: 600px) {
