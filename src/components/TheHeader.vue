@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import {ref, useTemplateRef, watch, computed, onBeforeMount} from "vue";
+  import {ref, watch, computed, onBeforeMount} from "vue";
   import {storeToRefs} from "pinia";
 
   import TheHamburger from "@/components/hambuger/TheHamburger.vue";
@@ -8,11 +8,9 @@
   import {useCompLayoutState} from "@/stores/comp-layout-state.ts";
   import {useHamburgerClickState} from "@/stores/ham-click.ts";
 
-  import type { Ref, TemplateRef } from "vue";
+  import type { Ref } from "vue";
 
   const {collapse} = defineProps<{collapse: boolean}>();
-
-  const _headBottom:TemplateRef<HTMLElement> = useTemplateRef("head-bottom");
 
   const breakPointStore = useCompLayoutState();
   const {breakPointState} = storeToRefs(breakPointStore);

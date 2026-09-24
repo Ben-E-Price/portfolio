@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import Header from "./Header.vue";
+  import TheHeader from "./TheHeader.vue";
   import Main from "./Main.vue";
   import Footer from "./Footer.vue";
   import {onMounted, ref} from "vue";
@@ -34,7 +34,7 @@
 </script>
 
 <template>
-  <Header
+  <TheHeader
     :collapse="collapseState"
     @vue:mounted="initObserver"
   />
