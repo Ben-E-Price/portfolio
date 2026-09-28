@@ -20,7 +20,20 @@
   const crossTransition = computed(() => isHovered.value || isClicked.value);
   const classActive = computed(() => [crossTransition.value ? "active" : ""]);
 
+  interface CalcElements {
+    wrapper: HTMLElement,
+    bar: HTMLElement,
+  }
+
   const barWrapper:TemplateRef<HTMLElement> = useTemplateRef("bar-wrapper");
+  const topBar:TemplateRef<HTMLElement> = useTemplateRef("top-bar");
+
+  function getCalcElements():CalcElements {
+    return {
+      wrapper: barWrapper.value,
+      bar: topBar.value
+    }
+  }
 
   interface GetBoundingClient {
     top:number;
@@ -50,10 +63,8 @@
   const barMovementString = (value:number):string => `${value}px`;
 
   function handleBarMovementCalc():void {
-    const parent:HTMLElement = barWrapper.value;
-    const child:HTMLElement = barWrapper.value?.children[0];
-
-    const movementDistance:number = calcBarMovementDistance(child, calcTargetLocation(parent));
+    const {wrapper, bar} = getElements();
+    const movementDistance:number = calcBarMovementDistance(bar, calcTargetLocation(wrapper));
     setBarMovementDistances(movementDistance);
   }
 
@@ -65,7 +76,7 @@
 
 <template>
   <div id="bar-wrapper" :class="classActive" ref="bar-wrapper">
-    <TheBar id="cross-top" :class="classActive"/>
+    <TheBar id="cross-top" :class="classActive" ref="top-bar"/>
     <TheBar id="cross-center" :class="classActive"/>
     <TheBar id="cross-bottom" :class="classActive"/>
   </div>
