@@ -42,6 +42,11 @@
     return targetLocation - top - (height / 2);
   }
 
+  function setBarMovementDistances(distance:number):void {
+    barMovementTop.value = barMovementString(distance);
+    barMovementBottom.value = barMovementString(distance * -1);
+  }
+
   const barMovementString = (value:number):string => `${value}px`;
 
   function handleBarMovementCalc():void {
@@ -49,8 +54,7 @@
     const child:HTMLElement = barWrapper.value?.children[0];
 
     const movementDistance:number = calcBarMovementDistance(child, calcTargetLocation(parent));
-    barMovementTop.value = barMovementString(movementDistance);
-    barMovementBottom.value = barMovementString(movementDistance * -1);
+    setBarMovementDistances(movementDistance);
   }
 
   onMounted(() => {
