@@ -15,7 +15,7 @@
   const {isClicked} = storeToRefs(clickState);
   const {isHovered} = storeToRefs(hoverState);
 
-  const barHeight:number = 10;
+  const barHeight:number = 15;
   const barMovementTop:Ref<string> = ref("");
   const barMovementBottom:Ref<string> = ref("");
 
@@ -24,12 +24,19 @@
 
   const barWrapper:TemplateRef<HTMLElement> = useTemplateRef("bar-wrapper");
 
+  class HamburgerError extends Error {
+    constructor(message: string) {
+      super(message);
+      this.name = "Hamburger Error: ";
+    }
+  }
+
   const isElement = (el:unknown):boolean => el instanceof HTMLElement
   const hasChildren = (el:HTMLElement):boolean => el.children && el.children.length > 0
 
   function isParentElement(el:unknown):asserts el is HTMLElement{
-    if (!isElement(el)) throw new Error("Hamburger outer not found");
-    if (!hasChildren(el)) throw new Error("Hamburger bar not found");
+    if (!isElement(el)) throw new HamburgerError("Outer not found");
+    if (!hasChildren(el as HTMLElement)) throw new HamburgerError("Bar not found");
   }
 
   const getTopBar = (parent:HTMLElement) => parent.children[0] as HTMLElement;
@@ -39,7 +46,7 @@
       isParentElement(barWrapper.value);
       return {wrapper: barWrapper.value, bar: getTopBar(barWrapper.value)}
     } catch (err:unknown) {
-      console.error(err.message);
+      err instanceof HamburgerError ? console.error(err.name + err.message) : null;
     }
   }
 
@@ -66,7 +73,7 @@
   const barMovementString = (value:number):string => `${value}px`;
 
   function handleBarMovementCalc():void {
-    const {wrapper, bar} = getCalcElements() as CalcElements;
+    const {wrapper, bar} = getCalcElements() as HamburgerElements;
     const movementDistance:number = calcBarMovementDistance(bar, calcTargetLocation(wrapper));
     setBarMovementDistances(movementDistance);
   }
