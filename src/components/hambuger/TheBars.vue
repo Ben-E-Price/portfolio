@@ -2,10 +2,11 @@
   import TheBar from './TheBar.vue'
   import {computed, onMounted, ref, useTemplateRef} from "vue";
   import {storeToRefs} from "pinia";
-  import {type Ref, type TemplateRef} from 'vue'
+  import type {Ref, TemplateRef} from 'vue'
 
   import {useHamburgerClickState} from "@/stores/ham-click.ts";
   import {useHamburgerHoverState} from "@/stores/ham-hover.ts";
+  import * as assert from "node:assert";
 
   const clickState = useHamburgerClickState();
   const hoverState = useHamburgerHoverState();
@@ -26,12 +27,23 @@
   }
 
   const barWrapper:TemplateRef<HTMLElement> = useTemplateRef("bar-wrapper");
-  const topBar:TemplateRef<HTMLElement> = useTemplateRef("top-bar");
 
-  function getCalcElements():CalcElements {
-    return {
-      wrapper: barWrapper.value,
-      bar: topBar.value
+  const isElement = (el:any):boolean => el instanceof HTMLElement
+  const hasChildren = (el:any):boolean => el.children && el.children.length > 0
+
+  function isParentElement(el:any):asserts el is HTMLElement{
+    if (!isElement(el)) throw new Error("Hamburger outer not found");
+    if (!hasChildren(el)) throw new Error("Hamburger bar not found");
+  }
+
+  const getTopBar = (parent:HTMLElement) => parent.children[0] as HTMLElement;
+
+  function getCalcElements():CalcElements | undefined {
+    try {
+      isParentElement(barWrapper.value);
+      return {wrapper: barWrapper.value, bar: getTopBar(barWrapper.value)}
+    } catch (err:any) {
+      console.error(err.message);
     }
   }
 
@@ -63,7 +75,7 @@
   const barMovementString = (value:number):string => `${value}px`;
 
   function handleBarMovementCalc():void {
-    const {wrapper, bar} = getElements();
+    const {wrapper, bar} = getCalcElements();
     const movementDistance:number = calcBarMovementDistance(bar, calcTargetLocation(wrapper));
     setBarMovementDistances(movementDistance);
   }
@@ -76,7 +88,7 @@
 
 <template>
   <div id="bar-wrapper" :class="classActive" ref="bar-wrapper">
-    <TheBar id="cross-top" :class="classActive" ref="top-bar"/>
+    <TheBar id="cross-top" :class="classActive"/>
     <TheBar id="cross-center" :class="classActive"/>
     <TheBar id="cross-bottom" :class="classActive"/>
   </div>
