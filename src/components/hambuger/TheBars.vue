@@ -2,11 +2,12 @@
   import TheBar from './TheBar.vue'
   import {computed, onMounted, ref, useTemplateRef} from "vue";
   import {storeToRefs} from "pinia";
+
   import type {Ref, TemplateRef} from 'vue'
+  import type {HamburgerElements, GetBoundingClient} from "@/types/hamburger.ts";
 
   import {useHamburgerClickState} from "@/stores/ham-click.ts";
   import {useHamburgerHoverState} from "@/stores/ham-hover.ts";
-  import * as assert from "node:assert";
 
   const clickState = useHamburgerClickState();
   const hoverState = useHamburgerHoverState();
@@ -21,35 +22,25 @@
   const crossTransition = computed(() => isHovered.value || isClicked.value);
   const classActive = computed(() => [crossTransition.value ? "active" : ""]);
 
-  interface CalcElements {
-    wrapper: HTMLElement,
-    bar: HTMLElement,
-  }
-
   const barWrapper:TemplateRef<HTMLElement> = useTemplateRef("bar-wrapper");
 
-  const isElement = (el:any):boolean => el instanceof HTMLElement
-  const hasChildren = (el:any):boolean => el.children && el.children.length > 0
+  const isElement = (el:unknown):boolean => el instanceof HTMLElement
+  const hasChildren = (el:HTMLElement):boolean => el.children && el.children.length > 0
 
-  function isParentElement(el:any):asserts el is HTMLElement{
+  function isParentElement(el:unknown):asserts el is HTMLElement{
     if (!isElement(el)) throw new Error("Hamburger outer not found");
     if (!hasChildren(el)) throw new Error("Hamburger bar not found");
   }
 
   const getTopBar = (parent:HTMLElement) => parent.children[0] as HTMLElement;
 
-  function getCalcElements():CalcElements | undefined {
+  function getCalcElements():HamburgerElements | undefined {
     try {
       isParentElement(barWrapper.value);
       return {wrapper: barWrapper.value, bar: getTopBar(barWrapper.value)}
-    } catch (err:any) {
+    } catch (err:unknown) {
       console.error(err.message);
     }
-  }
-
-  interface GetBoundingClient {
-    top:number;
-    height:number;
   }
 
   const getBoundingClient = (el:HTMLElement):GetBoundingClient => {
@@ -75,7 +66,7 @@
   const barMovementString = (value:number):string => `${value}px`;
 
   function handleBarMovementCalc():void {
-    const {wrapper, bar} = getCalcElements();
+    const {wrapper, bar} = getCalcElements() as CalcElements;
     const movementDistance:number = calcBarMovementDistance(bar, calcTargetLocation(wrapper));
     setBarMovementDistances(movementDistance);
   }
