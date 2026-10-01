@@ -2,17 +2,11 @@
   import PanelExperience from "@/components/accordion/PanelExperience.vue";
   import PanelQualification from "@/components/accordion/PanelQualification.vue";
 
-  import type {Education, EducationData, Experience, ExperienceData} from "@/types/content.ts";
-  import {onBeforeMount, type Ref, ref} from "vue";
+  import {onBeforeMount, ref} from "vue";
 
-  interface CompType {
-    education: boolean;
-    experience: boolean;
-  }
-
-  type CompTypeKey = keyof CompType;
-  type ContentList = Experience | Education;
-  type ContentData = ExperienceData | EducationData | undefined;
+  import type {Ref} from "vue";
+  import type {EducationData, ExperienceData} from "@/types/content.ts";
+  import type {CompType, CompTypeKey, ContentData, ContentList} from "@/types/accordion.ts";
 
   const {content} = defineProps<{content: ContentList}>();
 

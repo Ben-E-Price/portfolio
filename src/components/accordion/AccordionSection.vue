@@ -1,10 +1,10 @@
 <script setup lang="ts">
   import Accordion from "@/components/accordion/Accordion.vue";
   import DynamicHeading from "../heading/DynamicHeading.vue";
-  import type {Experience, Education} from "@/types/content.ts";
 
-  type ContentLists = Experience | Education;
-  const {content, sectionName} = defineProps<{content: ContentLists, sectionName: string}>();
+  import type {ContentList} from "@/types/accordion.ts";
+
+  const {content, sectionName} = defineProps<{content: ContentList, sectionName: string}>();
 </script>
 
 <template>
