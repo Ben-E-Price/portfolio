@@ -10,6 +10,7 @@
       <DynamicHeading
         :level="3"
         :text="locationTitle"
+        :class="['sum-heading']"
       />
     </span>
 
