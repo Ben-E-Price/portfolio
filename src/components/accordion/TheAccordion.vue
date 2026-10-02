@@ -8,7 +8,7 @@
 </script>
 
 <template>
-  <section class="sec-wrapper" :id="`sec-${sectionName}`">
+  <section :class="['sec-wrapper', 'accordion-wrapper']" :id="`sec-${sectionName}`">
     <DynamicHeading
       :id="sectionName"
       :text="sectionName"

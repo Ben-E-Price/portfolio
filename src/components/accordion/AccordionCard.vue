@@ -44,7 +44,7 @@
 
 <template>
   <details
-    class="accordion"
+    class="accordion-card"
     v-for="item in content"
     v-bind:key="item.year"
   >
