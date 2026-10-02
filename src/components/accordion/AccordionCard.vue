@@ -7,22 +7,21 @@
   import type {ContentList} from "@/types/accordion.ts";
 
   const {content} = defineProps<{content: ContentList}>();
-
 </script>
 
 <template>
-  <details
+  <div
     class="accordion-card"
     v-for="item in content"
     v-bind:key="item.year"
   >
     <AccordionSummery
-      :location="item.location"
+      :locationTitle="item.location"
       :date="item.year"
     />
 
     <AccordionBody :content="item"/>
-  </details>
+  </div>
 </template>
 
 <style scoped>

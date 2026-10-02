@@ -12,7 +12,7 @@
       },
 
       id: String,
-      class: Array<String>,
+      classNames: Array<String>,
       text: String as PropType<HTMLKeys>,
     },
 
