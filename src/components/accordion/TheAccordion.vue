@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import Accordion from "@/components/accordion/Accordion.vue";
+  import AccordionCard from "@/components/accordion/AccordionCard.vue";
   import DynamicHeading from "../heading/DynamicHeading.vue";
 
   import type {ContentList} from "@/types/accordion.ts";
@@ -14,7 +14,7 @@
       :text="sectionName"
       :level="2"
     />
-    <Accordion :content="content"/>
+    <AccordionCard :content="content"/>
   </section>
 </template>
 
