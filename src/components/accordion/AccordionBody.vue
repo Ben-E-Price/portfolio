@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import PanelExperience from "@/components/accordion/PanelExperience.vue";
-  import PanelQualification from "@/components/accordion/PanelQualification.vue";
+  import AccordionExperience from "@/components/accordion/AccordionExperience.vue";
+  import AccordionQualification from "@/components/accordion/AccordionQualification.vue";
   import {computed} from "vue";
   import type {EducationData, ExperienceData} from "@/types/content.ts";
 
@@ -12,12 +12,12 @@
 </script>
 
 <template>
-  <PanelExperience
+  <AccordionExperience
     v-if="isExperience"
     :content="content.description"
   />
 
-  <PanelQualification
+  <AccordionQualification
     v-if="isEducation"
     :content="content.qualification"
   />

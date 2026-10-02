@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import PanelExperience from "@/components/accordion/PanelExperience.vue";
-  import PanelQualification from "@/components/accordion/PanelQualification.vue";
+  import AccordionExperience from "@/components/accordion/AccordionExperience.vue";
+  import AccordionQualification from "@/components/accordion/AccordionQualification.vue";
 
   import {onBeforeMount, ref} from "vue";
 
@@ -52,12 +52,12 @@
       {{`${item.location} ${item.year}`}}
     </summary>
 
-    <PanelExperience
+    <AccordionExperience
       v-if="componentType.experience"
       :content="item.description"
     />
 
-    <PanelQualification
+    <AccordionQualification
       v-else-if="componentType.education"
       :content="item.qualification"
     />
