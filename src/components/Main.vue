@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import About from "@/components/main-sections/About.vue";
-  import AccordionSection from "@/components/accordion/AccordionSection.vue";
+  import TheAccordion from "@/components/accordion/TheAccordion.vue";
   import WorkExample from "@/components/main-sections/WorkExample.vue";
 
   import type {SiteContent} from "@/types/content.ts";
@@ -23,12 +23,12 @@
 <template>
   <main>
     <About :content="about"/>
-    <AccordionSection
+    <TheAccordion
       :section-name="`experience`"
       :content="experience"
     />
 
-    <AccordionSection
+    <TheAccordion
       :section-name="`education`"
       :content="education"
     />
