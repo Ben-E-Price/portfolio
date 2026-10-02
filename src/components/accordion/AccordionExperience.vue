@@ -3,7 +3,7 @@ const {content} = defineProps<{content:string}>();
 </script>
 
 <template>
-  <div class="accordion-panel">
+  <div class="exp-wrapper">
     <p class="exp-description">{{ content }}</p>
   </div>
 </template>

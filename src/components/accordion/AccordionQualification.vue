@@ -2,7 +2,7 @@
   import type {Qualification} from "@/types/content.ts";
 
   const {content} = defineProps<{content:Qualification[]}>();
-  const classList:string[] = ["accordion-panel", "qual-panel"];
+  const classList:string[] = ["qual-wrapper"];
 </script>
 
 <template>
